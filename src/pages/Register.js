@@ -1,11 +1,23 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 const Login = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = () => {
+    setLoading(true); // Set loading state to true
+    setTimeout(() => {
+      router.push("./Login"); // Navigate to desired route after 2 seconds
+      setLoading(false); // Set loading state back to false
+    }, 1000); // Delay navigation for 2 seconds
+  };
+
   return (
     <div className="flex">
       <div className="hidden md:block bg-red-300 w-1/2 h-screen"></div>
       <div className="bg-[#C3DDFD] w-full md:w-1/2 h-screen flex justify-center items-center">
-      <form className="max-w-sm mx-auto flex-grow">
+        <form className="max-w-sm mx-auto flex-grow">
           <div className="mb-3">
             <label
               for="text"
@@ -73,6 +85,19 @@ const Login = () => {
                 for="base-input"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
+                Username
+              </label>
+              <input
+                type="text"
+                id="base-input"
+                class="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div class="mb-7">
+              <label
+                for="base-input"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
                 Email
               </label>
               <input
@@ -87,6 +112,20 @@ const Login = () => {
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Password
+              </label>
+              <input
+                placeholder="••••••••••"
+                type="password"
+                id="base-input"
+                class="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div class="mb-5">
+              <label
+                for="base-input"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Connfirm Password
               </label>
               <input
                 placeholder="••••••••••"
@@ -118,21 +157,24 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <button
-           
+          {/* <button
+            onClick={handleSignup}
             type="button"
             class="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
           >
             Sign up
-          </button>
-          <div className="text-base font-normal flex mt-4">
-            
-            <button className="text-[#4285F4] text-base font-bold ml-3">Sign In
-
+          </button> */}
+          <div className="text-base font-normal flex mt-1">
+            <button
+              onClick={handleSignup}
+              disabled={loading} // Disable button while loading
+              type="button"
+              className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+            >
+              {loading ? "Signing up..." : "Sign up"}
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );

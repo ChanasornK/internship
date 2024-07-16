@@ -2,8 +2,11 @@ import { useRouter } from "next/router";
 const Login = () => {
   const router = useRouter();
   const handleClick = () => {
-    router.push("./Register");
+    router.push("./");
   };
+  const handleClickSignup =()=>{
+    router.push("./Register");
+  }
   return (
     <div className="flex">
       <div className="w-full md:w-1/2 bg-[#C3DDFD] h-screen flex justify-center items-center">
@@ -129,7 +132,8 @@ const Login = () => {
           </button>
           <div className="text-base font-normal flex mt-4">
             Don’t have an account yet?
-            <button className="text-[#4285F4] text-base font-bold ml-3">Sign Up
+            <button onClick={handleClickSignup}
+             className="text-[#4285F4] text-base font-bold ml-3">Sign Up
 
             </button>
           </div>
