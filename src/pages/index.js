@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Searchform from "./component/Searchform";
 const index = () => {
   const router = useRouter();
   const handleHomePage = () => {
@@ -10,22 +11,28 @@ const index = () => {
     <div className="">
       <div className="w-full h-auto">
         <header className="w-full bg-[#003399] text-white">
-          <div className="flex  justify-start w-4/5 mx-auto text-white font-bold font-serif text-3xl h-36">
-            <button className="-mt-16" onClick={handleHomePage}>
+          <div className="flex  justify-start w-4/5 mx-auto  text-white font-bold font-serif text-4xl h-36">
+            <button className="-mt-[3%]" onClick={handleHomePage}>
               Ming.com
-            </button>
-            <div className="flex ml-80 bg-red-400 -mt-16 items-center justify-center">
+            </button>{" "}
+            <Searchform />
+            {/* <div className="flex ml-80 bg-red-400 -mt-16 items-center justify-center">
               Icon
-            </div>
+            </div> */}
           </div>
         </header>
-        <div className=" w-full h-[55%] bg-white mt-24 ">
+        <div>
+          <h1 className="ml-56 mt-10 font-medium font-serif text-2xl">
+            หมวดหมู่สินค้า
+          </h1>
+        </div>
+        <div className=" w-full h-[55%] bg-white mt-10 ">
           <div className="flex justify-center items-center">
             <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
               <button>
                 <div className="  h-40 w-56">
                   <img
-                    src="https://dlcdnwebimgs.asus.com/gain/C650BB77-5D96-4CED-86C2-68B700AF88C9/w750/h470"
+                    src="https://mercular.s3.ap-southeast-1.amazonaws.com/images/products/2024/03/Product/asus-rog-swift-pg32ucdm-31-5-qd-oled-4k-gaming-monitor-240hz-front-left-view.jpg"
                     className="w-full h-full object-cover"
                   ></img>
                   <h1>Monitors</h1>
@@ -36,7 +43,7 @@ const index = () => {
               <button>
                 <div className="  h-40 w-56">
                   <img
-                    src="https://www.pcworld.com/wp-content/uploads/2023/10/Pic-2.jpg?quality=50&strip=all&w=1024"
+                    src="https://th.store.asus.com/media/catalog/product/g/7/g713-perkey_1__3.jpg?width=439&height=439&store=th_TH&image-type=image"
                     className="w-full h-full object-cover"
                   ></img>
                   <h1>Laptops</h1>
@@ -47,10 +54,10 @@ const index = () => {
               <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
                 <div className="  h-40 w-56">
                   <img
-                    src="https://media.education.studio7thailand.com/33949/Apple-iPad-Pro-11-inch-Wi-Fi-Space-Gray-1-square_medium.jpg"
+                    src="https://www.jib.co.th/img_master/product/original/20180718092410_30507_21_1.jpg"
                     className="w-full h-full object-cover"
                   ></img>
-                  <h1>Tablets</h1>
+                  <h1>Ram</h1>
                 </div>
               </div>
             </button>
@@ -58,10 +65,10 @@ const index = () => {
               <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
                 <div className="  h-40 w-56">
                   <img
-                    src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-card-40-iphone15prohero-202309_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1693086369818"
+                    src="https://img.advice.co.th/images_nas/pic_product4/A0154877/A0154877OK_BIG_1.jpg"
                     className="w-full h-full object-cover"
                   ></img>
-                  <h1>Phone</h1>
+                  <h1>CPU</h1>
                 </div>
               </div>
             </button>
@@ -73,10 +80,10 @@ const index = () => {
               <button>
                 <div className="  h-40 w-56">
                   <img
-                    src="https://dlcdnwebimgs.asus.com/gain/C650BB77-5D96-4CED-86C2-68B700AF88C9/w750/h470"
+                    src="https://image.makewebeasy.net/makeweb/m_1920x0/YLLBGff3K/Zotac/zt_d40720q_10m_image01.jpg"
                     className="w-full h-full object-cover"
                   ></img>
-                  <h1>Monitors</h1>
+                  <h1 className="">Graphic Card</h1>
                 </div>
               </button>
             </div>
@@ -84,10 +91,10 @@ const index = () => {
               <button>
                 <div className="  h-40 w-56">
                   <img
-                    src="https://www.pcworld.com/wp-content/uploads/2023/10/Pic-2.jpg?quality=50&strip=all&w=1024"
+                    src="https://cdn.ut.in.th/media/catalog/product/cache/5e6411639b53504723017d869741d016/p/r/pro-x-superlight-white-gallery-6_1_1.png"
                     className="w-full h-full object-cover"
                   ></img>
-                  <h1>Laptops</h1>
+                  <h1>Mouse</h1>
                 </div>
               </button>
             </div>
@@ -95,10 +102,10 @@ const index = () => {
               <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
                 <div className="  h-40 w-56">
                   <img
-                    src="https://media.education.studio7thailand.com/33949/Apple-iPad-Pro-11-inch-Wi-Fi-Space-Gray-1-square_medium.jpg"
+                    src="https://assets.central.co.th//adobe/dynamicmedia/deliver/dm-aid--b45045ee-b880-4d3d-ab57-583d5416ea28/logitech-whitelogitechg715wirelessmechanicalgamingkeyboardswitchlinear-mkp1331482-2.jpg?preferwebp=true&quality=85&width=550"
                     className="w-full h-full object-cover"
                   ></img>
-                  <h1>Tablets</h1>
+                  <h1>Keyboard</h1>
                 </div>
               </div>
             </button>
@@ -106,26 +113,20 @@ const index = () => {
               <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
                 <div className="  h-40 w-56">
                   <img
-                    src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-card-40-iphone15prohero-202309_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1693086369818"
+                    src="https://www.jib.co.th/img_master/product/original/2020092508482042835_1.jpg"
                     className="w-full h-full object-cover"
                   ></img>
-                  <h1>Phone</h1>
+                  <h1>Mainboard</h1>
                 </div>
               </div>
             </button>
           </div>
         </div>
         <div className="bg-white w-full mt-12 font-medium font-serif text-xl">
-          <h1 className="ml-32">
-            Most View
-          </h1>
-        
+          <h1 className="ml-32">Most View</h1>
+        </div>
+        <div className="bg-[#F5F5F5] w-full h-80 mt-12"></div>
       </div>
-      <div className="bg-pink-400 w-full h-80 mt-12">
-
-      </div>
-      </div>
-      
     </div>
   );
 };

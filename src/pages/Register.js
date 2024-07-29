@@ -14,20 +14,20 @@ const Login = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex max-h-dvh">
       <div className="hidden md:block bg-red-300 w-1/2 h-screen"></div>
       <div className="bg-[#C3DDFD] w-full md:w-1/2 h-screen flex justify-center items-center">
         <form className="max-w-sm mx-auto flex-grow">
           <div className="mb-3">
             <label
               for="text"
-              className="block mb-7 text-xl font-medium text-gray-900 dark:text-white"
+              className="block mb-7 text-xl font-medium text-gray-900 dark:text-white mt-10"
             >
               Welcome
             </label>
             <button
               type="button"
-              class="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              class="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-10"
             >
               <svg
                 class="w-4 h-4 me-2"
@@ -58,7 +58,7 @@ const Login = () => {
           <div className="mb-5">
             <button
               type="button"
-              class="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              class="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-10"
             >
               <svg
                 class="w-4 h-4 me-2"
@@ -80,7 +80,7 @@ const Login = () => {
               <button className="mx-2">or</button>
               <div className="bg-white h-0.5 border-stone-300 w-full mt-3 "></div>
             </div>
-            <div class="mb-7">
+            {/* <div class="mb-7">
               <label
                 for="base-input"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -90,9 +90,9 @@ const Login = () => {
               <input
                 type="text"
                 id="base-input"
-                class="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-            </div>
+            </div> */}
             <div class="mb-7">
               <label
                 for="base-input"
@@ -103,7 +103,7 @@ const Login = () => {
               <input
                 type="text"
                 id="base-input"
-                class="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
             <div class="mb-5">
@@ -117,7 +117,7 @@ const Login = () => {
                 placeholder="••••••••••"
                 type="password"
                 id="base-input"
-                class="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
             <div class="mb-5">
@@ -131,7 +131,7 @@ const Login = () => {
                 placeholder="••••••••••"
                 type="password"
                 id="base-input"
-                class="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
           </div>
