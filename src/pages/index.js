@@ -1,12 +1,15 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Searchform from "./component/Searchform";
+import Slide from "./Slide";
 const index = () => {
   const router = useRouter();
   const handleHomePage = () => {
     window.location.reload();
   };
-
+  const handleMonitor =() =>{
+    router.push("./IT/Monitor")
+  }
   return (
     <div className="">
       <div className="w-full h-auto">
@@ -22,14 +25,14 @@ const index = () => {
           </div>
         </header>
         <div>
-          <h1 className="ml-56 mt-10 font-medium font-serif text-2xl">
+          <h1 className="ml-32 mt-10 font-medium font-serif text-2xl">
             หมวดหมู่สินค้า
           </h1>
         </div>
         <div className=" w-full h-[55%] bg-white mt-10 ">
           <div className="flex justify-center items-center">
             <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
-              <button>
+              <button onClick={handleMonitor}>
                 <div className="  h-40 w-56">
                   <img
                     src="https://mercular.s3.ap-southeast-1.amazonaws.com/images/products/2024/03/Product/asus-rog-swift-pg32ucdm-31-5-qd-oled-4k-gaming-monitor-240hz-front-left-view.jpg"
@@ -125,7 +128,9 @@ const index = () => {
         <div className="bg-white w-full mt-12 font-medium font-serif text-xl">
           <h1 className="ml-32">Most View</h1>
         </div>
-        <div className="bg-[#F5F5F5] w-full h-80 mt-12"></div>
+        <div className="bg-white w-full h-[600px] mt-12">
+          <Slide />
+        </div>
       </div>
     </div>
   );

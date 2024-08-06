@@ -93,7 +93,7 @@ const Login = () => {
               <button className="mx-2">or</button>
               <div className="bg-white h-0.5 border-stone-300 w-full mt-3 "></div>
             </div>
-          
+
             <div className="mb-7">
               <label
                 htmlFor="email"
