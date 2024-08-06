@@ -56,7 +56,7 @@ const Login = () => {
   };
 
   const handleClickSignup = () => {
-    router.push("./Register");
+    router.push("./Register"); 
   };
 
   return (
