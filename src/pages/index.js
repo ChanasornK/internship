@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Searchform from "./component/Searchform";
 import Slide from "./Slide";
+import { Button } from "flowbite-react";
 const index = () => {
   const router = useRouter();
   const handleHomePage = () => {
@@ -10,8 +11,6 @@ const index = () => {
   const handleMonitor = () => {
     router.push("./IT/Monitor");
   };
-  console.log(profile);
-  console.log(profile?.currentUser?.photoURL)
   return (
     <div className="">
       <div className="w-full h-auto">
@@ -22,7 +21,7 @@ const index = () => {
             </button>
             <Searchform />{" "}
             <div className="bg-black ml-[3%]">
-              <img src={profile?.photoURL}></img>
+             
             </div>
           </div>
         </header>
@@ -34,7 +33,7 @@ const index = () => {
         <div className=" w-full h-[55%] bg-white mt-10 ">
           <div className="flex justify-center items-center">
             <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
-              <button onClick={handleMonitor}>
+              <Button onClick={handleMonitor}>
                 <div className="  h-40 w-56">
                   <img
                     src="https://mercular.s3.ap-southeast-1.amazonaws.com/images/products/2024/03/Product/asus-rog-swift-pg32ucdm-31-5-qd-oled-4k-gaming-monitor-240hz-front-left-view.jpg"
@@ -42,7 +41,7 @@ const index = () => {
                   ></img>
                   <h1>Monitors</h1>
                 </div>
-              </button>
+              </Button>
             </div>
             <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
               <button>
