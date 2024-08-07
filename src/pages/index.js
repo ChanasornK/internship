@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Searchform from "./component/Searchform";
 import Slide from "./Slide";
@@ -7,21 +7,23 @@ const index = () => {
   const handleHomePage = () => {
     window.location.reload();
   };
-  const handleMonitor =() =>{
-    router.push("./IT/Monitor")
-  }
+  const handleMonitor = () => {
+    router.push("./IT/Monitor");
+  };
+  console.log(profile);
+  console.log(profile?.currentUser?.photoURL)
   return (
     <div className="">
       <div className="w-full h-auto">
         <header className="w-full bg-[#003399] text-white">
-          <div className="flex  justify-start w-4/5 mx-auto  text-white font-bold font-serif text-4xl h-36">
+          <div className="flex  justify-start w-4/5 mx-auto grid-cols-3  text-white font-bold font-serif text-4xl h-36">
             <button className="-mt-[3%]" onClick={handleHomePage}>
               Ming.com
-            </button>{" "}
-            <Searchform />
-            {/* <div className="flex ml-80 bg-red-400 -mt-16 items-center justify-center">
-              Icon
-            </div> */}
+            </button>
+            <Searchform />{" "}
+            <div className="bg-black ml-[3%]">
+              <img src={profile?.photoURL}></img>
+            </div>
           </div>
         </header>
         <div>

@@ -1,31 +1,29 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-  GoogleAuthProvider,
-  connectAuthEmulator,
-  getAuth,
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Button } from "flowbite-react";
 import { auth, googleProvider } from "./test";
+
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [profile, setProfile] = useState(null);
+
   const loginAction = async () => {
     console.log("this checkLogin", auth?.currentUser);
+    setProfile(auth);
+    console.log(profile);
+
     if (!auth?.currentUser) {
       await signInWithPopup(auth, googleProvider)
         .then(function (result) {
           if (!result) return;
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
-          router.push('./')
-          
+          router.push("./");
         })
         .catch(function (error) {
           const errorCode = error.code;
@@ -42,7 +40,6 @@ const Login = () => {
         });
     } else {
       signOut(auth);
-     
     }
   };
   const handleClick = () => {
@@ -56,7 +53,7 @@ const Login = () => {
   };
 
   const handleClickSignup = () => {
-    router.push("./Register"); 
+    router.push("./Register");
   };
 
   return (
@@ -70,7 +67,8 @@ const Login = () => {
             >
               Welcome
             </label>
-            <Button onClick={loginAction}
+            <Button
+              onClick={loginAction}
               type="button"
               className="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
             >
