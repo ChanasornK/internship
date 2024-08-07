@@ -32,7 +32,7 @@ const Slide = () => {
           useKeyboardArrows
           renderArrowPrev={(onClickHandler, hasPrev, label) =>
             hasPrev && (
-              <button 
+              <button
                 type="button"
                 onClick={onClickHandler}
                 title={label}
@@ -42,7 +42,7 @@ const Slide = () => {
                   left: 30,
                   top: "50%",
                   transform: "translateY(-50%)",
-                  backgroundColor:"white"
+                  backgroundColor: "white",
                 }}
               >
                 <svg
@@ -54,9 +54,9 @@ const Slide = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
                   />
                 </svg>
@@ -75,11 +75,11 @@ const Slide = () => {
                   right: 30,
                   top: "50%",
                   transform: "translateY(-50%)",
-                   backgroundColor:"white"
+                  backgroundColor: "white",
                 }}
               >
                 <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
+                  className="w-6 h-6 text-gray-800 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -87,9 +87,9 @@ const Slide = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
                   />
                 </svg>
@@ -143,7 +143,7 @@ const Slide = () => {
               }}
             >
               <img
-               src="https://www.jib.co.th/img_master/product/original/20180718092410_30507_21_1.jpg"
+                src="https://www.jib.co.th/img_master/product/original/20180718092410_30507_21_1.jpg"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }} // เพิ่มการตั้งค่านี้
               ></img>
             </div>

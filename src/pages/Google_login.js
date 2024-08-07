@@ -14,6 +14,8 @@ const Google_login = () => {
   const [user, setUser] = useState(null);
   const [str, setStr] = useState("Hello");
   const [textBtn, setTextbtn] = useState("Login Google");
+  const [photoURL, setPhotoURL] = useState("");
+
   const loginAction = async () => {
     console.log("this checkLogin", auth?.currentUser);
     if (!auth?.currentUser) {
@@ -57,6 +59,7 @@ const Google_login = () => {
         {user ? "=>" : ""}
         {user?.email}
       </p>
+      
     </div>
   );
 };

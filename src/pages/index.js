@@ -1,28 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Searchform from "./component/Searchform";
 import Slide from "./Slide";
 import { Button } from "flowbite-react";
+import ProfileToggle from "./component/ProfileToggle";
 const index = () => {
   const router = useRouter();
   const handleHomePage = () => {
     window.location.reload();
   };
+  const handleGoRegister = () => {
+    router.push("./Register");
+  };
+  const handleGoLogin = () => {
+    router.push("./Login");
+  };
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const [profile, setProfile] = useState(null);
+  useEffect(() => {
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      setProfile(JSON.parse(storedData));
+    }
+  }, []);
+  console.log(profile);
   const handleMonitor = () => {
     router.push("./IT/Monitor");
   };
   return (
     <div className="">
-      <div className="w-full h-auto">
-        <header className="w-full bg-[#003399] text-white">
-          <div className="flex  justify-start w-4/5 mx-auto grid-cols-3  text-white font-bold font-serif text-4xl h-36">
-            <button className="-mt-[3%]" onClick={handleHomePage}>
+      <div className="w-full h-auto ">
+        <header className="w-full bg-[#003399] text-white flex">
+          <div className="flex  justify-start w-4/5 ml-24  text-white  h-36">
+            <button
+              className="-mt-[3%] font-bold font-serif text-4xl"
+              onClick={handleHomePage}
+            >
               Ming.com
             </button>
-            <Searchform />{" "}
-            <div className="bg-black ml-[3%]">
-             
-            </div>
+            <Searchform />
+          </div>
+          <div>
+            {profile ? (
+             <div className="mr-2">
+              <ProfileToggle profile={profile} /> </div>
+            ) : (
+              <div className="flex ml-6 mt-8 mx-auto">
+                <button onClick={handleGoLogin} className="  bg-pink-400 h-10">
+                  เข้าสู่ระบบ
+                </button>
+                <button
+                  onClick={handleGoRegister}
+                  className="bg-black h-10 ml-3"
+                >
+                  ลงทะเบียน
+                </button>
+              </div>
+            )}
           </div>
         </header>
         <div>
@@ -33,15 +70,15 @@ const index = () => {
         <div className=" w-full h-[55%] bg-white mt-10 ">
           <div className="flex justify-center items-center">
             <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
-              <Button onClick={handleMonitor}>
-                <div className="  h-40 w-56">
+              <button onClick={handleMonitor}>
+                <div className="  h-40 w-56 ">
                   <img
                     src="https://mercular.s3.ap-southeast-1.amazonaws.com/images/products/2024/03/Product/asus-rog-swift-pg32ucdm-31-5-qd-oled-4k-gaming-monitor-240hz-front-left-view.jpg"
                     className="w-full h-full object-cover"
                   ></img>
                   <h1>Monitors</h1>
                 </div>
-              </Button>
+              </button>
             </div>
             <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
               <button>

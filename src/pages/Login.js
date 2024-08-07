@@ -10,12 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [profile, setProfile] = useState(null);
 
   const loginAction = async () => {
     console.log("this checkLogin", auth?.currentUser);
-    setProfile(auth);
-    console.log(profile);
 
     if (!auth?.currentUser) {
       await signInWithPopup(auth, googleProvider)
@@ -23,6 +20,7 @@ const Login = () => {
           if (!result) return;
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
+          localStorage.setItem("profile", JSON.stringify(auth));
           router.push("./");
         })
         .catch(function (error) {
@@ -188,6 +186,7 @@ const Login = () => {
             Don’t have an account yet?
             <button
               onClick={handleClickSignup}
+              type="button"
               className="text-[#4285F4] text-base font-bold ml-3"
             >
               Sign Up
