@@ -11,6 +11,57 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const handleClick = async () => {
+    if (!email || !password) {
+      setError("กรุณากรอก email และ password");
+    } else {
+      // Reset any previous error message
+      setError("");
+
+      try {
+        // Call VerifyUsers with the email and password
+        const result = await VerifyUsers(email, password);
+        console.log(result?.data);
+        if (result) {
+          // Verification successful, navigate to the homepage or another route
+          localStorage.setItem("profile", JSON.stringify(result?.data));
+          router.push("./");
+        } else {
+          // Handle the case where verification fails (e.g., incorrect credentials)
+          setError("การเข้าสู้ระบบล้มเหลว โปรดตรวจสอบ email และ password");
+        }
+      } catch (error) {
+        // Handle unexpected errors (e.g., network issues)
+        console.error("Error during sign-in:", error);
+        setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
+      }
+    }
+  };
+
+  const VerifyUsers = async (email, password) => {
+    try {
+      const response = await fetch("http://localhost:8000/verifyUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Verification successful:", data);
+        return { data }; // Indicate success
+      } else {
+        console.error("Verification failed:", data.message);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error("Error during verification:", error);
+      return false; // Handle network errors or other unexpected issues
+    }
+  };
   const loginAction = async () => {
     console.log("this checkLogin", auth?.currentUser);
 
@@ -40,16 +91,19 @@ const Login = () => {
       signOut(auth);
     }
   };
-  const handleClick = () => {
-    if (!email || !password) {
-      setError("กรุณากรอก email และ password");
-    } else {
-      // Perform sign-in operation here
-      setError("");
-      router.push("./");
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleClick();
     }
   };
 
+  useEffect(() => {
+    // Add keydown listener to the document
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [email, password]);
   const handleClickSignup = () => {
     router.push("./Register");
   };
@@ -176,12 +230,13 @@ const Login = () => {
             </div>
           </div>
           <button
-            onClick={handleClick}
+            onClick={(handleClick, handleKeyDown)}
             type="button"
             className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
           >
             Sign In
           </button>
+
           <div className="text-base font-normal flex mt-4">
             Don’t have an account yet?
             <button

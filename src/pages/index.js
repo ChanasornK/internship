@@ -26,6 +26,13 @@ const index = () => {
       setProfile(JSON.parse(storedData));
     }
   }, []);
+  const [userProfile, setUserProfile] = useState(null);
+  useEffect(() => {
+    const storedData = localStorage.getItem("userProfile");
+    if (storedData) {
+      setUserProfile(JSON.parse(storedData));
+    }
+  }, []);
   console.log(profile);
   const handleMonitor = () => {
     router.push("./IT/Monitor");
@@ -45,16 +52,20 @@ const index = () => {
           </div>
           <div>
             {profile ? (
-             <div className="mr-2">
-              <ProfileToggle profile={profile} /> </div>
+              <div className="mr-2">
+                <ProfileToggle profile={profile} />
+              </div>
             ) : (
-              <div className="flex ml-6 mt-8 mx-auto">
-                <button onClick={handleGoLogin} className="  bg-pink-400 h-10">
+              <div className="flex ml-3 mt-8 mx-auto">
+                <button
+                  onClick={handleGoLogin}
+                  className="bg-white text-blue-600 h-10 px-2 rounded hover:bg-[#D1D5DB]/90"
+                >
                   เข้าสู่ระบบ
                 </button>
                 <button
                   onClick={handleGoRegister}
-                  className="bg-black h-10 ml-3"
+                  className="bg-white text-blue-600 h-10 ml-3 px-2 rounded hover:bg-[#D1D5DB]/90"
                 >
                   ลงทะเบียน
                 </button>

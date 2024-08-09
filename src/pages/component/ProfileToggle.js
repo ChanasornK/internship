@@ -31,7 +31,7 @@ const ProfileToggle = ({ profile }) => {
           </div>
           <div className=" w-auto h-10 mt-8 ml-2 flex justify-center items-center mr-3 ">
             <span className="whitespace-nowrap">
-              {profile?.currentUser?.displayName}
+              {profile?.currentUser?.displayName || profile?.userData?.email}
             </span>
           </div>
         </button>
