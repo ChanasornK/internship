@@ -1,22 +1,91 @@
 import React from "react";
-import Searchform from "../component/Searchform";
-import { useRouter } from "next/router";
+import Menu from "../component/Menu";
+import { Router, useRouter } from "next/router";
+
 const Monitor = () => {
   const router = useRouter();
-  const handleHomePage = () => {
-    router.push("../"); 
+  const handlePic1 = () => {
+    router.push(
+      "https://ihavecpu.com/product/19485/monitor-(%E0%B8%88%E0%B8%AD%E0%B8%A1%E0%B8%AD%E0%B8%99%E0%B8%B4%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)-lg-ultragear-24gs50f-b-23.8-va-fhd-180hz-(3y)"
+    );
   };
   return (
-    <>
-      <header className="w-full bg-[#003399] text-white">
-        <div className="flex  justify-start w-4/5 mx-auto  text-white font-bold font-serif text-4xl h-36">
-          <button onClick={handleHomePage} className="-mt-[3%]">Ming.com</button> <Searchform />
-          {/* <div className="flex ml-80 bg-red-400 -mt-16 items-center justify-center">
-              Icon
-            </div> */}
+    <div>
+      <Menu />
+      <div className=" w-full h-[55%] bg-white mt-10 ">
+        <div className="flex justify-center items-center ">
+          <div className="w-72 p-4 border border-gray-200 rounded-lg shadow-lg h-[450px] mr-4">
+            <button onClick={handlePic1} className="w-full">
+              <div className="h-auto w-56 overflow-hidden mx-auto">
+                <img
+                  src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg"
+                  className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2"
+                />
+              </div>
+              <h1 className="text-left mt-2 font-semibold">
+                MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz
+              </h1>
+              <h1 className="text-left mt-20 text-red-500 font-semibold ">
+                ฿3,990
+              </h1>
+            </button>
+          </div>
+
+          <div className="w-72 p-4 border border-gray-200 rounded-lg shadow-lg h-[450px] mr-4">
+            <button  className="w-full">
+              <div className="h-auto w-56 overflow-hidden mx-auto">
+                <img
+                  src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products53156_800.jpg"
+                  className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2"
+                />
+              </div>
+              <h1 className="text-left mt-2 font-semibold">
+              MONITOR (จอมอนิเตอร์) GIGABYTE GS27FA - 27 IPS FHD 180Hz (3Y)
+              </h1>
+              <h1 className="text-left mt-[105px] text-red-500 font-semibold ">
+                ฿5,190
+              </h1>
+            </button>
+          </div>
+          <button>
+          <div className="w-72 p-4 border border-gray-200 rounded-lg shadow-lg h-[450px] mr-4">
+            <button  className="w-full">
+              <div className="h-auto w-56 overflow-hidden mx-auto">
+                <img
+                  src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg"
+                  className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2"
+                />
+              </div>
+              <h1 className="text-left mt-2 font-semibold">
+                MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz
+              </h1>
+              <h1 className="text-left mt-20 text-red-500 font-semibold ">
+                ฿3,990
+              </h1>
+            </button>
+          </div>
+          </button>
+          <button>
+          <div className="w-72 p-4 border border-gray-200 rounded-lg shadow-lg h-[450px] mr-4">
+            <button  className="w-full">
+              <div className="h-auto w-56 overflow-hidden mx-auto">
+                <img
+                  src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg"
+                  className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2"
+                />
+              </div>
+              <h1 className="text-left mt-2 font-semibold">
+                MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz
+              </h1>
+              <h1 className="text-left mt-20 text-red-500 font-semibold ">
+                ฿3,990
+              </h1>
+            </button>
+          </div>
+          </button>
         </div>
-      </header>
-    </>
+      </div>
+    </div>
   );
 };
 

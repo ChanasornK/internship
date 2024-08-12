@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Button } from "flowbite-react";
 import { auth, googleProvider } from "./test";
 
-const Login = () => {
+const Register = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -213,4 +213,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

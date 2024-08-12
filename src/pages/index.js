@@ -5,10 +5,22 @@ import Slide from "./Slide";
 import { Button } from "flowbite-react";
 import ProfileToggle from "./component/ProfileToggle";
 const index = () => {
+  const handlecpu =() =>{
+    
+  }
+  const handleGraphic = () => {
+    router.push("./IT/Graphic");
+  };
+  const handleLaptop =() =>{
+    router.push("./IT/Laptop");
+  }
   const router = useRouter();
   const handleHomePage = () => {
     window.location.reload();
   };
+  const handleRam =() =>{
+    router.push('./IT/Ram')
+  }
   const handleGoRegister = () => {
     router.push("./Register");
   };
@@ -84,7 +96,7 @@ const index = () => {
               <button onClick={handleMonitor}>
                 <div className="  h-40 w-56 ">
                   <img
-                    src="https://mercular.s3.ap-southeast-1.amazonaws.com/images/products/2024/03/Product/asus-rog-swift-pg32ucdm-31-5-qd-oled-4k-gaming-monitor-240hz-front-left-view.jpg"
+                    src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products46916_800.jpg"
                     className="w-full h-full object-cover"
                   ></img>
                   <h1>Monitors</h1>
@@ -92,7 +104,7 @@ const index = () => {
               </button>
             </div>
             <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
-              <button>
+              <button onClick={handleLaptop}>
                 <div className="  h-40 w-56">
                   <img
                     src="https://th.store.asus.com/media/catalog/product/g/7/g713-perkey_1__3.jpg?width=439&height=439&store=th_TH&image-type=image"
@@ -102,7 +114,7 @@ const index = () => {
                 </div>
               </button>
             </div>
-            <button>
+            <button onClick={handleRam}>
               <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
                 <div className="  h-40 w-56">
                   <img
@@ -129,7 +141,7 @@ const index = () => {
         <div className=" w-full h-[55%] bg-white  ">
           <div className="flex justify-center items-center">
             <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
-              <button>
+              <button onClick={handleGraphic}>
                 <div className="  h-40 w-56">
                   <img
                     src="https://image.makewebeasy.net/makeweb/m_1920x0/YLLBGff3K/Zotac/zt_d40720q_10m_image01.jpg"

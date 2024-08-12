@@ -1,7 +1,7 @@
 import React from 'react'
 import Menu from '../component/Menu'
 
-const Mouse = () => {
+const Laptop = () => {
   return (
     <div>
       <Menu/>
@@ -9,4 +9,4 @@ const Mouse = () => {
   )
 }
 
-export default Mouse
+export default Laptop
