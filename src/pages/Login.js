@@ -108,12 +108,12 @@ const Login = () => {
 
   return (
     <div className="flex">
-      <div className="w-full md:w-1/2 bg-[#C3DDFD] h-screen flex justify-center items-center">
+      <div className="w-full min-h-screen bg-gradient-to-t from-blue-200 to-pink-200 flex justify-center items-center">
         <form className="max-w-sm mx-auto flex-grow">
           <div className="mb-3">
             <label
               htmlFor="text"
-              className="block mb-7 text-xl font-medium text-gray-900 dark:text-white"
+              className=" mb-7 text-xl font-medium text-gray-900 dark:text-white flex justify-center items-center"
             >
               Welcome
             </label>
@@ -149,7 +149,7 @@ const Login = () => {
             </Button>
           </div>
           <div className="mb-5">
-            <button
+            {/* <button
               type="button"
               className="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
             >
@@ -166,8 +166,8 @@ const Login = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Sign in with Github
-            </button>
+              Sign in with Phone
+            </button> */}
             <div className="flex justify-center mb-7 mt-7">
               <div className="bg-white h-0.5 border-stone-300 w-full mt-3 "></div>
               <button className="mx-2">or</button>
@@ -222,7 +222,7 @@ const Login = () => {
               >
                 Remember me
               </h1>
-              <button className="bg-[#C3DDFD] text-[#1C64F2] flex justify-end text-sm ml-36">
+              <button className=" text-[#1C64F2] flex justify-end text-sm ml-36">
                 Forget Password?
               </button>
             </div>
@@ -247,8 +247,6 @@ const Login = () => {
           </div>
         </form>
       </div>
-
-      <div className="hidden md:flex md:w-1/2 bg-red-300 h-screen justify-center items-center"></div>
     </div>
   );
 };

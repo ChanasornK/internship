@@ -59,15 +59,15 @@ const Register = () => {
 
   return (
     <div className="flex max-h-dvh">
-      <div className="hidden md:block bg-red-300 w-1/2 h-screen"></div>
-      <div className="bg-[#C3DDFD] w-full md:w-1/2 h-screen flex justify-center items-center">
+      
+      <div className="bg-gradient-to-r from-blue-200 to-pink-200 w-full  h-screen flex justify-center items-center">
         <form className="max-w-sm mx-auto flex-grow">
           <div className="mb-3">
             <label
               htmlFor="text"
-              className="block mb-7 text-xl font-medium text-gray-900 dark:text-white mt-10"
+              className=" mb-7 text-xl font-medium text-pink-400 dark:text-white mt-10 flex justify-center" 
             >
-              Welcome
+              Register
             </label>
             <button
               onClick={loginAction}

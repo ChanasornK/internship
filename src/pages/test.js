@@ -2,12 +2,10 @@ import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
   connectAuthEmulator,
-  getAuth,
   onAuthStateChanged,
-  signInWithPopup,
   signOut,
 } from "firebase/auth";
-
+import { getAuth, FacebookAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithCredential, EmailAuthProvider } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyBylDDHpDgZq-D57rfekXxjXqzI957fJKs",
   authDomain: "form-f8d6c.firebaseapp.com",
@@ -20,8 +18,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const FbAuthProvider = new FacebookAuthProvider();
  export const auth = getAuth(app);
  export const googleProvider = new GoogleAuthProvider();
+ export const FacebookAuth = async () =>{
+  const fbAuth = signInWithPopup(auth,FbAuthProvider);
+  return fbAuth;
+ }
 
+ 
  
   

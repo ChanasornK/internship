@@ -52,13 +52,13 @@ const index = () => {
   return (
     <div className="">
       <div className="w-full h-auto ">
-        <header className="w-full bg-[#003399] text-white flex">
+      <header className="w-full bg-[#FF8FAB] text-white flex">
           <div className="flex  justify-start w-4/5 ml-24  text-white  h-36">
             <button
               className="-mt-[3%] font-bold font-serif text-4xl"
               onClick={handleHomePage}
             >
-              Ming.com
+              IT.com
             </button>
             <Searchform />
           </div>

@@ -46,27 +46,36 @@ const ProfileToggle = ({ profile }) => {
             >
               <li>
                 <button
-                  onClick={handleSignout}
-                  className=" w-[100%] block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                  href="#"
+                  className="w-[100%] block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
-                  Sign Out
+                  Change Accout
                 </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                <button
+                  onClick={handleSignout}
+                  className=" w-[100%]  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 flex justify-center"
                 >
-                  Option 2
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                >
-                  Option 3
-                </a>
+                  <div className="px-2 mt-[2px]">
+                    <svg
+                      className="w-4 h-4 text-gray-800 dark:text-white flex items-center justify-center"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
+                      />
+                    </svg>
+                  </div>
+                  Sign Out
+                </button>
               </li>
             </ul>
           </div>
