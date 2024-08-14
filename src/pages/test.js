@@ -18,13 +18,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const FbAuthProvider = new FacebookAuthProvider();
  export const auth = getAuth(app);
  export const googleProvider = new GoogleAuthProvider();
- export const FacebookAuth = async () =>{
-  const fbAuth = signInWithPopup(auth,FbAuthProvider);
-  return fbAuth;
- }
+
 
  
  

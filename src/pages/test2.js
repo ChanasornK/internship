@@ -72,7 +72,6 @@ export default function Home() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       {!user ? (
         <>
-          <h1>Login with Facebook</h1>
           <button onClick={loginWithFacebook}>Login with Facebook</button>
         </>
       ) : (

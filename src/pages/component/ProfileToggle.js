@@ -11,6 +11,9 @@ const ProfileToggle = ({ profile }) => {
     localStorage.setItem("profile", JSON.stringify(null));
     window.location.reload();
   };
+  const handleChangeAccout = () => {
+    router.push("../Login");
+  };
   const defaultPhotoURL =
     "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
   return (
@@ -44,22 +47,37 @@ const ProfileToggle = ({ profile }) => {
               className="py-1 text-sm text-gray-700 dark:text-gray-200"
               aria-labelledby="dropdownActionButton"
             >
-              <li>
+              <div className="px-2 mt-[2px] flex">
                 <button
-                  href="#"
-                  className="w-[100%] block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                  onClick={handleChangeAccout}
+                  className="w-[100%]  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 flex justify-center"
                 >
+                  <svg
+                    className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
                   Change Accout
                 </button>
-              </li>
+              </div>
               <li>
                 <button
                   onClick={handleSignout}
                   className=" w-[100%]  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 flex justify-center"
                 >
-                  <div className="px-2 mt-[2px]">
+                  <div className=" mt-[2px]">
                     <svg
-                      className="w-4 h-4 text-gray-800 dark:text-white flex items-center justify-center"
+                      className="w-4 h-4 mr-7 text-gray-800 dark:text-white flex items-center justify-center"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -74,7 +92,7 @@ const ProfileToggle = ({ profile }) => {
                       />
                     </svg>
                   </div>
-                  Sign Out
+                  <div className="mr-3">Sign Out</div>
                 </button>
               </li>
             </ul>
