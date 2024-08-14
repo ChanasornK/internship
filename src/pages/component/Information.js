@@ -3,10 +3,32 @@ import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import Card from "./Card";
 import Upload from "./Upload";
+import axios from "axios";
 
 const Information = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState("");
+  const handleConfirm = async () => {
+    const formData = new FormData();
+    formData.append("image", document.getElementById("dropzone-file").files[0]);
 
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/uploadImage",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setUploadStatus(""); // ตั้งค่าสถานะเมื่ออัปโหลดสำเร็จ
+      console.log(response.data);
+    } catch (error) {
+      setUploadStatus("Error uploading file."); // ตั้งค่าสถานะเมื่อเกิดข้อผิดพลาด
+      console.error("Error uploading file:", error);
+    }
+  };
   return (
     <>
       <Button
@@ -33,10 +55,19 @@ const Information = () => {
               <Upload />
             </div>
             <div className="flex pb-4 justify-center gap-4">
-              <Button className="w-40 bg-green-400">ยืนยัน</Button>
-              <Button className="w-40 bg-red-600">ยกเลิก</Button>
+              <Button onClick={handleConfirm} className="w-40 bg-green-400">
+                ยืนยัน
+              </Button>
+              <Button
+                className="w-40 bg-red-600"
+                onClick={() => setOpenModal(false)} // เพิ่มฟังก์ชันปิด Modal ที่นี่
+              >
+                ยกเลิก
+              </Button>
             </div>
           </Modal>
+          {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}{" "}
+          {/* แสดงสถานะการอัปโหลด */}
         </>
       )}
     </>

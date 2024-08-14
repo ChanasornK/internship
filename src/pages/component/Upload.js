@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
-import axios from "axios";
 
 const Upload = () => {
   const [image, setImage] = useState(null);
@@ -18,28 +17,6 @@ const Upload = () => {
 
     if (file) {
       reader.readAsDataURL(file);
-    }
-  };
-
-  const handleConfirm = async (confirm) => {
-    const formData = new FormData();
-    formData.append("image", document.getElementById("dropzone-file").files[0]);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/uploadImage",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setUploadStatus("Upload successful!"); // ตั้งค่าสถานะเมื่ออัปโหลดสำเร็จ
-      console.log(response.data);
-    } catch (error) {
-      setUploadStatus("Error uploading file."); // ตั้งค่าสถานะเมื่อเกิดข้อผิดพลาด
-      console.error("Error uploading file:", error);
     }
   };
 
@@ -74,12 +51,9 @@ const Upload = () => {
                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                   />
                 </svg>
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 ml-2">
                   <span className="font-semibold">Click to upload</span> or drag
-                  and drop
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG or GIF (MAX. 1920x1080px)
+                  SVG, PNG, JPG or GIF (MAX. 1920x1080px) and drop
                 </p>
               </>
             )}
@@ -90,15 +64,7 @@ const Upload = () => {
             onChange={handleImageUpload}
           />
         </Label>
-        <button flex
-          onClick={handleConfirm}
-          
-        >
-          ยืนยัน
-        </button>
       </div>
-      {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}{" "}
-      {/* แสดงสถานะการอัปโหลด */}
     </>
   );
 };
