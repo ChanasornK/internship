@@ -1,10 +1,12 @@
 import React from "react";
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
+import Card from "./Card";
 import Upload from "./Upload";
+
 const Information = () => {
   const [openModal, setOpenModal] = useState(false);
-  const handleConfirm = () => {};
+
   return (
     <>
       <Button
@@ -24,14 +26,14 @@ const Information = () => {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 mt-16 " // ตั้ง z-index ต่ำกว่า backdrop
+            className="relative z-50 mt-16 w-3/5 mx-auto" // ตั้ง z-index ต่ำกว่า backdrop และกำหนดความกว้างเป็น w-96
           >
             <Modal.Header className="h-auto w-auto mr-4 mt-3"></Modal.Header>
-            <div className="w-full p-10 py">
+            <div className="w-auto p-10 py">
               <Upload />
             </div>
             <div className="flex pb-4 justify-center gap-4">
-              <Button  onClick={handleConfirm} className="w-40 bg-green-400">ยืนยัน</Button>
+              <Button className="w-40 bg-green-400">ยืนยัน</Button>
               <Button className="w-40 bg-red-600">ยกเลิก</Button>
             </div>
           </Modal>
