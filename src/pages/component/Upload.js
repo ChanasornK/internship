@@ -52,13 +52,14 @@ const Upload = () => {
                   />
                 </svg>
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 ml-2">
-                  <span className="font-semibold">Click to upload</span> or drag
-                  SVG, PNG, JPG or GIF (MAX. 1920x1080px) and drop
+                  <span className="font-semibold">
+                    Click to upload SVG, PNG, JPG or GIF (MAX. 1920x1080px){" "}
+                  </span>
                 </p>
               </>
             )}
           </div>
-          <FileInput 
+          <FileInput
             id="dropzone-file"
             className="hidden"
             onChange={handleImageUpload}

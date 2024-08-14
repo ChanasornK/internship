@@ -48,19 +48,33 @@ const Information = () => {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 mt-16 w-3/5 mx-auto" // ตั้ง z-index ต่ำกว่า backdrop และกำหนดความกว้างเป็น w-96
+            className="relative z-50 mt-12 w-2/5 mx-auto" // ตั้ง z-index ต่ำกว่า backdrop และกำหนดความกว้างเป็น w-96
           >
-            <Modal.Header className="h-auto w-auto mr-4 mt-3"></Modal.Header>
+            <Modal.Header className="h-auto w-auto mr-4 mt-6"></Modal.Header>
             <div className="w-auto p-10 py">
               <Upload />
             </div>
-            <div className="flex pb-4 justify-center gap-4">
-              <Button onClick={handleConfirm} className="w-40 bg-green-400">
+            
+              <input
+                placeholder="รายละเอียด"
+                className="bg-gray-50 text-gray-700 mt-4 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              />
+            
+            <input
+              placeholder="ราคา"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            />
+
+            <div className="flex pb-4 justify-center gap-4 mt-5">
+              <Button
+                onClick={handleConfirm}
+                className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
+              >
                 ยืนยัน
               </Button>
               <Button
-                className="w-40 bg-red-600"
-                onClick={() => setOpenModal(false)} // เพิ่มฟังก์ชันปิด Modal ที่นี่
+                className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-red-700 active:bg-red-800 transition-colors duration-200"
+                onClick={() => setOpenModal(false)}
               >
                 ยกเลิก
               </Button>
