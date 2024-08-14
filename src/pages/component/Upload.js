@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
+import axios from "axios";
 
 const Upload = () => {
   const [image, setImage] = useState(null);
+  const [imageName, setImageName] = useState("");
+  const [uploadStatus, setUploadStatus] = useState(""); // เพิ่ม state สำหรับสถานะการอัปโหลด
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -10,10 +13,33 @@ const Upload = () => {
 
     reader.onloadend = () => {
       setImage(reader.result);
+      setImageName(file.name);
     };
 
     if (file) {
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleConfirm = async (confirm) => {
+    const formData = new FormData();
+    formData.append("image", document.getElementById("dropzone-file").files[0]);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/uploadImage",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setUploadStatus("Upload successful!"); // ตั้งค่าสถานะเมื่ออัปโหลดสำเร็จ
+      console.log(response.data);
+    } catch (error) {
+      setUploadStatus("Error uploading file."); // ตั้งค่าสถานะเมื่อเกิดข้อผิดพลาด
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -53,18 +79,26 @@ const Upload = () => {
                   and drop
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                  SVG, PNG, JPG or GIF (MAX. 1920x1080px)
                 </p>
               </>
             )}
           </div>
-          <FileInput
+          <FileInput 
             id="dropzone-file"
             className="hidden"
             onChange={handleImageUpload}
           />
         </Label>
+        <button flex
+          onClick={handleConfirm}
+          
+        >
+          ยืนยัน
+        </button>
       </div>
+      {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}{" "}
+      {/* แสดงสถานะการอัปโหลด */}
     </>
   );
 };
