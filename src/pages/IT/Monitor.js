@@ -24,14 +24,7 @@ const Monitor = () => {
         "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg",
       link: "https://ihavecpu.com/product/19485/monitor-(%E0%B8%88%E0%B8%AD%E0%B8%A1%E0%B8%AD%E0%B8%99%E0%B8%B4%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)-lg-ultragear-24gs50f-b-23.8-va-fhd-180hz-(3y)",
     },
-    {
-      id: 2,
-      name: "MONITOR (จอมอนิเตอร์) GIGABYTE GS27FA - 27 IPS FHD 180Hz (3Y)",
-      price: "฿5,190",
-      imageUrl:
-        "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products53156_800.jpg",
-      link: "#",
-    },
+    
     {
       id: 3,
       name: "MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz",
