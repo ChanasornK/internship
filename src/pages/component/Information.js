@@ -25,7 +25,7 @@ const Information = () => {
       setUploadStatus(""); // ตั้งค่าสถานะเมื่ออัปโหลดสำเร็จ
       console.log(response.data);
     } catch (error) {
-      setUploadStatus("Error uploading file."); // ตั้งค่าสถานะเมื่อเกิดข้อผิดพลาด
+      setUploadStatus(); // ตั้งค่าสถานะเมื่อเกิดข้อผิดพลาด
       console.error("Error uploading file:", error);
     }
   };

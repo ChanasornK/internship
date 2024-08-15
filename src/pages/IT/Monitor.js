@@ -15,65 +15,49 @@ const Monitor = () => {
   if (!isClient) {
     return null; // หรือแสดง loading indicator ก็ได้
   }
-  const products = [
-    {
-      id: 1,
-      name: "MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz",
-      price: "฿3,990",
-      imageUrl:
-        "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg",
-      link: "https://ihavecpu.com/product/19485/monitor-(%E0%B8%88%E0%B8%AD%E0%B8%A1%E0%B8%AD%E0%B8%99%E0%B8%B4%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)-lg-ultragear-24gs50f-b-23.8-va-fhd-180hz-(3y)",
-    },
-    
-    {
-      id: 3,
-      name: "MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz",
-      price: "฿3,990",
-      imageUrl:
-        "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg",
-      link: "#",
-    },
-    {
-      id: 4,
-      name: "MONITOR (จอมอนิเตอร์) LG ULTRAGEAR 24GS50F-B - 23.8 VA FHD 180Hz",
-      price: "฿3,990",
-      imageUrl:
-        "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products45446_800.jpg",
-      link: "#",
-    },
-  ];
 
+  const getImage = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/getImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return { data }; // Indicate success
+      } else {
+        console.error("Fetch image failed:", data.message);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error("Error during fetch image:", error);
+      return false; // Handle network errors or other unexpected issues
+    }
+  };
   return (
     <div>
       <Menu />
       <div className="bg-white flex justify-end mt-6 mr-10 ">
         <Information />
       </div>
-      <div className="w-full h-[55%] bg-white mt-10">
+      <div className="w-full h-[55%] bg-white mt-6">
         <div className="flex justify-center items-center">
-          {products.map((product, index) => (
-            <div
-              key={index}
-              className="w-72 p-4 border border-gray-200 rounded-lg shadow-lg h-[450px] mr-4"
-            >
-              <a href={product.link}>
-                <button className="w-full">
-                  <div className="h-auto w-56 overflow-hidden mx-auto">
-                    <img
-                      src={product.imageUrl}
-                      className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2 relative z-20" // ตั้ง z-index ให้ hover อยู่ข้างหลัง backdrop
-                    />
-                  </div>
-                  <h1 className="text-left mt-2 font-semibold">
-                    {product.name}
-                  </h1>
-                  <h1 className="text-left mt-20 text-red-500 font-semibold">
-                    {product.price}
-                  </h1>
-                </button>
-              </a>
-            </div>
-          ))}
+          <div className="w-72 p-4 border border-gray-200 rounded-lg shadow-lg h-[450px] mr-4 bg-pink-400">
+            <button className="w-full">
+              <div className="h-auto w-56 overflow-hidden mx-auto">
+                <img
+                  className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2 relative z-20" // ตั้ง z-index ให้ hover อยู่ข้างหลัง backdrop
+                />
+              </div>
+              <h1 className="text-left mt-2 font-semibold"></h1>
+              <h1 className="text-left mt-20 text-red-500 font-semibold"></h1>
+            </button>
+          </div>
         </div>
       </div>
     </div>
