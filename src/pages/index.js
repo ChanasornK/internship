@@ -5,22 +5,21 @@ import Slide from "./Slide";
 import { Button } from "flowbite-react";
 import ProfileToggle from "./component/ProfileToggle";
 const index = () => {
-  const handlecpu =() =>{
-    
-  }
+  const handlecpu = () => {};
+
   const handleGraphic = () => {
     router.push("./IT/Graphic");
   };
-  const handleLaptop =() =>{
+  const handleLaptop = () => {
     router.push("./IT/Laptop");
-  }
+  };
   const router = useRouter();
   const handleHomePage = () => {
     window.location.reload();
   };
-  const handleRam =() =>{
-    router.push('./IT/Ram')
-  }
+  const handleRam = () => {
+    router.push("./IT/Ram");
+  };
   const handleGoRegister = () => {
     router.push("./Register");
   };
@@ -40,7 +39,8 @@ const index = () => {
   }, []);
   const [userProfile, setUserProfile] = useState(null);
   useEffect(() => {
-    const storedData = localStorage.getItem("userProfile");
+    const storedData = localStorage.getItem("profile");
+    console.log(storedData);
     if (storedData) {
       setUserProfile(JSON.parse(storedData));
     }
@@ -49,10 +49,11 @@ const index = () => {
   const handleMonitor = () => {
     router.push("./IT/Monitor");
   };
+  console.log(userProfile);
   return (
     <div className="">
       <div className="w-full h-auto ">
-      <header className="w-full bg-[#FF8FAB] text-white flex">
+        <header className="w-full bg-[#FF8FAB] text-white flex">
           <div className="flex  justify-start w-4/5 ml-24  text-white  h-36">
             <button
               className="-mt-[3%] font-bold font-serif text-4xl"

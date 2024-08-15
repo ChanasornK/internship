@@ -10,15 +10,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const handleClick = async () => {
-    router.push("./");
-    if (!email || !password) {
-      setError("กรุณากรอก email และ password");
-    } else {
-      // Reset any previous error message
-      setError("");
 
+    if (!email || !password) {
+      setError("กรุณากรอก Email และ Password.");
       try {
         const result = await VerifyUsers(email, password);
         console.log(result?.data);
@@ -34,8 +29,16 @@ const Login = () => {
         setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
       }
     }
-  };
 
+    // ตรวจสอบข้อมูลผู้ใช้
+    const verificationResult = await VerifyUsers(email, password);
+    if (verificationResult) {
+      console.log("Login successful");
+      router.push("./");
+    } else {
+      setError("Invalid email or password.");
+    }
+  };
   const VerifyUsers = async (email, password) => {
     try {
       const response = await fetch("http://localhost:8000/verifyUser", {
@@ -50,6 +53,7 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Verification successful:", data);
+        localStorage.setItem("profile", JSON.stringify(data));
         return { data }; // Indicate success
       } else {
         console.error("Verification failed:", data.message);
