@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
-import Card from "./Card";
 import Upload from "./Upload";
 import axios from "axios";
 
 const Information = () => {
   const [openModal, setOpenModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
+  const [price, setPrice] = useState("");
+  const [detail, setDetail] = useState("");
+  const [image, setImage] = useState(null);
+  const [data, setData] = useState([]); // เพิ่ม state สำหรับเก็บข้อมูลที่ fetch มา
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/getData"); // เปลี่ยน URL ให้ตรงกับ API ของคุณ
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch ข้อมูลเมื่อ component mount
+  }, []);
+
   const handleConfirm = async () => {
     const formData = new FormData();
-    formData.append("image", document.getElementById("dropzone-file").files[0]);
+    formData.append("image", image);
+    formData.append("price", price);
+    formData.append("detail", detail);
 
     try {
       const response = await axios.post(
@@ -22,13 +40,15 @@ const Information = () => {
           },
         }
       );
-      setUploadStatus(""); // ตั้งค่าสถานะเมื่ออัปโหลดสำเร็จ
+      setUploadStatus("");
       console.log(response.data);
+      fetchData(); // Fetch ข้อมูลใหม่หลังจากอัพโหลดสำเร็จ
     } catch (error) {
-      setUploadStatus(); // ตั้งค่าสถานะเมื่อเกิดข้อผิดพลาด
+      setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
     }
   };
+
   return (
     <>
       <Button
@@ -41,30 +61,33 @@ const Information = () => {
       {openModal && (
         <>
           <div
-            className="fixed inset-0 bg-gray-700 opacity-75 z-40" // เพิ่ม z-index เพื่อให้ backdrop อยู่เลเยอร์หน้าสุด
+            className="fixed inset-0 bg-gray-700 opacity-75 z-40"
             onClick={() => setOpenModal(false)}
           ></div>
           <Modal
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 mt-12 w-2/5 mx-auto" // ตั้ง z-index ต่ำกว่า backdrop และกำหนดความกว้างเป็น w-96
+            className="relative z-50 mt-12 w-2/5 mx-auto"
           >
             <Modal.Header className="h-auto w-auto mr-4 mt-6"></Modal.Header>
             <div className="w-auto p-10 py">
-              <Upload />
+              <Upload setImage={setImage} />
             </div>
-            
-              <input
-                placeholder="รายละเอียด"
-                className="bg-gray-50 text-gray-700 mt-4 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-              />
-            
             <input
+              id="detail-input"
+              placeholder="รายละเอียด"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              value={detail}
+              onChange={(e) => setDetail(e.target.value)}
+            />
+            <input
+              id="price-input"
               placeholder="ราคา"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
             />
-
             <div className="flex pb-4 justify-center gap-4 mt-5">
               <Button
                 onClick={handleConfirm}
@@ -80,10 +103,20 @@ const Information = () => {
               </Button>
             </div>
           </Modal>
-          {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}{" "}
-          {/* แสดงสถานะการอัปโหลด */}
+          {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
         </>
       )}
+
+      {/* Display fetched data */}
+      <div className="mt-8">
+        {data.map((item, index) => (
+          <div key={index} className="p-4 border border-gray-300 rounded-lg">
+            <p>รายละเอียด: {item.detail}</p>
+            <p>ราคา: {item.price}</p>
+            {/* Add more fields as necessary */}
+          </div>
+        ))}
+      </div>
     </>
   );
 };

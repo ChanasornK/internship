@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
 
-const Upload = () => {
-  const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState("");
-  const [uploadStatus, setUploadStatus] = useState(""); // เพิ่ม state สำหรับสถานะการอัปโหลด
+const Upload = ({ setImage }) => {
+  const [imagePreview, setImagePreview] = useState("");
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
+    setImage(file);
 
+    const reader = new FileReader();
     reader.onloadend = () => {
-      setImage(reader.result);
-      setImageName(file.name);
+      setImagePreview(reader.result);
     };
 
     if (file) {
@@ -28,9 +26,9 @@ const Upload = () => {
           className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
         >
           <div className="flex h-full w-full items-center justify-center pb-6 pt-5">
-            {image ? (
+            {imagePreview ? (
               <img
-                src={image}
+                src={imagePreview}
                 alt="Uploaded"
                 className="h-full w-full object-cover"
               />
@@ -53,7 +51,7 @@ const Upload = () => {
                 </svg>
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 ml-2">
                   <span className="font-semibold">
-                    Click to upload SVG, PNG, JPG or GIF (MAX. 1920x1080px){" "}
+                    Click to upload SVG, PNG, JPG or GIF (MAX. 1920x1080px)
                   </span>
                 </p>
               </>
