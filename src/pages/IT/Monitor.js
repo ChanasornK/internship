@@ -11,6 +11,7 @@ const Monitor = () => {
   const [price, setPrice] = useState(null);
   const [detail, setDetail] = useState(null);
   const [image, setImages] = useState([]);
+  const [type,setType]=useState(null);
   console.log(image);
   useEffect(() => {
     setIsClient(true);
@@ -34,7 +35,7 @@ const Monitor = () => {
                 price: image.price,
                 detail: image.detail,
                 link: image.link,
-                type: image.Laptop,
+                type: image.Monitor,
               };
             });
 

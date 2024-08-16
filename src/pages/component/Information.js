@@ -9,13 +9,13 @@ const Information = () => {
   const [price, setPrice] = useState("");
   const [detail, setDetail] = useState("");
   const [image, setImage] = useState(null);
-
+  const [type, setType] = useState(null);
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("image", image);
     formData.append("price", price);
     formData.append("detail", detail);
-
+    formData.append("type", type);
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -69,8 +69,14 @@ const Information = () => {
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
             />
-            {/* <input className="bg-black"
-            /> */}
+            <input
+              id="type-input"
+              placeholder="type"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            />
+
             <input
               id="price-input"
               placeholder="ราคา"
