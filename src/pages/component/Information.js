@@ -28,6 +28,9 @@ const Information = () => {
       );
       setUploadStatus("");
       console.log(response.data);
+
+      // Refresh the page after successful upload
+      window.location.reload();
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
