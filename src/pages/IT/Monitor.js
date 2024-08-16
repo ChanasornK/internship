@@ -18,7 +18,7 @@ const Monitor = () => {
   useEffect(() => {
     if (isClient) {
       const fetchData = async () => {
-        const image = await getImage("2");
+        const image = await getImage("1");
 
         if (image) {
           const base64String = arrayBufferToBase64(
@@ -95,7 +95,7 @@ const Monitor = () => {
               )}
               <div className="mt-32">
                 <span className="text-red-600 flex justify-start font-medium">
-                  {price} บาท
+                  {price} 
                 </span>{" "}
                 {/* แสดงข้อมูล price */}
               </div>

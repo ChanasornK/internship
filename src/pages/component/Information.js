@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import Upload from "./Upload";
 import axios from "axios";
@@ -9,20 +9,6 @@ const Information = () => {
   const [price, setPrice] = useState("");
   const [detail, setDetail] = useState("");
   const [image, setImage] = useState(null);
-  const [data, setData] = useState([]); // เพิ่ม state สำหรับเก็บข้อมูลที่ fetch มา
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/getData"); // เปลี่ยน URL ให้ตรงกับ API ของคุณ
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(); // Fetch ข้อมูลเมื่อ component mount
-  }, []);
 
   const handleConfirm = async () => {
     const formData = new FormData();
@@ -42,7 +28,6 @@ const Information = () => {
       );
       setUploadStatus("");
       console.log(response.data);
-      fetchData(); // Fetch ข้อมูลใหม่หลังจากอัพโหลดสำเร็จ
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
@@ -106,17 +91,6 @@ const Information = () => {
           {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
         </>
       )}
-
-      {/* Display fetched data */}
-      <div className="mt-8">
-        {data.map((item, index) => (
-          <div key={index} className="p-4 border border-gray-300 rounded-lg">
-            <p>รายละเอียด: {item.detail}</p>
-            <p>ราคา: {item.price}</p>
-            {/* Add more fields as necessary */}
-          </div>
-        ))}
-      </div>
     </>
   );
 };
