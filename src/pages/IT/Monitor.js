@@ -30,6 +30,7 @@ const Monitor = () => {
               src: `data:image/png;base64,${base64String}`,
               price: image.price,
               detail: image.detail,
+              link: image.link,
             };
           });
 
@@ -91,13 +92,13 @@ const Monitor = () => {
       </div>
       <div className="w-full h-[55%] bg-white mt-6">
         <div className="flex justify-center items-center">
-          <button>
-            <div className="flex flex-wrap">
-              {image.map((image, index) => (
-                <div
-                  key={index}
-                  className="w-72 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white m-2"
-                >
+          <div className="flex flex-wrap">
+            {image.map((image, index) => (
+              <div
+                key={index}
+                className="w-72 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white m-2"
+              >
+                <button onClick={() => router.push(image.link)}>
                   {image.src && (
                     <div className="relative z-20 flex justify-center items-center">
                       <img
@@ -106,35 +107,19 @@ const Monitor = () => {
                         className="w-auto h-[250px] object-cover transform transition-transform duration-300 hover:scale-110"
                       />
                       <span className="absolute bottom-[-40px] left-0 bg-white bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
-                        {image.detail} {/* แสดงข้อมูล detail */}
+                        {image.detail}
                       </span>
                     </div>
                   )}
                   <div className="mt-32">
                     <span className="text-red-600 flex justify-start font-medium">
                       {image.price}
-                    </span>{" "}
-                    {/* แสดงข้อมูล price */}
+                    </span>
                   </div>
-                  <button className="w-full">
-                    {/* <div className="h-auto w-56 overflow-hidden mx-auto">
-                      <img
-                        className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-125 mt-2 relative z-20"
-                        src={image.buttonImageSrc} // ใช้ source ของภาพใน button
-                        alt={`Button Image ${index}`}
-                      />
-                    </div> */}
-                    <h1 className="text-left mt-2 font-semibold">
-                      {image.title} {/* แสดงข้อมูล title */}
-                    </h1>
-                    <h1 className="text-left mt-20 text-red-500 font-semibold">
-                      {image.subtitle} {/* แสดงข้อมูล subtitle */}
-                    </h1>
-                  </button>
-                </div>
-              ))}
-            </div>
-          </button>
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
