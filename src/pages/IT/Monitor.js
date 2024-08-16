@@ -23,16 +23,20 @@ const Monitor = () => {
           const response = await getImage(); // ดึงข้อมูลภาพทั้งหมดจาก API
           const imageDataArray = response.data.imageData; // สมมติว่า API คืนข้อมูลภาพทั้งหมดใน array `imageData`
 
-          const validImageDataArray = imageDataArray.map((image) => {
-            const base64String = arrayBufferToBase64(image.image.data);
-            return {
-              id: image.id,
-              src: `data:image/png;base64,${base64String}`,
-              price: image.price,
-              detail: image.detail,
-              link: image.link,
-            };
-          });
+          // กรองข้อมูลที่มี type เป็น "Laptop"
+          const validImageDataArray = imageDataArray
+            .filter((image) => image.type === "Monitor")
+            .map((image) => {
+              const base64String = arrayBufferToBase64(image.image.data);
+              return {
+                id: image.id,
+                src: `data:image/png;base64,${base64String}`,
+                price: image.price,
+                detail: image.detail,
+                link: image.link,
+                type: image.Laptop,
+              };
+            });
 
           // ตั้งค่า state ที่นี่
           setImages(validImageDataArray);

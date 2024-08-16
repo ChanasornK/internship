@@ -69,6 +69,8 @@ const Information = () => {
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
             />
+            {/* <input className="bg-black"
+            /> */}
             <input
               id="price-input"
               placeholder="ราคา"
