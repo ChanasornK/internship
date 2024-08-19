@@ -91,6 +91,9 @@ const Slide = () => {
     }
     return window.btoa(binary);
   };
+  if (!isClient) {
+    return null;
+  }
   return (
     <div>
       <div

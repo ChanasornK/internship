@@ -40,9 +40,7 @@ const Information = () => {
       console.error("Error uploading file:", error);
     }
   };
-  if (!isClient) {
-    return null;
-  }
+ 
 
   return (
     <>
