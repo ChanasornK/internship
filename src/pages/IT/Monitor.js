@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import Menu from "../component/Menu";
 import { useRouter } from "next/router";
 import Information from "../component/Information";
+import RatingStarz from "../component/RatingStarz";
 
 const Monitor = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const [showInformation, setShowformation] = useState(false);
-  const [imageSrc, setImageSrc] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [detail, setDetail] = useState(null);
   const [image, setImages] = useState([]);
-  const [type,setType]=useState(null);
-  console.log(image);
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -21,10 +17,9 @@ const Monitor = () => {
     if (isClient) {
       const fetchAllImages = async () => {
         try {
-          const response = await getImage(); // ดึงข้อมูลภาพทั้งหมดจาก API
-          const imageDataArray = response.data.imageData; // สมมติว่า API คืนข้อมูลภาพทั้งหมดใน array `imageData`
+          const response = await getImage();
+          const imageDataArray = response.data.imageData;
 
-          // กรองข้อมูลที่มี type เป็น "Laptop"
           const validImageDataArray = imageDataArray
             .filter((image) => image.type === "Monitor")
             .map((image) => {
@@ -35,15 +30,13 @@ const Monitor = () => {
                 price: image.price,
                 detail: image.detail,
                 link: image.link,
-                type: image.Monitor,
+                type: image.type,
               };
             });
 
-          // ตั้งค่า state ที่นี่
           setImages(validImageDataArray);
         } catch (error) {
           console.error("Error fetching images:", error);
-          // จัดการกับ error ที่นี่ถ้าจำเป็น
         }
       };
 
@@ -90,18 +83,19 @@ const Monitor = () => {
   }
 
   return (
-    <div>
+    <>
       <Menu />
-      <div className="bg-white flex justify-end mt-6 mr-10 ">
-        <Information />
-      </div>
-      <div className="w-full h-[55%] bg-white mt-6">
+      <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
+        <div className="flex justify-end mr-5 ">
+          <Information />
+        </div>
+
         <div className="flex justify-center items-center">
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-center w-4/5">
             {image.map((image, index) => (
               <div
                 key={index}
-                className="w-72 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white m-2"
+                className="w-60 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white m-2"
               >
                 <button onClick={() => router.push(image.link)}>
                   {image.src && (
@@ -109,25 +103,29 @@ const Monitor = () => {
                       <img
                         src={image.src}
                         alt={`Fetched Image ${index}`}
-                        className="w-auto h-[250px] object-cover transform transition-transform duration-300 hover:scale-110"
+                        className="w-auto h-64 object-cover transform transition-transform duration-200 hover:scale-110"
                       />
-                      <span className="absolute bottom-[-40px] left-0 bg-white bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                      <span className="absolute bottom-[-70px] left-0 bg-white bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {image.detail}
                       </span>
                     </div>
                   )}
-                  <div className="mt-32">
-                    <span className="text-red-600 flex justify-start font-medium">
-                      {image.price}
-                    </span>
-                  </div>
                 </button>
+                <div className="mt-28">
+                  <RatingStarz
+                    userId={"user123"} // คุณอาจจะส่งค่า userId จริงๆ ที่นี่
+                    itemId={image.id} // ใช้ id ของรูปเป็น itemId
+                  />
+                  <span className="text-red-600 flex justify-start font-medium ">
+                    {image.price}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

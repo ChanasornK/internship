@@ -40,7 +40,7 @@ const Information = () => {
   return (
     <>
       <Button
-        className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300"
+        className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 mt-7"
         onClick={() => setOpenModal(true)}
       >
         เพิ่มข้อมูล

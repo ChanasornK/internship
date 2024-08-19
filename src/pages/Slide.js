@@ -1,5 +1,8 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import RatingStarz from "./component/RatingStarz";
 
 const arrowStyles = {
   //   backgroundColor: "white",
@@ -15,6 +18,78 @@ const arrowStyles = {
 };
 
 const Slide = () => {
+  const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+  const [image, setImages] = useState([]);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      const fetchAllImages = async () => {
+        try {
+          const response = await getImage(); // Fetch all images from API
+          const imageDataArray = response.data.imageData; // Assuming the API returns an array `imageData`
+
+          const validImageDataArray = imageDataArray
+            .filter((image) => image.type === "Monitor")
+            .map((image) => {
+              const base64String = arrayBufferToBase64(image.image.data);
+              return {
+                id: image.id,
+                price: image.price,
+
+                src: `data:image/png;base64,${base64String}`,
+                // Assume rating comes from API or set it to 0 if not available
+              };
+            });
+
+          // Set state here
+          setImages(validImageDataArray);
+        } catch (error) {
+          console.error("Error fetching images:", error);
+        }
+      };
+
+      fetchAllImages();
+    }
+  }, [isClient]);
+
+  const getImage = async (id) => {
+    try {
+      const response = await fetch("http://localhost:8000/getAllImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return { data };
+      } else {
+        console.error("Fetch image failed:", data.message);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error during fetch image:", error);
+      return false;
+    }
+  };
+
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
   return (
     <div>
       <div
@@ -98,22 +173,33 @@ const Slide = () => {
           }
         >
           <div style={{ display: "flex" }}>
-            <div
-              style={{
-                backgroundColor: "pink",
-                width: "32%",
-                height: "400px",
-                marginRight: "2%",
-                border: "1px solid lightgray",
-                borderRadius: "5%",
-                overflow: "hidden", // เพิ่มการตั้งค่านี้
-              }}
-            >
-              <img
-                src="https://www.jib.co.th/img_master/product/original/2020092508482042835_1.jpg"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }} // เพิ่มการตั้งค่านี้
-              ></img>
-            </div>
+            {image.map(
+              (image, index) =>
+                index === 2 && (
+                  <div
+                    key={index}
+                    className=" p-4 shadow-lg  bg-white m-2  w-1/3 h-96 mr-2 border border-gray-300 rounded overflow-hidden"
+                  >
+                    <button onClick={() => router.push(image.link)}>
+                      {image.src && (
+                        <div className="relative z-20 flex justify-center items-center ">
+                          <img
+                            src={image.src}
+                            alt={`Fetched Image ${index}`}
+                            className="w-auto h-64 object-cover "
+                          />
+                          <span className="absolute bottom-[-70px] left-0 bg-white bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                            {image.detail}
+                          </span>
+                        </div>
+                      )}
+                      <span className="text-red-500  font-medium text-xl leading-7 tracking-wide">
+                        {image.price}
+                      </span>
+                    </button>
+                  </div>
+                )
+            )}
 
             <div
               style={{
