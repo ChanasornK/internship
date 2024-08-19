@@ -31,6 +31,7 @@ const Monitor = () => {
                 detail: image.detail,
                 link: image.link,
                 type: image.type,
+                rating: image.rating,
               };
             });
 
@@ -55,7 +56,7 @@ const Monitor = () => {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         return { data };
       } else {
@@ -86,16 +87,15 @@ const Monitor = () => {
     <>
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
-        <div className="flex justify-end mr-5 ">
+        <div className="flex justify-end mr-7">
           <Information />
         </div>
-
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center -mt-5 ">
           <div className="flex flex-wrap justify-center w-4/5">
             {image.map((image, index) => (
               <div
                 key={index}
-                className="w-60 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white m-2"
+                className="w-64 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white mx-3 overflow-hidden mt-10" // เปลี่ยนจาก mt-44 เป็น mt-10
               >
                 <button onClick={() => router.push(image.link)}>
                   {image.src && (
@@ -111,12 +111,12 @@ const Monitor = () => {
                     </div>
                   )}
                 </button>
-                <div className="mt-28">
-                  <RatingStarz
-                    userId={"user123"} // คุณอาจจะส่งค่า userId จริงๆ ที่นี่
-                    itemId={image.id} // ใช้ id ของรูปเป็น itemId
-                  />
-                  <span className="text-red-600 flex justify-start font-medium ">
+
+                <div className="mt-24">
+                  <div className="">
+                    <RatingStarz getRating={image.rating} isEnabled={false} />
+                  </div>
+                  <span className="text-red-600 flex justify-start font-medium mt-4 ">
                     {image.price}
                   </span>
                 </div>

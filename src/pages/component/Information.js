@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import Upload from "./Upload";
 import axios from "axios";
+import RatingStarz from "./RatingStarz";
 
 const Information = () => {
+  const handleRatingSelect = (selectedRating) => {
+    setRating(selectedRating);
+  };
   const [openModal, setOpenModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
   const [price, setPrice] = useState("");
   const [detail, setDetail] = useState("");
   const [image, setImage] = useState(null);
   const [type, setType] = useState(null);
+  const [rating, setRating] = useState(0);
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("image", image);
     formData.append("price", price);
     formData.append("detail", detail);
     formData.append("type", type);
+    formData.append("rating", rating);
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -28,19 +34,20 @@ const Information = () => {
       );
       setUploadStatus("");
       console.log(response.data);
-
-      // Refresh the page after successful upload
       window.location.reload();
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
     }
   };
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <>
       <Button
-        className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 mt-7"
+        className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 mt-44 "
         onClick={() => setOpenModal(true)}
       >
         เพิ่มข้อมูล
@@ -84,6 +91,13 @@ const Information = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
+            <div className="ml-10">
+            <RatingStarz
+              onRatingSelect={handleRatingSelect}
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            />
+            </div>
             <div className="flex pb-4 justify-center gap-4 mt-5">
               <Button
                 onClick={handleConfirm}

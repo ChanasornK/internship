@@ -51,7 +51,7 @@ const index = () => {
   };
   console.log(userProfile);
   return (
-    <div className="w-full h-auto ">
+    <div className="w-full h-auto  ">
       <header className="w-full bg-[#FF8FAB] text-white flex fixed top-0">
         <div className="flex justify-start w-4/5 ml-24 text-white h-36">
           <button
@@ -91,9 +91,10 @@ const index = () => {
           หมวดหมู่สินค้า
         </h1>
       </div>
+      
       <div className=" w-full h-[55%] bg-white mt-10 ">
         <div className="flex justify-center items-center">
-          <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+          <div className=" w-80  p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
             <button onClick={handleMonitor}>
               <div className="  h-40 w-56 ">
                 <img
@@ -193,6 +194,7 @@ const index = () => {
         <Slide />
       </div>
     </div>
+    
   );
 };
 

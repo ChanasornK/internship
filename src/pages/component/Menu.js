@@ -36,39 +36,40 @@ const Menu = () => {
 
   return (
     <>
-      <header className="w-full bg-[#FF8FAB] text-white flex ">
-        <div className="flex  justify-start w-4/5 ml-24  text-white  h-36">
-          <button
-            className="-mt-[3%] font-bold font-serif text-4xl"
-            onClick={handleHomePage}
-          >
-            IT.com
-          </button>
-          <Searchform />
-        </div>
-        <div>
-          {profile ? (
-            <div className="mr-2">
-              <ProfileToggle profile={profile} />
-            </div>
-          ) : (
-            <div className="flex ml-3 mt-8 mx-auto">
-              <button
-                onClick={handleGoLogin}
-                className="bg-white text-blue-600 h-10 px-2 rounded hover:bg-[#D1D5DB]/90"
-              >
-                เข้าสู่ระบบ
-              </button>
-              <button
-                onClick={handleGoRegister}
-                className="bg-white text-blue-600 h-10 ml-3 px-2 rounded hover:bg-[#D1D5DB]/90"
-              >
-                ลงทะเบียน
-              </button>
-            </div>
-          )}
-        </div>
-      </header>
+     <header className="fixed top-0 left-0 w-full bg-[#FF8FAB] text-white flex z-50 h-36">
+  <div className="flex justify-start w-4/5 ml-24 text-white h-full">
+    <button
+      className="-mt-[3%] font-bold font-serif text-4xl"
+      onClick={handleHomePage}
+    >
+      IT.com
+    </button>
+    <Searchform />
+  </div>
+  <div>
+    {profile ? (
+      <div className="mr-2">
+        <ProfileToggle profile={profile} />
+      </div>
+    ) : (
+      <div className="flex ml-3 mt-8 mx-auto">
+        <button
+          onClick={handleGoLogin}
+          className="bg-white text-blue-600 h-10 px-2 rounded hover:bg-[#D1D5DB]/90"
+        >
+          เข้าสู่ระบบ
+        </button>
+        <button
+          onClick={handleGoRegister}
+          className="bg-white text-blue-600 h-10 ml-3 px-2 rounded hover:bg-[#D1D5DB]/90"
+        >
+          ลงทะเบียน
+        </button>
+      </div>
+    )}
+  </div>
+</header>
+
     </>
   );
 };

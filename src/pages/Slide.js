@@ -40,6 +40,7 @@ const Slide = () => {
               return {
                 id: image.id,
                 price: image.price,
+                rating: image.rating,
 
                 src: `data:image/png;base64,${base64String}`,
                 // Assume rating comes from API or set it to 0 if not available
@@ -173,33 +174,30 @@ const Slide = () => {
           }
         >
           <div style={{ display: "flex" }}>
-            {image.map(
-              (image, index) =>
-                index === 2 && (
-                  <div
-                    key={index}
-                    className=" p-4 shadow-lg  bg-white m-2  w-1/3 h-96 mr-2 border border-gray-300 rounded overflow-hidden"
-                  >
-                    <button onClick={() => router.push(image.link)}>
-                      {image.src && (
-                        <div className="relative z-20 flex justify-center items-center ">
-                          <img
-                            src={image.src}
-                            alt={`Fetched Image ${index}`}
-                            className="w-auto h-64 object-cover "
-                          />
-                          <span className="absolute bottom-[-70px] left-0 bg-white bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
-                            {image.detail}
-                          </span>
-                        </div>
-                      )}
-                      <span className="text-red-500  font-medium text-xl leading-7 tracking-wide">
-                        {image.price}
-                      </span>
-                    </button>
-                  </div>
-                )
-            )}
+            {image.map((image, index) => (
+              <div
+                key={index}
+                className="bg-white w-1/3 h-[400px] mr-2 border border-lightgray rounded-lg overflow-hidden " // เปลี่ยนจาก mt-44 เป็น mt-10
+              >
+                <button onClick={() => router.push(image.link)}>
+                  {image.src && (
+                    <div className="relative z-20 flex justify-center items-center">
+                      <img
+                        src={image.src}
+                        alt={`Fetched Image ${index}`}
+                        className="w-auto h-64 object-cover transition-transform duration-200 transform hover:scale-110 mt-10"
+                      />
+                    </div>
+                  )}
+                </button>
+
+                <div className="mt-4">
+                  <span className="text-pink-600 flex justify-center font-medium text-2xl   ">
+                    {image.price}
+                  </span>
+                </div>
+              </div>
+            ))}
 
             <div
               style={{
