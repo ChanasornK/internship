@@ -95,7 +95,7 @@ const Monitor = () => {
             {image.map((image, index) => (
               <div
                 key={index}
-                className="w-64 p-4 border border-gray-600 rounded-lg shadow-lg h-[450px] bg-white mx-3 overflow-hidden mt-10" // เปลี่ยนจาก mt-44 เป็น mt-10
+                className="w-64 p-4 border-2 border-pink-500 rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10" // เปลี่ยนจาก mt-44 เป็น mt-10
               >
                 <button onClick={() => router.push(image.link)}>
                   {image.src && (
@@ -105,7 +105,7 @@ const Monitor = () => {
                         alt={`Fetched Image ${index}`}
                         className="w-auto h-64 object-cover transform transition-transform duration-200 hover:scale-110"
                       />
-                      <span className="absolute bottom-[-70px] left-0 bg-white bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                      <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {image.detail}
                       </span>
                     </div>

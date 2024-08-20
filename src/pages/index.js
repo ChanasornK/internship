@@ -52,7 +52,7 @@ const index = () => {
   console.log(userProfile);
   return (
     <div className="w-full h-auto  ">
-      <header className="w-full bg-[#FF8FAB] text-white flex fixed top-0">
+      <div className="w-full bg-[#FF8FAB] text-white flex fixed top-0">
         <div className="flex justify-start w-4/5 ml-24 text-white h-36">
           <button
             className="-mt-[3%] font-bold font-serif text-4xl"
@@ -84,24 +84,22 @@ const index = () => {
             </div>
           )}
         </div>
-      </header>
-
-      <div>
-        <h1 className="ml-52 mt-44 font-medium font-serif text-2xl">
-          หมวดหมู่สินค้า
-        </h1>
       </div>
 
-      <div className=" w-full h-[55%] bg-white mt-10 ">
-        <div className="flex justify-center items-center">
-          <div className=" rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
+      <div className=" w-full h-[55%] bg-gray-100 mt-36  ">
+        <div className="ml-52 font-medium text-2xl font-sans pt-10">
+          หมวดหมู่สินค้า
+        </div>
+
+        <div className="flex justify-center items-center mt-12">
+          <div className=" rounded-lg w-80  p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleMonitor}>
               <div className="  h-40 w-56 ">
                 <img
-                  src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/453999537_3721773308071854_8105163053466317409_n.png?stp=dst-png_p206x206&_nc_cat=105&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeH65wXhA4vWVXRvXqA2_8_Ehvng-7f4FnWG-eD7t_gWdbtRhv8yuprijyDkDn8cLihUNfrn4P6v4e3hxReD21rY&_nc_ohc=get-jnwGVWEQ7kNvgHFUEgE&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QEFylAYBt9aLEVdaYL4fNymbpJVf8Bkr3cmWYwk7SZPQA&oe=66EB96D6"
+                  src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/455781387_996798958857539_7944499843495434905_n.png?stp=dst-png_p206x206&_nc_cat=101&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeFdj4wovrUL7vG0mFtHv4t6zwWf7y8pTUHPBZ_vLylNQVqIDZ3jgoKil3-ryVZUJm7OAdlfibq0efQ40lrDMG7S&_nc_ohc=GGZTEIvtp2AQ7kNvgFEw5tg&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QGJominLjV8mSShhZgc4hhmOTHQsKpTnDMschd1TQuWDw&oe=66EBC72E"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Monitors</h1>
+                <h1 className="font-medium text-lg font-sans">Monitors</h1>
               </div>
             </button>
           </div>
@@ -112,7 +110,7 @@ const index = () => {
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/455827025_553516126998035_2811257514390542398_n.png?stp=dst-png_p206x206&_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeGW82o8UJRooopHTNTp3dTCgnM2pRHP5PeCczalEc_k91NoHJkEpEoBcuNSs3-uQDBMOtpq-UNKHfnbr8hgGl5p&_nc_ohc=GKrTlcFXbFIQ7kNvgGRGcJL&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGa_1LFTEU4bxeOxeopSXqXa9bQ4HfNA1dz9QAnCurCPg&oe=66EBB911"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Laptops</h1>
+                <h1 className="font-medium text-lg font-sans">Laptops</h1>
               </div>
             </button>
           </div>
@@ -123,7 +121,7 @@ const index = () => {
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454741255_2830441413922118_486956867719846047_n.png?stp=dst-png_p206x206&_nc_cat=103&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHyHevdOtuT0Fi5pbL8eQz998iF7J9f6Yn3yIXsn1_piUO57erntEwbafcTUH2QWcrbgnCGSoKI_FJDYrMhndLl&_nc_ohc=YFGUwmaYdEEQ7kNvgGDf58f&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGyFa_p8wu4CjLc3kJmMtvtpDgZbskxz78uLhxyc5BVWw&oe=66EBCC56"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Ram</h1>
+                <h1 className="font-medium text-lg font-sans">Ram</h1>
               </div>
             </div>
           </button>
@@ -134,13 +132,13 @@ const index = () => {
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454013932_8045529075567082_7996735512788385954_n.png?stp=dst-png_p206x206&_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHf-NhX6KAjpZmMhCPame2giOb1XGAXTxmI5vVcYBdPGVOj4A-BqkHMJvQ9kQALhbl6yIQGSe1S93UwAMMJPwkZ&_nc_ohc=PkX6LE4uJrYQ7kNvgGzGnOd&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QFFLiKRRWWbmmmMG7vpdvVGSZvMvmld8FBMnl6cDPmIyg&oe=66EBB7DF"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">CPU</h1>
+                <h1 className="font-medium text-lg font-sans">CPU</h1>
               </div>
             </div>
           </button>
         </div>
       </div>
-      <div className=" w-full h-[55%] bg-white  ">
+      <div className=" w-full h-[55%] bg-gray-100   ">
         <div className="flex justify-center items-center">
           <div className=" rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleGraphic}>
@@ -149,7 +147,7 @@ const index = () => {
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454100142_1695084344660877_1592313795624777958_n.png?stp=dst-png_p206x206&_nc_cat=108&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHZHLTMbJiPxni0JbXzUfWxLbpse851V4stumx7znVXixRqXnVCia0EGkcb9EXEdfz4ocR1wQNGroyd1AZcwFsx&_nc_ohc=KwM8IkSZZRkQ7kNvgFDK4a9&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGm5kfVgsuWmmmkXD7gBkQMqd3F7xumB5xRXIzHXtMfbA&oe=66EBACE5"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Graphic Card</h1>
+                <h1 className="font-medium text-lg font-sans">Graphic Card</h1>
               </div>
             </button>
           </div>
@@ -160,7 +158,7 @@ const index = () => {
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/370225849_1041626030487065_5887468006243962269_n.png?stp=dst-png_p206x206&_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeG8dNuUOdTpyx1CU0t1QUP4uhWPR3Rov6K6FY9HdGi_opYYzES2uml2vdLbDRroTHuqcxv7sKINVRDj5oyphFFh&_nc_ohc=WJ6A5jWB-cgQ7kNvgFsFwHW&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QEqOwMQCvpDL28Zd4avahbU3VlCtYyod5QFOuO_KoreaA&oe=66EBB3F7"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Mouse</h1>
+                <h1 className="font-medium text-lg font-sans">Mouse</h1>
               </div>
             </button>
           </div>
@@ -171,7 +169,7 @@ const index = () => {
                   src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/346103947_539803734793246_515299174836356142_n.png?stp=dst-png_p206x206&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeEWJEnmvmoBtHWORVULRu3WcdNsGeDdFIFx02wZ4N0UgRz_8QbEe_wvH3GnUPkna_-cIdlo4eFxIMJOgnaG70iz&_nc_ohc=4HL-bJofi5YQ7kNvgF9TjDw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QFbMIUwr9GBLjKnoypskL_WWgQnFyV-sD1ssbbdLzfxKA&oe=66EBBE45"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Keyboard</h1>
+                <h1 className="font-medium text-lg font-sans">Keyboard</h1>
               </div>
             </div>
           </button>
@@ -182,15 +180,17 @@ const index = () => {
                   src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456104035_483817987744850_1471080268211175341_n.png?stp=dst-png_p206x206&_nc_cat=105&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeE4zUiQpfzQcb91TCa9m-B-eztp9zvv2p97O2n3O-_an9KUE6SHvOe-HovDmzLcJdVUUy_yVpEAYGdAWH_SAZuJ&_nc_ohc=FOfjzCS7N8UQ7kNvgEZQemK&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QGhg5zR5KnANCJT86hf9cQ82mzUydBn2K4xMXx6xVJ4CA&oe=66EBAC57"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="font-serif font-normal">Mainboard</h1>
+                <h1 className="font-medium text-lg font-sans">Mainboard</h1>
               </div>
             </div>
           </button>
         </div>
       </div>
 
-      <div className="bg-white w-full h-[500px] mt-12 font-medium font-serif text-xl">
-        <h1 className="ml-32 mt-10 mb-10">Most View</h1>
+      <div className="bg-gray-100  w-full h-[500px] overflow-hidden">
+        <h1 className="ml-32 pt-10 mb-10 font-medium text-2xl font-sans">
+          Most View
+        </h1>
         <Slide />
       </div>
     </div>

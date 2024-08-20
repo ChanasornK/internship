@@ -102,6 +102,7 @@ const Slide = () => {
           height: "300px",
           margin: "auto",
           position: "relative",
+          
         }}
       >
         <Carousel
@@ -182,7 +183,7 @@ const Slide = () => {
               .map((image) => (
                 <div
                   key={image.id}
-                  className="bg-white w-1/3 h-[400px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
+                  className=" bg-white w-1/3 h-[370px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
                 >
                   <button onClick={() => router.push(image.link)}>
                     {image.src && (
@@ -209,7 +210,7 @@ const Slide = () => {
               .map((image) => (
                 <div
                   key={image.id}
-                  className="bg-white w-1/3 h-[400px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
+                  className=" bg-gradient-to-t from-pink-200 to-blue-200 w-1/3 h-[400px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
                 >
                   <button onClick={() => router.push(image.link)}>
                     {image.src && (
