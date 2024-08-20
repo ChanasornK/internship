@@ -91,11 +91,11 @@ const Monitor = () => {
           <Information />
         </div>
         <div className="flex justify-center items-center -mt-5 ">
-          <div className="flex flex-wrap justify-center w-4/5">
+          <div className="flex flex-wrap justify-center w-4/5 mb-5">
             {image.map((image, index) => (
               <div
                 key={index}
-                className="w-64 p-4 border-2 border-pink-500 rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10" // เปลี่ยนจาก mt-44 เป็น mt-10
+                className="w-64 p-4 border-2 border-pink-500 rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10 " // เปลี่ยนจาก mt-44 เป็น mt-10
               >
                 <button onClick={() => router.push(image.link)}>
                   {image.src && (

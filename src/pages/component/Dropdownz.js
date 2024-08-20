@@ -42,7 +42,7 @@ const Dropdownz = ({ onSelectItem }) => {
             CPU
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={() => handleSelect("Graphic Card")}
+            onClick={() => handleSelect("Graphic")}
             className="text-black hover:bg-gradient-to-t from-blue-200 to-pink-200"
           >
             Graphic

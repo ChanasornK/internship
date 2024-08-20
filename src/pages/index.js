@@ -188,7 +188,7 @@ const index = () => {
       </div>
 
       <div className="bg-gray-100  w-full h-[500px] overflow-hidden">
-        <h1 className="ml-32 pt-10 mb-10 font-medium text-2xl font-sans">
+        <h1 className="ml-52 pt-10 mb-10 font-medium text-2xl font-sans ">
           Most View
         </h1>
         <Slide />

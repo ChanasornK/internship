@@ -102,7 +102,6 @@ const Slide = () => {
           height: "300px",
           margin: "auto",
           position: "relative",
-          
         }}
       >
         <Carousel
@@ -183,7 +182,40 @@ const Slide = () => {
               .map((image) => (
                 <div
                   key={image.id}
-                  className=" bg-white w-1/3 h-[370px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
+                  className=" bg-gray-100  w-1/3 h-[370px] mr-2 border-2 border-pink-500 rounded-lg overflow-hidden "
+                >
+                  <button
+                    onClick={() =>
+                      router.push(
+                        "https://ihavecpu.com/product/19945/monitor-(%E0%B8%88%E0%B8%AD%E0%B8%A1%E0%B8%AD%E0%B8%99%E0%B8%B4%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)-lg-ultragear-27gs60f-b-27-ips-fhd-180hz-(3y)"
+                      )
+                    }
+                  >
+                    {image.src && (
+                      <div className="relative z-20 flex justify-center items-center">
+                        <img
+                          src={image.src}
+                          alt={`Fetched Image ${image.id}`}
+                          className="w-auto h-64 object-cover transition-transform duration-300 transform hover:scale-125 mt-10"
+                        />
+                      </div>
+                    )}
+                  </button>
+
+                  <div className="mt-4">
+                    <span className="text-pink-600 flex justify-center font-medium text-2xl font-sans">
+                      {image.price}
+                    </span>
+                  </div>
+                </div>
+              ))}
+
+            {image
+              .filter((img) => img.id === 11) // Filter เพียง id ที่เลือก
+              .map((image) => (
+                <div
+                  key={image.id}
+                  className="bg-gray-100 w-1/3 h-[370px] mr-2 border-2 border-pink-500 rounded-lg overflow-hidden"
                 >
                   <button onClick={() => router.push(image.link)}>
                     {image.src && (
@@ -206,11 +238,11 @@ const Slide = () => {
               ))}
 
             {image
-              .filter((img) => img.id === 11) // Filter เพียง id ที่เลือก
+              .filter((img) => img.id === 13) // Filter เพียง id ที่เลือก
               .map((image) => (
                 <div
                   key={image.id}
-                  className=" bg-gradient-to-t from-pink-200 to-blue-200 w-1/3 h-[400px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
+                  className="bg-gray-100 w-1/3 h-[370px] mr-2 border-2 border-pink-500 rounded-lg overflow-hidden"
                 >
                   <button onClick={() => router.push(image.link)}>
                     {image.src && (
@@ -231,23 +263,6 @@ const Slide = () => {
                   </div>
                 </div>
               ))}
-
-            <div
-              style={{
-                backgroundColor: "pink",
-                width: "32%",
-                height: "400px",
-                marginRight: "2%",
-                border: "1px solid lightgray",
-                borderRadius: "5%",
-                overflow: "hidden", // เพิ่มการตั้งค่านี้
-              }}
-            >
-              <img
-                src="https://www.jib.co.th/img_master/product/original/20180718092410_30507_21_1.jpg"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }} // เพิ่มการตั้งค่านี้
-              ></img>
-            </div>
           </div>
 
           <div>
