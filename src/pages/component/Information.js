@@ -3,10 +3,14 @@ import { Button, Modal } from "flowbite-react";
 import Upload from "./Upload";
 import axios from "axios";
 import RatingStarz from "./RatingStarz";
+import Dropdownz from "./Dropdownz";
 
 const Information = () => {
   const handleRatingSelect = (selectedRating) => {
     setRating(selectedRating);
+  };
+  const handleTypeSelect = (selectedItem) => {
+    setType(selectedItem);
   };
   const [openModal, setOpenModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
@@ -40,7 +44,6 @@ const Information = () => {
       console.error("Error uploading file:", error);
     }
   };
- 
 
   return (
     <>
@@ -61,7 +64,7 @@ const Information = () => {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 mt-12 w-2/5 mx-auto"
+            className="relative z-50 mt-10 w-2/5 mx-auto"
           >
             <Modal.Header className="h-auto w-auto mr-4 mt-6"></Modal.Header>
             <div className="w-auto p-10 py">
@@ -74,13 +77,6 @@ const Information = () => {
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
             />
-            <input
-              id="type-input"
-              placeholder="type"
-              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-            />
 
             <input
               id="price-input"
@@ -89,12 +85,17 @@ const Information = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            <div className="ml-10">
-            <RatingStarz
-              onRatingSelect={handleRatingSelect}
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
+            <Dropdownz
+              onSelectItem={handleTypeSelect}
+              value={type}
+              onChange={(e) => setType(e.target.value)}
             />
+            <div className="ml-10 mt-5">
+              <RatingStarz
+                onRatingSelect={handleRatingSelect}
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              />
             </div>
             <div className="flex pb-4 justify-center gap-4 mt-5">
               <Button

@@ -3,7 +3,6 @@ import { Rating, RatingStar } from "flowbite-react";
 
 const RatingStarz = ({ onRatingSelect, getRating, isEnabled = true }) => {
   const [rating, setRating] = useState(getRating);
-
   const handleClick = (value) => {
     if (isEnabled) {
       setRating(value);
@@ -17,7 +16,7 @@ const RatingStarz = ({ onRatingSelect, getRating, isEnabled = true }) => {
   };
 
   return (
-    <div className= "">
+    <button className="">
       <Rating>
         {[...Array(5)].map((_, i) => (
           <RatingStar
@@ -28,7 +27,7 @@ const RatingStarz = ({ onRatingSelect, getRating, isEnabled = true }) => {
           />
         ))}
       </Rating>
-    </div>
+    </button>
   );
 };
 

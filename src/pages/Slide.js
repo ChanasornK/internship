@@ -34,7 +34,7 @@ const Slide = () => {
           const imageDataArray = response.data.imageData; // Assuming the API returns an array `imageData`
 
           const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Monitor")
+            // .filter((image) => image.type === "Monitor")
             .map((image) => {
               const base64String = arrayBufferToBase64(image.image.data);
               return {
@@ -177,47 +177,60 @@ const Slide = () => {
           }
         >
           <div style={{ display: "flex" }}>
-            {image.map((image, index) => (
-              <div
-                key={index}
-                className="bg-white w-1/3 h-[400px] mr-2 border border-lightgray rounded-lg overflow-hidden " // เปลี่ยนจาก mt-44 เป็น mt-10
-              >
-                <button onClick={() => router.push(image.link)}>
-                  {image.src && (
-                    <div className="relative z-20 flex justify-center items-center">
-                      <img
-                        src={image.src}
-                        alt={`Fetched Image ${index}`}
-                        className="w-auto h-64 object-cover transition-transform duration-200 transform hover:scale-110 mt-10"
-                      />
-                    </div>
-                  )}
-                </button>
+            {image
+              .filter((img) => img.id === 1) // Filter เพียง id ที่เลือก
+              .map((image) => (
+                <div
+                  key={image.id}
+                  className="bg-white w-1/3 h-[400px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
+                >
+                  <button onClick={() => router.push(image.link)}>
+                    {image.src && (
+                      <div className="relative z-20 flex justify-center items-center">
+                        <img
+                          src={image.src}
+                          alt={`Fetched Image ${image.id}`}
+                          className="w-auto h-64 object-cover transition-transform duration-200 transform hover:scale-110 mt-10"
+                        />
+                      </div>
+                    )}
+                  </button>
 
-                <div className="mt-4">
-                  <span className="text-pink-600 flex justify-center font-medium text-2xl   ">
-                    {image.price}
-                  </span>
+                  <div className="mt-4">
+                    <span className="text-pink-600 flex justify-center font-medium text-2xl font-sans">
+                      {image.price}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
-            <div
-              style={{
-                backgroundColor: "pink",
-                width: "32%",
-                height: "400px",
-                marginRight: "2%",
-                border: "1px solid lightgray",
-                borderRadius: "5%",
-                overflow: "hidden", // เพิ่มการตั้งค่านี้
-              }}
-            >
-              <img
-                src="https://assets.central.co.th//adobe/dynamicmedia/deliver/dm-aid--b45045ee-b880-4d3d-ab57-583d5416ea28/logitech-whitelogitechg715wirelessmechanicalgamingkeyboardswitchlinear-mkp1331482-2.jpg?preferwebp=true&quality=85&width=550"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }} // เพิ่มการตั้งค่านี้
-              ></img>
-            </div>
+            {image
+              .filter((img) => img.id === 11) // Filter เพียง id ที่เลือก
+              .map((image) => (
+                <div
+                  key={image.id}
+                  className="bg-white w-1/3 h-[400px] mr-2 border border-pink-500 rounded-lg overflow-hidden "
+                >
+                  <button onClick={() => router.push(image.link)}>
+                    {image.src && (
+                      <div className="relative z-20 flex justify-center items-center">
+                        <img
+                          src={image.src}
+                          alt={`Fetched Image ${image.id}`}
+                          className="w-auto h-64 object-cover transition-transform duration-200 transform hover:scale-110 mt-10"
+                        />
+                      </div>
+                    )}
+                  </button>
+
+                  <div className="mt-4">
+                    <span className="text-pink-600 flex justify-center font-medium text-2xl font-sans">
+                      {image.price}
+                    </span>
+                  </div>
+                </div>
+              ))}
+
             <div
               style={{
                 backgroundColor: "pink",
@@ -321,7 +334,7 @@ const Slide = () => {
               <button
                 style={{ backgroundColor: "", width: "32%", height: "auto" }}
               >
-                sdfsdfsd
+                sdfsdfsd97898
               </button>
             </div>
           </div>

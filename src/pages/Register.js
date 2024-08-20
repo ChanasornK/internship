@@ -40,32 +40,72 @@ const Register = () => {
       signOut(auth);
     }
   };
-  const handleSignup = () => {
-    if (!email) {
-      setError("Email is required!");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-
-    setLoading(true); // Set loading state to true
+  const handleSignup = async () => {
+    if (!email || !password) {
+      setError("กรุณากรอก Email และ Password.");
+      try {
+        const result = await register(email, password);
+        console.log(result?.data);
+        if (result) {
+          localStorage.setItem("profile", JSON.stringify(result?.data));
+          router.push("./");
+        } else {
+          setError("การเข้าสู้ระบบล้มเหลว โปรดตรวจสอบ email และ password");
+        }
+      } catch (error) {
+        // Handle unexpected errors (e.g., network issues)
+        console.error("Error during sign-in:", error);
+        setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
+      }
+    }  setLoading(true); // Set loading state to true
     setTimeout(() => {
       router.push("./Login"); // Navigate to desired route after 2 seconds
       setLoading(false); // Set loading state back to false
-    }, 1000); // Delay navigation for 2 seconds
+    }, 1000);
+
+    // ตรวจสอบข้อมูลผู้ใช้
+    const verificationResult = await register(email, password);
+    if (verificationResult) {
+      console.log("Register successful");
+      router.push("./Login");
+    } else {
+      setError("Invalid email or password.");
+    }
+  };
+  const register = async (email, password) => {
+    try {
+      const response = await fetch("http://localhost:8000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Verification successful:", data);
+        localStorage.setItem("profile", JSON.stringify(data));
+        return { data }; // Indicate success
+      } else {
+        console.error("Verification failed:", data.message);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error("Error during verification:", error);
+      return false; // Handle network errors or other unexpected issues
+    }
   };
 
   return (
     <div className="flex max-h-dvh">
-      
       <div className="bg-gradient-to-r from-blue-200 to-pink-200 w-full  h-screen flex justify-center items-center">
         <form className="max-w-sm mx-auto flex-grow">
           <div className="mb-3">
             <label
               htmlFor="text"
-              className=" mb-7 text-xl font-medium text-pink-400 dark:text-white mt-10 flex justify-center" 
+              className=" mb-7 text-xl font-medium text-pink-400 dark:text-white mt-10 flex justify-center"
             >
               Register
             </label>

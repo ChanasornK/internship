@@ -7,11 +7,11 @@ import { auth, googleProvider } from "./test";
 
 const Login = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const handleClick = async () => {
-
     if (!email || !password) {
       setError("กรุณากรอก Email และ Password.");
       try {
@@ -28,7 +28,11 @@ const Login = () => {
         console.error("Error during sign-in:", error);
         setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
       }
-    }
+      setLoading(true); // Set loading state to true
+      setTimeout(() => {
+        router.push("./"); // Navigate to desired route after 2 seconds
+        setLoading(false); // Set loading state back to false
+      }, 1000); }
 
     // ตรวจสอบข้อมูลผู้ใช้
     const verificationResult = await VerifyUsers(email, password);
@@ -36,9 +40,10 @@ const Login = () => {
       console.log("Login successful");
       router.push("./");
     } else {
-      setError("Invalid email or password.");
+      setError("Incorrect email or password.");
     }
   };
+
   const VerifyUsers = async (email, password) => {
     try {
       const response = await fetch("http://localhost:8000/verifyUser", {

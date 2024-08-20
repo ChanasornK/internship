@@ -122,14 +122,11 @@ const Laptop = () => {
                     </div>
                   )}
                 </button>
-                <div className="mt-28">
-                  <RatingStarz
-                    rating={image.rating}
-                    onRatingChange={(newRating) =>
-                      handleRatingChange(image.id, newRating)
-                    }
-                  />
-                  <span className="text-red-600 flex justify-start font-medium ">
+                <div className="mt-24">
+                  <div className="">
+                    <RatingStarz getRating={image.rating} isEnabled={false} />
+                  </div>
+                  <span className="text-red-600 flex justify-start font-medium mt-4 ">
                     {image.price}
                   </span>
                 </div>

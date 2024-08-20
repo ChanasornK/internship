@@ -8,7 +8,7 @@ const Monitor = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
-
+  
   useEffect(() => {
     setIsClient(true);
   }, []);

@@ -91,50 +91,50 @@ const index = () => {
           หมวดหมู่สินค้า
         </h1>
       </div>
-      
+
       <div className=" w-full h-[55%] bg-white mt-10 ">
         <div className="flex justify-center items-center">
-          <div className=" w-80  p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+          <div className=" rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleMonitor}>
               <div className="  h-40 w-56 ">
                 <img
-                  src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products46916_800.jpg"
+                  src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/453999537_3721773308071854_8105163053466317409_n.png?stp=dst-png_p206x206&_nc_cat=105&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeH65wXhA4vWVXRvXqA2_8_Ehvng-7f4FnWG-eD7t_gWdbtRhv8yuprijyDkDn8cLihUNfrn4P6v4e3hxReD21rY&_nc_ohc=get-jnwGVWEQ7kNvgHFUEgE&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QEFylAYBt9aLEVdaYL4fNymbpJVf8Bkr3cmWYwk7SZPQA&oe=66EB96D6"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>Monitors</h1>
+                <h1 className="font-serif font-normal">Monitors</h1>
               </div>
             </button>
           </div>
-          <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+          <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleLaptop}>
               <div className="  h-40 w-56">
                 <img
-                  src="https://th.store.asus.com/media/catalog/product/g/7/g713-perkey_1__3.jpg?width=439&height=439&store=th_TH&image-type=image"
+                  src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/455827025_553516126998035_2811257514390542398_n.png?stp=dst-png_p206x206&_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeGW82o8UJRooopHTNTp3dTCgnM2pRHP5PeCczalEc_k91NoHJkEpEoBcuNSs3-uQDBMOtpq-UNKHfnbr8hgGl5p&_nc_ohc=GKrTlcFXbFIQ7kNvgGRGcJL&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGa_1LFTEU4bxeOxeopSXqXa9bQ4HfNA1dz9QAnCurCPg&oe=66EBB911"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>Laptops</h1>
+                <h1 className="font-serif font-normal">Laptops</h1>
               </div>
             </button>
           </div>
           <button onClick={handleRam}>
-            <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+            <div className=" rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img
-                  src="https://www.jib.co.th/img_master/product/original/20180718092410_30507_21_1.jpg"
+                  src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454741255_2830441413922118_486956867719846047_n.png?stp=dst-png_p206x206&_nc_cat=103&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHyHevdOtuT0Fi5pbL8eQz998iF7J9f6Yn3yIXsn1_piUO57erntEwbafcTUH2QWcrbgnCGSoKI_FJDYrMhndLl&_nc_ohc=YFGUwmaYdEEQ7kNvgGDf58f&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGyFa_p8wu4CjLc3kJmMtvtpDgZbskxz78uLhxyc5BVWw&oe=66EBCC56"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>Ram</h1>
+                <h1 className="font-serif font-normal">Ram</h1>
               </div>
             </div>
           </button>
           <button>
-            <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+            <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img
-                  src="https://img.advice.co.th/images_nas/pic_product4/A0154877/A0154877OK_BIG_1.jpg"
+                  src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454013932_8045529075567082_7996735512788385954_n.png?stp=dst-png_p206x206&_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHf-NhX6KAjpZmMhCPame2giOb1XGAXTxmI5vVcYBdPGVOj4A-BqkHMJvQ9kQALhbl6yIQGSe1S93UwAMMJPwkZ&_nc_ohc=PkX6LE4uJrYQ7kNvgGzGnOd&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QFFLiKRRWWbmmmMG7vpdvVGSZvMvmld8FBMnl6cDPmIyg&oe=66EBB7DF"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>CPU</h1>
+                <h1 className="font-serif font-normal">CPU</h1>
               </div>
             </div>
           </button>
@@ -142,47 +142,47 @@ const index = () => {
       </div>
       <div className=" w-full h-[55%] bg-white  ">
         <div className="flex justify-center items-center">
-          <div className=" w-80   p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+          <div className=" rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleGraphic}>
               <div className="  h-40 w-56">
                 <img
-                  src="https://image.makewebeasy.net/makeweb/m_1920x0/YLLBGff3K/Zotac/zt_d40720q_10m_image01.jpg"
+                  src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454100142_1695084344660877_1592313795624777958_n.png?stp=dst-png_p206x206&_nc_cat=108&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHZHLTMbJiPxni0JbXzUfWxLbpse851V4stumx7znVXixRqXnVCia0EGkcb9EXEdfz4ocR1wQNGroyd1AZcwFsx&_nc_ohc=KwM8IkSZZRkQ7kNvgFDK4a9&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGm5kfVgsuWmmmkXD7gBkQMqd3F7xumB5xRXIzHXtMfbA&oe=66EBACE5"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1 className="">Graphic Card</h1>
+                <h1 className="font-serif font-normal">Graphic Card</h1>
               </div>
             </button>
           </div>
-          <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+          <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button>
               <div className="  h-40 w-56">
                 <img
-                  src="https://cdn.ut.in.th/media/catalog/product/cache/5e6411639b53504723017d869741d016/p/r/pro-x-superlight-white-gallery-6_1_1.png"
+                  src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/370225849_1041626030487065_5887468006243962269_n.png?stp=dst-png_p206x206&_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeG8dNuUOdTpyx1CU0t1QUP4uhWPR3Rov6K6FY9HdGi_opYYzES2uml2vdLbDRroTHuqcxv7sKINVRDj5oyphFFh&_nc_ohc=WJ6A5jWB-cgQ7kNvgFsFwHW&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QEqOwMQCvpDL28Zd4avahbU3VlCtYyod5QFOuO_KoreaA&oe=66EBB3F7"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>Mouse</h1>
+                <h1 className="font-serif font-normal">Mouse</h1>
               </div>
             </button>
           </div>
           <button>
-            <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+            <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img
-                  src="https://assets.central.co.th//adobe/dynamicmedia/deliver/dm-aid--b45045ee-b880-4d3d-ab57-583d5416ea28/logitech-whitelogitechg715wirelessmechanicalgamingkeyboardswitchlinear-mkp1331482-2.jpg?preferwebp=true&quality=85&width=550"
+                  src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/346103947_539803734793246_515299174836356142_n.png?stp=dst-png_p206x206&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeEWJEnmvmoBtHWORVULRu3WcdNsGeDdFIFx02wZ4N0UgRz_8QbEe_wvH3GnUPkna_-cIdlo4eFxIMJOgnaG70iz&_nc_ohc=4HL-bJofi5YQ7kNvgF9TjDw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QFbMIUwr9GBLjKnoypskL_WWgQnFyV-sD1ssbbdLzfxKA&oe=66EBBE45"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>Keyboard</h1>
+                <h1 className="font-serif font-normal">Keyboard</h1>
               </div>
             </div>
           </button>
           <button>
-            <div className=" w-80 text-center align-middle p-4 border-2 border-solid  h-64 w-42 flex items-center justify-center">
+            <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img
-                  src="https://www.jib.co.th/img_master/product/original/2020092508482042835_1.jpg"
+                  src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456104035_483817987744850_1471080268211175341_n.png?stp=dst-png_p206x206&_nc_cat=105&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeE4zUiQpfzQcb91TCa9m-B-eztp9zvv2p97O2n3O-_an9KUE6SHvOe-HovDmzLcJdVUUy_yVpEAYGdAWH_SAZuJ&_nc_ohc=FOfjzCS7N8UQ7kNvgEZQemK&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QGhg5zR5KnANCJT86hf9cQ82mzUydBn2K4xMXx6xVJ4CA&oe=66EBAC57"
                   className="w-full h-full object-cover"
                 ></img>
-                <h1>Mainboard</h1>
+                <h1 className="font-serif font-normal">Mainboard</h1>
               </div>
             </div>
           </button>
@@ -194,7 +194,6 @@ const index = () => {
         <Slide />
       </div>
     </div>
-    
   );
 };
 
