@@ -8,7 +8,7 @@ const Graphic = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
-  
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -21,7 +21,7 @@ const Graphic = () => {
           const imageDataArray = response.data.imageData;
 
           const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Graphic Card")
+            .filter((image) => image.type === "Graphic")
             .map((image) => {
               const base64String = arrayBufferToBase64(image.image.data);
               return {
@@ -32,6 +32,7 @@ const Graphic = () => {
                 link: image.link,
                 type: image.type,
                 rating: image.rating,
+                views: image.view,
               };
             });
 
@@ -82,6 +83,27 @@ const Graphic = () => {
   if (!isClient) {
     return null;
   }
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        console.log("View count incremented successfully");
+      } else {
+        console.error("Failed to increment view count");
+      }
+    } catch (error) {
+      console.error("Error incrementing view count:", error);
+    }
+
+    router.push(link);
+  };
 
   return (
     <>
@@ -95,9 +117,9 @@ const Graphic = () => {
             {image.map((image, index) => (
               <div
                 key={index}
-                className="w-64 p-4 border-2 border-pink-500 rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10 " // เปลี่ยนจาก mt-44 เป็น mt-10
+                className="w-64 p-4 border-2 border-[#FF8FAB] rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10"
               >
-                <button onClick={() => router.push(image.link)}>
+                <button onClick={() => handleImageClick(image.id, image.link)}>
                   {image.src && (
                     <div className="relative z-20 flex justify-center items-center">
                       <img
@@ -112,13 +134,14 @@ const Graphic = () => {
                   )}
                 </button>
 
-                <div className="mt-24">
-                  <div className="">
-                    <RatingStarz getRating={image.rating} isEnabled={false} />
+                <div className="mt-[85px]">
+                  <RatingStarz getRating={image.rating} isEnabled={false} />
+                  <div className="flex">
+                    <span className="text-red-600 flex justify-start font-medium">
+                      {image.price}
+                    </span>
                   </div>
-                  <span className="text-red-600 flex justify-start font-medium mt-4 ">
-                    {image.price}
-                  </span>
+                  <div className="ml-1">Views: {image.views}</div>
                 </div>
               </div>
             ))}

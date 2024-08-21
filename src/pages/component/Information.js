@@ -66,7 +66,7 @@ const Information = () => {
             onClose={() => setOpenModal(false)}
             className="relative z-50 mt-10 w-2/5 mx-auto"
           >
-            <Modal.Header className="h-auto w-auto mr-4 mt-6"></Modal.Header>
+            <Modal.Header className="h-auto w-auto mr-4 mt-6 flex justify-end "></Modal.Header>
             <div className="w-auto p-10 py">
               <Upload setImage={setImage} />
             </div>

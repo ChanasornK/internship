@@ -17,10 +17,9 @@ const Laptop = () => {
     if (isClient) {
       const fetchAllImages = async () => {
         try {
-          const response = await getImage(); // Fetch all images from API
-          const imageDataArray = response.data.imageData; // Assuming the API returns an array `imageData`
+          const response = await getImage();
+          const imageDataArray = response.data.imageData;
 
-          // Filter and map data with type "Laptop"
           const validImageDataArray = imageDataArray
             .filter((image) => image.type === "Laptop")
             .map((image) => {
@@ -31,12 +30,12 @@ const Laptop = () => {
                 price: image.price,
                 detail: image.detail,
                 link: image.link,
-                type: image.Laptop,
-                rating: image.rating || 0, // Assume rating comes from API or set it to 0 if not available
+                type: image.type,
+                rating: image.rating,
+                views: image.view,
               };
             });
 
-          // Set state here
           setImages(validImageDataArray);
         } catch (error) {
           console.error("Error fetching images:", error);
@@ -58,7 +57,7 @@ const Laptop = () => {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         return { data };
       } else {
@@ -81,34 +80,46 @@ const Laptop = () => {
     return window.btoa(binary);
   };
 
-  const handleRatingChange = (id, newRating) => {
-    setImages((prevImages) =>
-      prevImages.map((image) =>
-        image.id === id ? { ...image, rating: newRating } : image
-      )
-    );
-  };
-
   if (!isClient) {
     return null;
   }
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        console.log("View count incremented successfully");
+      } else {
+        console.error("Failed to increment view count");
+      }
+    } catch (error) {
+      console.error("Error incrementing view count:", error);
+    }
+
+    router.push(link);
+  };
 
   return (
     <>
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
-        <div className="flex justify-end mr-5 ">
+        <div className="flex justify-end mr-7">
           <Information />
         </div>
-
-        <div className="flex justify-center items-center">
-        <div className="flex flex-wrap justify-center w-4/5 mb-5">
+        <div className="flex justify-center items-center -mt-5 ">
+          <div className="flex flex-wrap justify-center w-4/5 mb-5">
             {image.map((image, index) => (
               <div
                 key={index}
-                className="w-64 p-4 border-2 border-pink-500 rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10 " // เปลี่ยนจาก mt-44 เป็น mt-10
+                className="w-64 p-4 border-2 border-[#FF8FAB] rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10"
               >
-                <button onClick={() => router.push(image.link)}>
+                <button onClick={() => handleImageClick(image.id, image.link)}>
                   {image.src && (
                     <div className="relative z-20 flex justify-center items-center">
                       <img
@@ -123,13 +134,14 @@ const Laptop = () => {
                   )}
                 </button>
 
-                <div className="mt-24">
-                  <div className="">
-                    <RatingStarz getRating={image.rating} isEnabled={false} />
+                <div className="mt-[85px]">
+                  <RatingStarz getRating={image.rating} isEnabled={false} />
+                  <div className="flex">
+                    <span className="text-red-600 flex justify-start font-medium">
+                      {image.price}
+                    </span>
                   </div>
-                  <span className="text-red-600 flex justify-start font-medium mt-4 ">
-                    {image.price}
-                  </span>
+                  <div className="ml-1">Views: {image.views}</div>
                 </div>
               </div>
             ))}

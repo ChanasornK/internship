@@ -5,10 +5,20 @@ import Slide from "./Slide";
 import { Button } from "flowbite-react";
 import ProfileToggle from "./component/ProfileToggle";
 const index = () => {
-  const handlecpu = () => {};
-
+  const handleCpu = () => {
+    router.push("./IT/Cpu");
+  };
+  const handleMainboard = () => {
+    router.push("./IT/Mainboard");
+  };
+  const handleKeyboard = () => {
+    router.push("./IT/Keyboard");
+  };
   const handleGraphic = () => {
     router.push("./IT/Graphic");
+  };
+  const handleMouse = () => {
+    router.push("./IT/Mouse");
   };
   const handleLaptop = () => {
     router.push("./IT/Laptop");
@@ -125,7 +135,7 @@ const index = () => {
               </div>
             </div>
           </button>
-          <button>
+          <button onClick={handleCpu}>
             <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img
@@ -152,7 +162,7 @@ const index = () => {
             </button>
           </div>
           <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
-            <button>
+            <button onClick={handleMouse}>
               <div className="  h-40 w-56">
                 <img
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/370225849_1041626030487065_5887468006243962269_n.png?stp=dst-png_p206x206&_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeG8dNuUOdTpyx1CU0t1QUP4uhWPR3Rov6K6FY9HdGi_opYYzES2uml2vdLbDRroTHuqcxv7sKINVRDj5oyphFFh&_nc_ohc=WJ6A5jWB-cgQ7kNvgFsFwHW&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QEqOwMQCvpDL28Zd4avahbU3VlCtYyod5QFOuO_KoreaA&oe=66EBB3F7"
@@ -162,7 +172,7 @@ const index = () => {
               </div>
             </button>
           </div>
-          <button>
+          <button onClick={handleKeyboard}>
             <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img
@@ -173,7 +183,7 @@ const index = () => {
               </div>
             </div>
           </button>
-          <button>
+          <button onClick={handleMainboard}>
             <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
               <div className="  h-40 w-56">
                 <img

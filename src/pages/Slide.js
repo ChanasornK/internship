@@ -132,7 +132,7 @@ const Slide = () => {
                   viewBox="0 0 8 14"
                 >
                   <path
-                    stroke="currentColor"
+                    stroke="#FF8FAB"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
@@ -165,7 +165,7 @@ const Slide = () => {
                   viewBox="0 0 8 14"
                 >
                   <path
-                    stroke="currentColor"
+                    stroke="#A6C3E4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
@@ -182,7 +182,7 @@ const Slide = () => {
               .map((image) => (
                 <div
                   key={image.id}
-                  className=" bg-gray-100  w-1/3 h-[370px] mr-2 border-2 border-pink-500 rounded-lg overflow-hidden "
+                  className=" bg-gray-100  w-1/3 h-[370px] mr-2 border-2 border-[#FF8FAB] rounded-lg overflow-hidden "
                 >
                   <button
                     onClick={() =>
@@ -215,9 +215,15 @@ const Slide = () => {
               .map((image) => (
                 <div
                   key={image.id}
-                  className="bg-gray-100 w-1/3 h-[370px] mr-2 border-2 border-pink-500 rounded-lg overflow-hidden"
+                  className="bg-gray-100 w-1/3 h-[370px] mr-2 border-2 border-[#FF8FAB] rounded-lg overflow-hidden"
                 >
-                  <button onClick={() => router.push(image.link)}>
+                  <button
+                    onClick={() =>
+                      router.push(
+                        "https://www.jib.co.th/web/product/readProduct/58409/NOTEBOOK--%E0%B9%82%E0%B8%99%E0%B9%89%E0%B8%95%E0%B8%9A%E0%B8%B8%E0%B9%8A%E0%B8%84--ASUS-ROG-STRIX-SCAR-17-G733PZ-LL023W--OFF-BLACK-"
+                      )
+                    }
+                  >
                     {image.src && (
                       <div className="relative z-20 flex justify-center items-center">
                         <img
@@ -242,9 +248,15 @@ const Slide = () => {
               .map((image) => (
                 <div
                   key={image.id}
-                  className="bg-gray-100 w-1/3 h-[370px] mr-2 border-2 border-pink-500 rounded-lg overflow-hidden"
+                  className="bg-gray-100 w-1/3 h-[370px] mr-2 border-2 border-[#FF8FAB] rounded-lg overflow-hidden"
                 >
-                  <button onClick={() => router.push(image.link)}>
+                  <button
+                    onClick={() =>
+                      router.push(
+                        "https://shopee.co.th/VGA-(%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%94%E0%B9%81%E0%B8%AA%E0%B8%94%E0%B8%87%E0%B8%9C%E0%B8%A5)-ASUS-ROG-MATRIX-PLATINUM-GEFORCE-RTX-4090-24GB-GDDR6X-i.17333589.24426570729?publish_id=&sp_atk=382239d3-37b8-4431-90fc-038fb1419fbb&xptdk=382239d3-37b8-4431-90fc-038fb1419fbb"
+                      )
+                    }
+                  >
                     {image.src && (
                       <div className="relative z-20 flex justify-center items-center">
                         <img
@@ -265,35 +277,38 @@ const Slide = () => {
               ))}
           </div>
 
-          <div>
-            <div style={{ display: "flex" }}>
+          {image
+            .filter((img) => img.id === 32) // Filter เพียง id ที่เลือก
+            .map((image) => (
               <div
-                style={{
-                  backgroundColor: "black",
-                  width: "32%",
-                  height: "400px",
-                  marginRight: "2%",
-                }}
+                key={image.id}
+                className=" bg-gray-100  w-1/3 h-[370px] mr-2 border-2 border-[#FF8FAB] rounded-lg overflow-hidden "
               >
-                sdfsdfsd
+                <button
+                  onClick={() =>
+                    router.push(
+                      "https://ihavecpu.com/product/19945/monitor-(%E0%B8%88%E0%B8%AD%E0%B8%A1%E0%B8%AD%E0%B8%99%E0%B8%B4%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)-lg-ultragear-27gs60f-b-27-ips-fhd-180hz-(3y)"
+                    )
+                  }
+                >
+                  {image.src && (
+                    <div className="relative z-20 flex justify-center items-center">
+                      <img
+                        src={image.src}
+                        alt={`Fetched Image ${image.id}`}
+                        className="w-auto h-64 object-cover transition-transform duration-300 transform hover:scale-125 mt-10"
+                      />
+                    </div>
+                  )}
+                </button>
+
+                <div className="mt-4">
+                  <span className="text-pink-600 flex justify-center font-medium text-2xl font-sans">
+                    {image.price}
+                  </span>
+                </div>
               </div>
-              <div
-                style={{
-                  backgroundColor: "green",
-                  width: "32%",
-                  height: "auto",
-                  marginRight: "2%",
-                }}
-              >
-                sdfsdfsdf
-              </div>
-              <button
-                style={{ backgroundColor: "red", width: "32%", height: "auto" }}
-              >
-                sdfsdfsd
-              </button>
-            </div>
-          </div>
+            ))}
 
           <div>
             <div style={{ display: "flex" }}>

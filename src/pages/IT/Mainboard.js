@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
 
-const Mouse = () => {
+const Mainboard = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
@@ -21,7 +21,7 @@ const Mouse = () => {
           const imageDataArray = response.data.imageData;
 
           const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Mouse")
+            .filter((image) => image.type === "Mainboard")
             .map((image) => {
               const base64String = arrayBufferToBase64(image.image.data);
               return {
@@ -152,4 +152,4 @@ const Mouse = () => {
   );
 };
 
-export default Mouse;
+export default Mainboard;
