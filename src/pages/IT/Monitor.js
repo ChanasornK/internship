@@ -6,6 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import Product from "../component/Product";
 
+
 const Monitor = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
@@ -116,9 +117,15 @@ const Monitor = () => {
     <>
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
-        <div className="flex justify-end mr-7">
-          <Information />
+        <div className="flex justify-between w-full ">
+          <div className="ml-10">
+            <Product />
+          </div>
+          <div className="mr-10">
+            <Information />
+          </div>
         </div>
+
         <div className="flex justify-center items-center -mt-5 ">
           <div className="flex flex-wrap justify-center w-4/5 mb-5">
             {image.map((image, index) => (
