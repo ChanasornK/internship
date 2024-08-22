@@ -3,11 +3,13 @@ import Menu from "../component/Menu";
 import { useRouter } from "next/router";
 import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
+import LoadingModal from "../component/loading";
 
 const Cpu = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
+  const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
 
   useEffect(() => {
     setIsClient(true);
@@ -39,6 +41,8 @@ const Cpu = () => {
           setImages(validImageDataArray);
         } catch (error) {
           console.error("Error fetching images:", error);
+        } finally {
+          setLoading(false); // ปิดการโหลดข้อมูลเมื่อโหลดเสร็จแล้ว
         }
       };
 
@@ -80,9 +84,11 @@ const Cpu = () => {
     return window.btoa(binary);
   };
 
-  if (!isClient) {
-    return null;
+  if (!isClient || loading) {
+    // แสดง spinner ถ้ายังโหลดข้อมูลอยู่
+    return <LoadingModal />; // แสดง LoadingModal ระหว่างโหลด
   }
+
   const handleImageClick = async (id, link) => {
     try {
       const response = await fetch("http://localhost:8000/increment-view", {
@@ -134,17 +140,14 @@ const Cpu = () => {
                   )}
                 </button>
 
-                <div className="mt-28">
+                <div className="mt-[85px]">
                   <RatingStarz getRating={image.rating} isEnabled={false} />
-                  <div className="flex justify-between">
-                    <span className="text-red-600 font-medium">
+                  <div className="flex">
+                    <span className="text-red-600 flex justify-start font-medium">
                       {image.price}
                     </span>
-                    <span className="font-medium flex font-sans">
-                      {image.views} views
-                      
-                    </span>
                   </div>
+                  <div className="ml-1"> {image.views} views</div>
                 </div>
               </div>
             ))}

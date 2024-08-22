@@ -74,12 +74,7 @@ const index = () => {
   }, []);
   console.log(profile);
   const handleMonitor = async () => {
-    setLoading(true);
-    try {
-      await router.push("./IT/Monitor");
-    } finally {
-      setLoading(false);
-    }
+    await router.push("./IT/Monitor");
   };
   console.log(userProfile);
   return (
