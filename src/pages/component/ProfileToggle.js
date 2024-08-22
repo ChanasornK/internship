@@ -32,7 +32,7 @@ const ProfileToggle = ({ profile }) => {
               className="object-fill  "
             />
           </div>
-          <div className=" w-auto h-10 mt-8 ml-2 flex justify-center items-center mr-3 ">
+          <div className=" w-auto h-10 mt-8 ml-2 flex justify-center items-center mr-3 text-black font-medium text-base font-sans ">
             <span className="whitespace-nowrap">
               {profile?.currentUser?.displayName || profile?.userData?.email}
             </span>

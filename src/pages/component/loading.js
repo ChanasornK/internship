@@ -1,28 +1,17 @@
 import { Modal } from "flowbite-react";
 import React from "react";
 import { Oval } from "react-loader-spinner";
+import { ProgressBar } from "react-loader-spinner";
 const LoadingModal = ({ openModal }) => {
   return (
     <>
-      <div className="flex justify-center items-center h-screen bg-black">
-        <div className="flex justify-center items-center h-20 w-20">
-          <svg
-            aria-label="oval-loading"
-            className="animate-spin h-16 w-16 text-pink-600"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="10"
-              r="35"
-              strokeDasharray="165 57"
-            />
-          </svg>
+      <div className="flex justify-center items-center h-screen bg-gradient-to-t from-blue-200 to-pink-200 ">
+        <div className="flex justify-center items-center">
+          <div
+            role="progressbar"
+            aria-label="progress-bar-loading"
+            className="h-20 w-20 border-t-4 border-r-4 border-b-4 border-l-4 border-t-transparent border-r-[#FF8FAB] border-purple-400 rounded-full animate-spin"
+          ></div>
         </div>
       </div>
     </>

@@ -5,23 +5,8 @@ import Slide from "./Slide";
 import { Button } from "flowbite-react";
 import ProfileToggle from "./component/ProfileToggle";
 import axios from "axios";
+import Menu from "./component/Menu";
 const index = () => {
-  const [loading, setLoading] = useState(false);
-  const [wait, setWait] = useState("");
-  const fetchLoading = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/getAllImage");
-      setLoading(true);
-      setWait(response.data.imageData);
-    } catch (error) {
-      console.error("Something wrong", error);
-    } finally {
-      setLoading(false);
-    }
-    useEffect(() => {
-      fetchLoading();
-    }, []);
-  };
   const handleCpu = () => {
     router.push("./IT/Cpu");
   };
@@ -73,48 +58,30 @@ const index = () => {
     }
   }, []);
   console.log(profile);
-  const handleMonitor = async () => {
-    await router.push("./IT/Monitor");
+  const handleMonitor = () => {
+    router.push("./IT/Monitor");
   };
   console.log(userProfile);
   return (
     <div className="w-full h-auto  ">
-      <div className="w-full bg-[#FF8FAB] text-white flex fixed top-0">
-        <div className="flex justify-start w-4/5 ml-24 text-white h-36">
-          <button
-            className="-mt-[3%] font-bold font-serif text-4xl"
-            onClick={handleHomePage}
+      <Menu />
+      <div className=" w-full h-[55%] bg-[#F8F5FD] mt-36  ">
+        <div className="ml-52 font-medium text-xl font-sans px-6 pt-10 flex items-center">
+          <svg
+            className="w-6 h-6 text-gray-800 dark:text-white mr-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="#FF8FAB"
+            viewBox="0 0 24 24"
           >
-            IT.com
-          </button>
-          <Searchform />
-        </div>
-        <div>
-          {profile ? (
-            <div className="mr-2">
-              <ProfileToggle profile={profile} />
-            </div>
-          ) : (
-            <div className="flex ml-3 mt-8 mx-auto">
-              <button
-                onClick={handleGoLogin}
-                className="bg-white text-blue-600 h-10 px-2 rounded hover:bg-[#D1D5DB]/90"
-              >
-                เข้าสู่ระบบ
-              </button>
-              <button
-                onClick={handleGoRegister}
-                className="bg-white text-blue-600 h-10 ml-3 px-2 rounded hover:bg-[#D1D5DB]/90"
-              >
-                ลงทะเบียน
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className=" w-full h-[55%] bg-gray-100 mt-36  ">
-        <div className="ml-52 font-medium text-2xl font-sans pt-10">
+            <path
+              fillRule="evenodd"
+              d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2ZM7 12.5a.5.5 0 0 1 .495.43.762.762 0 0 0 .157.096c.213.106.553.208 1.005.295.896.173 2.111.262 3.343.262 1.232 0 2.447-.09 3.343-.262.452-.087.792-.19 1.006-.295a.764.764 0 0 0 .156-.096.5.5 0 0 1 .995.07c0 1.19-.644 2.438-1.618 3.375C14.9 17.319 13.531 18 12 18c-1.531 0-2.9-.681-3.882-1.625C7.144 15.438 6.5 14.19 6.5 13a.5.5 0 0 1 .5-.5Zm9.519.417l.003-.004-.003.004Zm-9.038 0a.017.017 0 0 1-.003-.004l.003.004Zm.901-4.853L9 6.81l.619 1.253 1.381.2-1 .976.236 1.376-1.237-.65-1.235.65L8 9.239l-1-.975 1.382-.2Zm6 0L15 6.81l.619 1.253 1.381.2-1 .976.236 1.376-1.237-.65-1.235.65L14 9.239l-1-.975 1.382-.2Z"
+              clipRule="evenodd"
+            />
+          </svg>
           หมวดหมู่สินค้า
         </div>
 
@@ -166,7 +133,7 @@ const index = () => {
           </button>
         </div>
       </div>
-      <div className=" w-full h-[55%] bg-gray-100   ">
+      <div className=" w-full h-[55%] bg-[#F8F5FD]  ">
         <div className="flex justify-center items-center">
           <div className=" rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-pink-200 to-blue-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleGraphic}>
@@ -215,7 +182,7 @@ const index = () => {
         </div>
       </div>
 
-      <div className="bg-gray-100  w-full h-[500px] overflow-hidden">
+      <div className="bg-[#F8F5FD]  w-full h-[500px] overflow-hidden">
         <h1 className="ml-52 pt-10 mb-10 font-medium text-2xl font-sans ">
           Most View
         </h1>

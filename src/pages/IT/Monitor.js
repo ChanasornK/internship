@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
+import Product from "../component/Product";
 
 const Monitor = () => {
   const router = useRouter();
@@ -140,14 +141,14 @@ const Monitor = () => {
                   )}
                 </button>
 
-                <div className="mt-[85px]">
+                <div className="mt-28">
                   <RatingStarz getRating={image.rating} isEnabled={false} />
-                  <div className="flex">
-                    <span className="text-red-600 flex justify-start font-medium">
+                  <div className="flex justify-between">
+                    <span className="text-red-600 font-medium">
                       {image.price}
                     </span>
+                    <div className="ml-1"> {image.views} views</div>
                   </div>
-                  <div className="ml-1"> {image.views} views</div>
                 </div>
               </div>
             ))}

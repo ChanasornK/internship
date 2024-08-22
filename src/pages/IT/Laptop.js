@@ -140,14 +140,14 @@ const Laptop = () => {
                   )}
                 </button>
 
-                <div className="mt-[85px]">
+                <div className="mt-28">
                   <RatingStarz getRating={image.rating} isEnabled={false} />
-                  <div className="flex">
-                    <span className="text-red-600 flex justify-start font-medium">
+                  <div className="flex justify-between">
+                    <span className="text-red-600 font-medium">
                       {image.price}
                     </span>
+                    <div className="ml-1"> {image.views} views</div>
                   </div>
-                  <div className="ml-1"> {image.views} views</div>
                 </div>
               </div>
             ))}

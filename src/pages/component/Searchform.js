@@ -2,7 +2,7 @@ import React from "react";
 
 const Searchform = () => {
   return (
-    <form className="w-[50%] ml-32 mt-7">
+    <form className="w-[55%] ml-32 mt-10">
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -20,7 +20,7 @@ const Searchform = () => {
         />
         <button
           type="submit"
-          className="text-white absolute end-2.5 bottom-2.5 bg-gradient-to-t from-blue-200 to-pink-200 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white absolute end-2.5 bottom-2.5 bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           <svg
             className="w-4 h-4"
