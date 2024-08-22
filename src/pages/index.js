@@ -4,7 +4,24 @@ import Searchform from "./component/Searchform";
 import Slide from "./Slide";
 import { Button } from "flowbite-react";
 import ProfileToggle from "./component/ProfileToggle";
+import axios from "axios";
 const index = () => {
+  const [loading, setLoading] = useState(false);
+  const [wait, setWait] = useState("");
+  const fetchLoading = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/getAllImage");
+      setLoading(true);
+      setWait(response.data.imageData);
+    } catch (error) {
+      console.error("Something wrong", error);
+    } finally {
+      setLoading(false);
+    }
+    useEffect(() => {
+      fetchLoading();
+    }, []);
+  };
   const handleCpu = () => {
     router.push("./IT/Cpu");
   };
@@ -56,8 +73,13 @@ const index = () => {
     }
   }, []);
   console.log(profile);
-  const handleMonitor = () => {
-    router.push("./IT/Monitor");
+  const handleMonitor = async () => {
+    setLoading(true);
+    try {
+      await router.push("./IT/Monitor");
+    } finally {
+      setLoading(false);
+    }
   };
   console.log(userProfile);
   return (
@@ -102,17 +124,18 @@ const index = () => {
         </div>
 
         <div className="flex justify-center items-center mt-12">
-          <div className=" rounded-lg w-80  p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleMonitor}>
-              <div className="  h-40 w-56 ">
+              <div className="h-40 w-56">
                 <img
                   src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/455781387_996798958857539_7944499843495434905_n.png?stp=dst-png_p206x206&_nc_cat=101&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeFdj4wovrUL7vG0mFtHv4t6zwWf7y8pTUHPBZ_vLylNQVqIDZ3jgoKil3-ryVZUJm7OAdlfibq0efQ40lrDMG7S&_nc_ohc=GGZTEIvtp2AQ7kNvgFEw5tg&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QGJominLjV8mSShhZgc4hhmOTHQsKpTnDMschd1TQuWDw&oe=66EBC72E"
                   className="w-full h-full object-cover"
-                ></img>
+                />
                 <h1 className="font-medium text-lg font-sans">Monitors</h1>
               </div>
             </button>
           </div>
+
           <div className="rounded-lg w-80  p-4 border-2 border-solid  bg-gradient-to-t from-blue-200 to-pink-200  h-64 w-42 flex items-center justify-center mr-2 mb-2">
             <button onClick={handleLaptop}>
               <div className="  h-40 w-56">
