@@ -46,15 +46,15 @@ const ModalConfirm = ({ isOpen, onClose, imageId, dataSource }) => {
       onClose={onClose}
       popup
       backdrop
-      className="relative z-50 w-auto max-w-md mx-auto mt-56 p-auto rounded-md" // เพิ่ม rounded-md ตรงนี้
+      className="relative z-50 w-auto max-w-md mx-auto mt-56 p-auto rounded-md " // เพิ่ม rounded-md ตรงนี้
     >
-      <Modal.Header className="bg-pink w-auto rounded-md bg-[#F5E8F7]" />
+      <Modal.Header className="bg-pink w-auto rounded-md  bg-[#fce4ec]" />
 
       <Modal.Body className="w-auto rounded-md ">
-        <div className="text-center rounded-md bg-[#F5E8F7]">
+        <div className="text-center rounded-md bg-[#fce4ec]">
           <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-            คุณต้องการที่จะลบข้อมูลนี้ ?
+          <h3 className="mb-5 text-lg font-normal text-black dark:text-gray-400">
+            คุณต้องการที่จะลบข้อมูลนี้ 
           </h3>
           <div className="flex justify-center gap-4 py-5">
             <Button
