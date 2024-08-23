@@ -59,17 +59,17 @@ const Information = () => {
       {openModal && (
         <>
           <div
-            className="fixed inset-0 bg-gray-700 opacity-75 z-40"
+            className="fixed inset-0 bg-gray-700 opacity-75 z-50"
             onClick={() => setOpenModal(false)}
           ></div>
           <Modal
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 mt-2 w-2/5 mx-auto"
+            className="relative z-50 mx-auto bg-gray-700 pt-2"
           >
             <Modal.Header className="h-auto w-auto mr-4 mt-3 flex justify-end "></Modal.Header>
-            <div className="w-auto p-10 py">
+            <div className="w-auto p-10 ">
               <Upload setImage={setImage} />
             </div>
             <input
@@ -109,7 +109,7 @@ const Information = () => {
               </div>
             </div>
 
-            <div className="flex pb-4 justify-center gap-4 mt-14">
+            <div className="flex pb-4 justify-center gap-4 mt-12">
               <Button
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"

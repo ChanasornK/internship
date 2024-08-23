@@ -24,10 +24,6 @@ const Monitor = () => {
         try {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
-
-          // สมมติว่าคุณได้รับ role จาก API ที่ส่งกลับมาใน response
-          setRole(response.data.role);
-
           const validImageDataArray = imageDataArray
             .filter((image) => image.type === "Monitor")
             .map((image) => {
@@ -125,11 +121,9 @@ const Monitor = () => {
           <div className="ml-10">
             <Product />
           </div>
-          {role !== "user" && ( // แสดง Information ถ้า role ไม่ใช่ 'user'
-            <div className="mr-10">
-              <Information />
-            </div>
-          )}
+          <div className="mr-10">
+            <Information />
+          </div>
         </div>
 
         <div className="flex justify-center items-center -mt-5 ">
@@ -153,7 +147,6 @@ const Monitor = () => {
                     </div>
                   )}
                 </button>
-
                 <div className="mt-28">
                   <div className="flex items-center justify-between">
                     <RatingStarz getRating={image.rating} isEnabled={false} />
