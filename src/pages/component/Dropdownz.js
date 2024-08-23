@@ -10,7 +10,7 @@ const Dropdownz = ({ onSelectItem }) => {
   };
 
   return (
-    <div className="relative ml-10 mt-5 bg-gray-50 w-24 ">
+    <div className="relative ml-10 bg-gray-50 w-24 ">
       <Dropdown
         label={<span className="text-gray-700 ">{selectedItem}</span>}
         dismissOnClick={true}

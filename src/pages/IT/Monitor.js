@@ -5,13 +5,14 @@ import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import Product from "../component/Product";
-
+import { Button } from "flowbite-react";
 
 const Monitor = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
   const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
+  const [role, setRole] = useState(null); // เก็บค่า role
 
   useEffect(() => {
     setIsClient(true);
@@ -23,6 +24,9 @@ const Monitor = () => {
         try {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
+
+          // สมมติว่าคุณได้รับ role จาก API ที่ส่งกลับมาใน response
+          setRole(response.data.role);
 
           const validImageDataArray = imageDataArray
             .filter((image) => image.type === "Monitor")
@@ -121,9 +125,11 @@ const Monitor = () => {
           <div className="ml-10">
             <Product />
           </div>
-          <div className="mr-10">
-            <Information />
-          </div>
+          {role !== "user" && ( // แสดง Information ถ้า role ไม่ใช่ 'user'
+            <div className="mr-10">
+              <Information />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-center items-center -mt-5 ">
@@ -139,7 +145,7 @@ const Monitor = () => {
                       <img
                         src={image.src}
                         alt={`Fetched Image ${index}`}
-                        className="w-auto h-64 object-cover transform transition-transform duration-200 hover:scale-110"
+                        className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-110"
                       />
                       <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {image.detail}
@@ -149,12 +155,15 @@ const Monitor = () => {
                 </button>
 
                 <div className="mt-28">
-                  <RatingStarz getRating={image.rating} isEnabled={false} />
-                  <div className="flex justify-between">
+                  <div className="flex items-center justify-between">
+                    <RatingStarz getRating={image.rating} isEnabled={false} />
+                    <Button className="ml-auto text-black">แก้ไข</Button>
+                  </div>
+                  <div className="flex justify-between mt-2">
                     <span className="text-red-600 font-medium">
                       {image.price}
                     </span>
-                    <div className="ml-1"> {image.views} views</div>
+                    <div className="ml-1">{image.views} views</div>
                   </div>
                 </div>
               </div>

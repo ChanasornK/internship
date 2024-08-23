@@ -19,6 +19,7 @@ const Information = () => {
   const [image, setImage] = useState(null);
   const [type, setType] = useState(null);
   const [rating, setRating] = useState(0);
+  const [link, setLink] = useState("");
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("image", image);
@@ -26,6 +27,7 @@ const Information = () => {
     formData.append("detail", detail);
     formData.append("type", type);
     formData.append("rating", rating);
+    formData.append("link", link);
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -64,16 +66,16 @@ const Information = () => {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 mt-10 w-2/5 mx-auto"
+            className="relative z-50 mt-2 w-2/5 mx-auto"
           >
-            <Modal.Header className="h-auto w-auto mr-4 mt-6 flex justify-end "></Modal.Header>
+            <Modal.Header className="h-auto w-auto mr-4 mt-3 flex justify-end "></Modal.Header>
             <div className="w-auto p-10 py">
               <Upload setImage={setImage} />
             </div>
             <input
               id="detail-input"
               placeholder="รายละเอียด"
-              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="bg-gray-50 text-gray-700 mt-2 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
             />
@@ -85,19 +87,29 @@ const Information = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            <Dropdownz
-              onSelectItem={handleTypeSelect}
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+            <input
+              id="link-input"
+              placeholder="Link"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
             />
-            <div className="ml-10 mt-5">
-              <RatingStarz
-                onRatingSelect={handleRatingSelect}
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
+            <div className="flex items-center mt-6 ">
+              <Dropdownz
+                onSelectItem={handleTypeSelect}
+                value={type}
+                onChange={(e) => setType(e.target.value)}
               />
+              <div className="ml-3">
+                <RatingStarz
+                  onRatingSelect={handleRatingSelect}
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="flex pb-4 justify-center gap-4 mt-5">
+
+            <div className="flex pb-4 justify-center gap-4 mt-14">
               <Button
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
