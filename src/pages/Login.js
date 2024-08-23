@@ -12,9 +12,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const ResetPassword = () => {
+    router.push("./ForgetPassword");
   };
   const handleClick = async () => {
     if (!email || !password) {
@@ -226,7 +229,11 @@ const Login = () => {
               >
                 Remember me
               </h1>
-              <button className=" text-[#1C64F2] flex justify-end text-sm ml-36">
+              <button
+                onClick={ResetPassword}
+                type="button" // เพิ่ม type="button"
+                className="text-[#1C64F2] flex justify-end text-sm ml-36"
+              >
                 Forget Password?
               </button>
             </div>
