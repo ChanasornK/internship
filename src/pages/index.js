@@ -64,7 +64,41 @@ const index = () => {
   console.log(userProfile);
   return (
     <div className="w-full h-auto  ">
-      <Menu />
+      <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-400 to-pink-300  flex z-50 h-36">
+        <div className=" w-4/5 ml-24 ">
+          <div className=" flex">
+            <span
+              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white "
+              onClick={handleHomePage}
+            >
+              Review.com
+            </span>
+            <Searchform />
+          </div>
+        </div>
+        <div>
+          {profile ? (
+            <div className="mr-2 mt-2">
+              <ProfileToggle profile={profile} />
+            </div>
+          ) : (
+            <div className="flex ml-3 mt-8 mx-auto">
+              <button
+                onClick={handleGoLogin}
+                className="bg-white text-blue-600 h-10 px-2 rounded hover:bg-[#D1D5DB]/90"
+              >
+                เข้าสู่ระบบ
+              </button>
+              <button
+                onClick={handleGoRegister}
+                className="bg-white text-blue-600 h-10 ml-3 px-2 rounded hover:bg-[#D1D5DB]/90"
+              >
+                ลงทะเบียน
+              </button>
+            </div>
+          )}
+        </div>
+      </header>
       <div className=" w-full h-[55%] bg-[#F8F5FD] mt-36  ">
         <div className="ml-52 font-medium text-xl font-sans px-6 pt-10 flex items-center">
           <svg

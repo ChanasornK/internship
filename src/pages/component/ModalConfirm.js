@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { TbAlertCircleFilled } from "react-icons/tb";
 import axios from "axios";
-
+import { FaCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 const ModalConfirm = ({ isOpen, onClose, imageId, dataSource }) => {
   useEffect(() => {
     if (dataSource) {
@@ -48,24 +49,33 @@ const ModalConfirm = ({ isOpen, onClose, imageId, dataSource }) => {
       backdrop
       className="relative z-50 w-auto max-w-md mx-auto mt-56 p-auto rounded-md " // เพิ่ม rounded-md ตรงนี้
     >
-      <Modal.Header className="bg-pink w-auto rounded-md  bg-[#fce4ec]" />
-
-      <Modal.Body className="w-auto rounded-md ">
-        <div className="text-center rounded-md bg-[#fce4ec]">
-          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+      <Modal.Body className="w-auto rounded-md border-2 border-purple-500  ">
+        <Modal.Header className="bg-pink w-auto rounded-md   bg-gradient-to-t from-pink-200 to-pink-200  " />
+        <div className="text-center rounded-md  bg-gradient-to-t from-blue-200 to-pink-200 ">
+          <TbAlertCircleFilled className="mx-auto mb-4 h-14 w-14  dark:text-gray-200" />
           <h3 className="mb-5 text-lg font-normal text-black dark:text-gray-400">
-            คุณต้องการที่จะลบข้อมูลนี้ 
+            คุณต้องการที่จะลบข้อมูลนี้
           </h3>
           <div className="flex justify-center gap-4 py-5">
             <Button
-              color="gray"
+              color=""
               onClick={deleteImage}
-              className="rounded-md"
+              className="flex items-center rounded-md bg-green-400"
             >
-              ยืนยัน
+              <div className="flex items-center">
+                <FaCheck className="mr-2 text-sm " />
+                <span className="text-sm">ยืนยัน</span>
+              </div>
             </Button>
-            <Button color="gray" onClick={onClose} className="rounded-md">
-              ยกเลิก
+            <Button
+              color=""
+              onClick={onClose}
+              className="flex items-center rounded-md bg-red-600"
+            >
+              <div className="flex items-center">
+                <ImCross className="mr-2 text-sm " />
+                <span className="text-sm">ยกเลิก</span>
+              </div>
             </Button>
           </div>
         </div>

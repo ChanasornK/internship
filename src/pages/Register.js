@@ -3,14 +3,24 @@ import React, { useState, useEffect } from "react";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Button } from "flowbite-react";
 import { auth, googleProvider } from "./test";
-
+import { GoEye } from "react-icons/go";
+import { GoEyeClosed } from "react-icons/go";
 const Register = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
   const loginAction = async () => {
     console.log("this checkLogin", auth?.currentUser);
 
@@ -57,7 +67,8 @@ const Register = () => {
         console.error("Error during sign-in:", error);
         setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
       }
-    }  setLoading(true); // Set loading state to true
+    }
+    setLoading(true); // Set loading state to true
     setTimeout(() => {
       router.push("./Login"); // Navigate to desired route after 2 seconds
       setLoading(false); // Set loading state back to false
@@ -181,37 +192,53 @@ const Register = () => {
                 className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
-            <div className="mb-5">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Password
-              </label>
-              <input
-                placeholder="••••••••••"
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="confirm-password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Confirm Password
-              </label>
-              <input
-                placeholder="••••••••••"
-                type="password"
-                id="confirm-password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
+            <div>
+              <div>
+                <div className="mb-5 relative">
+                  <label
+                    htmlFor="password"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Password
+                  </label>
+                  <input
+                    placeholder="••••••••••"
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-10"
+                  />
+                  <div
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer mt-4"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <GoEyeClosed /> : <GoEye />}
+                  </div>
+                </div>
+                <div className="mb-5 relative">
+                  <label
+                    htmlFor="confirm-password"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                  >
+                    Confirm Password
+                  </label>
+                  <input
+                    placeholder="••••••••••"
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirm-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-10"
+                  />
+                  <div
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer mt-4"
+                    onClick={toggleConfirmPasswordVisibility}
+                  >
+                    {showConfirmPassword ? <GoEyeClosed /> : <GoEye />}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {error && <p className="text-red-500 mb-5">{error}</p>}
@@ -232,7 +259,7 @@ const Register = () => {
               >
                 Remember me
               </h1>
-              <button className="bg-[#C3DDFD] text-[#1C64F2] flex justify-end text-sm ml-36">
+              <button className=" text-[#1C64F2] flex justify-end text-sm ml-36">
                 Forget Password?
               </button>
             </div>

@@ -1,7 +1,7 @@
 import { Button } from "flowbite-react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
-import { PiMonitor } from "react-icons/pi";
+import { MdOutlineMonitor } from "react-icons/md";
 import { MdLaptopMac } from "react-icons/md";
 import { BsMemory } from "react-icons/bs";
 import { LuCpu } from "react-icons/lu";
@@ -44,7 +44,7 @@ const Product = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <Button
-        className="mt-[150px] bg-gray-200 flex items-center justify-between text-black"
+        className=" bg-gray-200  text-black ml-2 mt-1"
         onClick={toggleDropdown}
       >
         <BiCategory className="mr-2 mt-1 text-base flex-shrink-0" />
@@ -78,8 +78,8 @@ const Product = () => {
             onClick={() => handleNavigation("../IT/Monitor")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            <PiMonitor className="mr-3 text-base flex-shrink-0" />
-            <span className="flex-grow">Monitor</span>
+            <MdOutlineMonitor  className="mr-3 text-base flex-shrink-0" />
+            <span className="flex-grow ">Monitor</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Laptop")}

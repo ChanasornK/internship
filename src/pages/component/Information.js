@@ -4,7 +4,7 @@ import Upload from "./Upload";
 import axios from "axios";
 import RatingStarz from "./RatingStarz";
 import Dropdownz from "./Dropdownz";
-
+import { IoMdAddCircle } from "react-icons/io";
 const Information = () => {
   const handleRatingSelect = (selectedRating) => {
     setRating(selectedRating);
@@ -53,7 +53,10 @@ const Information = () => {
         className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 mt-44 "
         onClick={() => setOpenModal(true)}
       >
-        เพิ่มข้อมูล
+        <div className="flex items-center">
+          <IoMdAddCircle className="mr-1 text-sm " />
+          <span className="text-sm">เพิ่มข้อมูล</span>
+        </div>
       </Button>
 
       {openModal && (
@@ -66,7 +69,7 @@ const Information = () => {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen"
+            className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen "
           >
             <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end"></Modal.Header>
             <div className="w-auto p-10 ">

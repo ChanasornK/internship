@@ -102,7 +102,7 @@ const FixInformation = ({ dataSource }) => {
     <>
       <Button
         onClick={() => setFixModal(true)}
-        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200"
+        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400"
       >
         แก้ไข
       </Button>
@@ -116,9 +116,9 @@ const FixInformation = ({ dataSource }) => {
             dismissible
             show={fixModal}
             onClose={() => setFixModal(false)}
-            className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen"
+            className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen "
           >
-            <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end"></Modal.Header>
+            <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end "></Modal.Header>
             <div className="w-auto p-10 ">
               <Upload2 setImage={setImage} image={image} />
             </div>
@@ -165,7 +165,7 @@ const FixInformation = ({ dataSource }) => {
                 </div>
               </Button>
               <Button
-                className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-red-700 active:bg-red-800 transition-colors duration-200"
+                className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-orange-400 active:bg-red-800 transition-colors duration-200"
                 onClick={() => setFixModal(false)}
               >
                 <div className="flex items-center">

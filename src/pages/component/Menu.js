@@ -37,21 +37,22 @@ const Menu = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-400 to-pink-300 text-white flex z-50 h-36">
-        <div className="flex justify-start w-4/5 ml-24 text-white ">
-          <span
-            className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 in"
-            onClick={handleHomePage}
-          >
-            Review.com
-          </span>
-
-          <Searchform />
+      <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-400 to-pink-300  flex z-50 h-36">
+        <div className=" w-4/5 ml-24 ">
+          <div className=" flex">
+            <span
+              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white "
+              onClick={handleHomePage}
+            >
+              Review.com
+            </span>
+            <Searchform />
+          </div>
+          <Product />
         </div>
-
         <div>
           {profile ? (
-            <div className="mr-2">
+            <div className="mr-2 mt-2">
               <ProfileToggle profile={profile} />
             </div>
           ) : (
