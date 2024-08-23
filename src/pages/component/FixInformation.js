@@ -5,7 +5,10 @@ import axios from "axios";
 import RatingStarz from "./RatingStarz";
 import Dropdownz from "./Dropdownz";
 import Upload2 from "./upload2";
-
+import { IoTrashBin } from "react-icons/io5";
+import { ImCross } from "react-icons/im";
+import { FaCheck } from "react-icons/fa";
+import ModalConfirm from "./ModalConfirm";
 const FixInformation = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -15,7 +18,16 @@ const FixInformation = ({ dataSource }) => {
   const [type, setType] = useState("");
   const [rating, setRating] = useState(0);
   const [uploadStatus, setUploadStatus] = useState("");
-  const [imageId, setImageId] = useState(null); // Add imageId state
+  const [imageId, setImageId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  // Add imageId state
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -76,8 +88,8 @@ const FixInformation = ({ dataSource }) => {
       console.log("Server response:", response); // ตรวจสอบการตอบกลับจากเซิร์ฟเวอร์
 
       if (response.status === 200) {
-        alert(response.data.message);
-        // ทำการอัปเดต UI ตามความเหมาะสม เช่น การลบภาพออกจาก state
+        setFixModal(false); // ปิด Modal หลังจากลบเสร็จสิ้น
+        window.location.reload(); // รีเฟรชหน้าเพื่อแสดงข้อมูลที่อัปเดต
       } else {
         alert(response.data.message || "Failed to delete image");
       }
@@ -88,7 +100,10 @@ const FixInformation = ({ dataSource }) => {
   };
   return (
     <>
-      <Button onClick={() => setFixModal(true)} className="text-black">
+      <Button
+        onClick={() => setFixModal(true)}
+        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200"
+      >
         แก้ไข
       </Button>
       {fixModal && (
@@ -144,20 +159,37 @@ const FixInformation = ({ dataSource }) => {
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
               >
-                ยืนยัน
+                <div className="flex items-center">
+                  <FaCheck className="mr-2 text-sm " />
+                  <span className="text-sm">ยืนยัน</span>
+                </div>
               </Button>
               <Button
                 className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-red-700 active:bg-red-800 transition-colors duration-200"
                 onClick={() => setFixModal(false)}
               >
-                ยกเลิก
+                <div className="flex items-center">
+                  <ImCross className="mr-2 text-sm " />
+                  <span className="text-sm">ยกเลิก</span>
+                </div>
               </Button>
-              <Button
-                onClick={() => deleteImage(imageId)}
-                className="w-32 bg-black text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-pink-500 active:bg-pink-500 transition-colors duration-200"
-              >
-                ลบข้อมูล
-              </Button>
+              <div>
+                <Button
+                  onClick={handleDeleteClick}
+                  className="w-32 bg-black text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-purple-500 active:bg-purple-500 transition-colors duration-200 flex items-center justify-center"
+                >
+                  <div className="flex items-center">
+                    <IoTrashBin className="mr-2 text-sm" />
+                    <span className="text-sm">ลบข้อมูล</span>
+                  </div>
+                </Button>
+
+                <ModalConfirm
+                  isOpen={isModalOpen}
+                  imageId={imageId}
+                  onClose={handleCloseModal}
+                />
+              </div>
             </div>
           </Modal>
           {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
