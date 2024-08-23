@@ -6,7 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import Product from "../component/Product";
 import { Button } from "flowbite-react";
-import FixInformation from "../component/Fixinformation";
+import FixInformation from "../component/FixInformation";
 
 const Monitor = () => {
   const router = useRouter();

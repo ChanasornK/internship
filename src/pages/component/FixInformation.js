@@ -15,7 +15,7 @@ const FixInformation = ({ dataSource }) => {
   const [type, setType] = useState("");
   const [rating, setRating] = useState(0);
   const [uploadStatus, setUploadStatus] = useState("");
-
+  const [imageId, setImageId] = useState(null); // Add imageId state
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -24,6 +24,7 @@ const FixInformation = ({ dataSource }) => {
       setType(dataSource.type || "");
       setRating(dataSource.rating || 0);
       setImage(dataSource?.src || null);
+      setImageId(dataSource?.id || null); // Set imageId from dataSource
       // If image URL is provided, you can set it as well
       // setImage(dataSource.image || null);
     }
@@ -45,10 +46,11 @@ const FixInformation = ({ dataSource }) => {
     if (type) formData.append("type", type);
     formData.append("rating", rating);
     formData.append("link", link);
+    formData.append("id", dataSource?.id);
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/uploadImage",
+        "http://localhost:8000/update",
         formData,
         {
           headers: {
@@ -60,11 +62,30 @@ const FixInformation = ({ dataSource }) => {
       console.log(response.data);
       window.location.reload();
     } catch (error) {
-      setUploadStatus(`Upload failed: ${error.message}`);
+      setUploadStatus(`Upload Failed: ${error.message}`);
       console.error("Error uploading file:", error);
     }
   };
+  const deleteImage = async (imageId) => {
+    try {
+      console.log("Deleting image with ID:", imageId); // ตรวจสอบค่า imageId
+      const response = await axios.delete("http://localhost:8000/deleteImage", {
+        data: { id: imageId },
+      });
 
+      console.log("Server response:", response); // ตรวจสอบการตอบกลับจากเซิร์ฟเวอร์
+
+      if (response.status === 200) {
+        alert(response.data.message);
+        // ทำการอัปเดต UI ตามความเหมาะสม เช่น การลบภาพออกจาก state
+      } else {
+        alert(response.data.message || "Failed to delete image");
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      alert("Error deleting image");
+    }
+  };
   return (
     <>
       <Button onClick={() => setFixModal(true)} className="text-black">
@@ -72,7 +93,10 @@ const FixInformation = ({ dataSource }) => {
       </Button>
       {fixModal && (
         <>
-          <div className="fixed inset-0 bg-gray-700 opacity-75 z-50"></div>
+          <div
+            className="fixed inset-0 bg-gray-700 opacity-75 z-50"
+            onClick={() => setFixModal(false)}
+          ></div>
           <Modal
             dismissible
             show={fixModal}
@@ -127,6 +151,12 @@ const FixInformation = ({ dataSource }) => {
                 onClick={() => setFixModal(false)}
               >
                 ยกเลิก
+              </Button>
+              <Button
+                onClick={() => deleteImage(imageId)}
+                className="w-32 bg-black text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-pink-500 active:bg-pink-500 transition-colors duration-200"
+              >
+                ลบข้อมูล
               </Button>
             </div>
           </Modal>

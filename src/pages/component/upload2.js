@@ -3,7 +3,7 @@ import { FileInput, Label } from "flowbite-react";
 
 const Upload2 = ({ setImage, image }) => {
   const [imagePreview, setImagePreview] = useState(image || "");
-  console.log(image);
+  // console.log(image);
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     setImage(file);

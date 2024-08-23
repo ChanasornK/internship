@@ -5,13 +5,16 @@ import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import Product from "../component/Product";
+import { Button } from "flowbite-react";
+import FixInformation from "../component/FixInformation";
 
 const Laptop = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
   const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
-
+  const [role, setRole] = useState(null); // เก็บค่า role
+  const [fixModal, setFixModal] = useState(false);
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -22,7 +25,6 @@ const Laptop = () => {
         try {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
-
           const validImageDataArray = imageDataArray
             .filter((image) => image.type === "Laptop")
             .map((image) => {
@@ -116,7 +118,7 @@ const Laptop = () => {
     <>
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
-      <div className="flex justify-between w-full ">
+        <div className="flex justify-between w-full ">
           <div className="ml-10">
             <Product />
           </div>
@@ -138,7 +140,7 @@ const Laptop = () => {
                       <img
                         src={image.src}
                         alt={`Fetched Image ${index}`}
-                        className="w-auto h-64 object-cover transform transition-transform duration-200 hover:scale-110"
+                        className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-110"
                       />
                       <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {image.detail}
@@ -146,14 +148,19 @@ const Laptop = () => {
                     </div>
                   )}
                 </button>
-
                 <div className="mt-28">
-                  <RatingStarz getRating={image.rating} isEnabled={false} />
-                  <div className="flex justify-between">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <RatingStarz getRating={image.rating} isEnabled={false} />
+                    </div>
+                    <FixInformation dataSource={image} />
+                  </div>
+
+                  <div className="flex justify-between mt-2">
                     <span className="text-red-600 font-medium">
                       {image.price}
                     </span>
-                    <div className="ml-1"> {image.views} views</div>
+                    <div className="ml-1">{image.views} views</div>
                   </div>
                 </div>
               </div>
