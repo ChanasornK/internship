@@ -6,6 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import Product from "../component/Product";
 import { Button } from "flowbite-react";
+import FixInformation from "../component/Fixinformation";
 
 const Monitor = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const Monitor = () => {
   const [image, setImages] = useState([]);
   const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
   const [role, setRole] = useState(null); // เก็บค่า role
-
+  const [fixModal, setFixModal] = useState(false);
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -149,9 +150,12 @@ const Monitor = () => {
                 </button>
                 <div className="mt-28">
                   <div className="flex items-center justify-between">
-                    <RatingStarz getRating={image.rating} isEnabled={false} />
-                    <Button className="ml-auto text-black">แก้ไข</Button>
+                    <div className="flex items-center">
+                      <RatingStarz getRating={image.rating} isEnabled={false} />
+                    </div>
+                    <FixInformation dataSource={image} />
                   </div>
+
                   <div className="flex justify-between mt-2">
                     <span className="text-red-600 font-medium">
                       {image.price}

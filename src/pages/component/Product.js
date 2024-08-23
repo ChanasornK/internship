@@ -8,6 +8,7 @@ import { LuCpu } from "react-icons/lu";
 import { PiGraphicsCard } from "react-icons/pi";
 import { PiMouseLight } from "react-icons/pi";
 import { FaRegKeyboard } from "react-icons/fa";
+import { BiCategory } from "react-icons/bi";
 import { BsFillMotherboardFill } from "react-icons/bs";
 const Product = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,10 +44,11 @@ const Product = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <Button
-        className="mt-[150px] bg-gray-200 flex items-center text-black"
+        className="mt-[150px] bg-gray-200 flex items-center justify-between text-black"
         onClick={toggleDropdown}
       >
-        หมวดหมู่
+        <BiCategory className="mr-2 mt-1 text-base flex-shrink-0" />
+        <span className="flex-grow">หมวดหมู่</span>
         <svg
           className="w-6 h-6 ml-2 text-gray-800 dark:text-white"
           aria-hidden="true"

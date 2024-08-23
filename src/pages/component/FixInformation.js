@@ -1,33 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
 import Upload from "./Upload";
 import axios from "axios";
 import RatingStarz from "./RatingStarz";
 import Dropdownz from "./Dropdownz";
+import Upload2 from "./upload2";
 
-const Information = () => {
+const FixInformation = ({ dataSource }) => {
+  const [fixModal, setFixModal] = useState(false);
+  const [image, setImage] = useState(null);
+  const [price, setPrice] = useState("");
+  const [detail, setDetail] = useState("");
+  const [link, setLink] = useState("");
+  const [type, setType] = useState("");
+  const [rating, setRating] = useState(0);
+  const [uploadStatus, setUploadStatus] = useState("");
+
+  useEffect(() => {
+    if (dataSource) {
+      setPrice(dataSource.price || "");
+      setDetail(dataSource.detail || "");
+      setLink(dataSource.link || "");
+      setType(dataSource.type || "");
+      setRating(dataSource.rating || 0);
+      setImage(dataSource?.src || null);
+      // If image URL is provided, you can set it as well
+      // setImage(dataSource.image || null);
+    }
+  }, [dataSource]);
+
   const handleRatingSelect = (selectedRating) => {
     setRating(selectedRating);
   };
+
   const handleTypeSelect = (selectedItem) => {
     setType(selectedItem);
   };
-  const [openModal, setOpenModal] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState("");
-  const [price, setPrice] = useState("");
-  const [detail, setDetail] = useState("");
-  const [image, setImage] = useState(null);
-  const [type, setType] = useState(null);
-  const [rating, setRating] = useState(0);
-  const [link, setLink] = useState("");
+
   const handleConfirm = async () => {
     const formData = new FormData();
-    formData.append("image", image);
+    if (image) formData.append("image", image);
     formData.append("price", price);
     formData.append("detail", detail);
-    formData.append("type", type);
+    if (type) formData.append("type", type);
     formData.append("rating", rating);
     formData.append("link", link);
+
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -49,28 +67,21 @@ const Information = () => {
 
   return (
     <>
-      <Button
-        className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 mt-44 "
-        onClick={() => setOpenModal(true)}
-      >
-        เพิ่มข้อมูล
+      <Button onClick={() => setFixModal(true)} className="text-black">
+        แก้ไข
       </Button>
-
-      {openModal && (
+      {fixModal && (
         <>
-          <div
-            className="fixed inset-0 bg-gray-700 opacity-75 z-50"
-            onClick={() => setOpenModal(false)}
-          ></div>
+          <div className="fixed inset-0 bg-gray-700 opacity-75 z-50"></div>
           <Modal
             dismissible
-            show={openModal}
-            onClose={() => setOpenModal(false)}
+            show={fixModal}
+            onClose={() => setFixModal(false)}
             className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen"
           >
             <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end"></Modal.Header>
             <div className="w-auto p-10 ">
-              <Upload setImage={setImage} />
+              <Upload2 setImage={setImage} image={image} />
             </div>
             <input
               id="detail-input"
@@ -94,22 +105,17 @@ const Information = () => {
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
-            <div className="flex items-center mt-6 ">
-              <Dropdownz
-                onSelectItem={handleTypeSelect}
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              />
+            <div className="flex items-center mt-6">
+              <Dropdownz onSelectItem={handleTypeSelect} value={type} />
               <div className="ml-7">
                 <RatingStarz
                   onRatingSelect={handleRatingSelect}
                   value={rating}
-                  onChange={(e) => setRating(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className="flex pb-4 justify-center gap-4 mt-12 ">
+            <div className="flex pb-4 justify-center gap-4 mt-12">
               <Button
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
@@ -118,7 +124,7 @@ const Information = () => {
               </Button>
               <Button
                 className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-red-700 active:bg-red-800 transition-colors duration-200"
-                onClick={() => setOpenModal(false)}
+                onClick={() => setFixModal(false)}
               >
                 ยกเลิก
               </Button>
@@ -131,4 +137,4 @@ const Information = () => {
   );
 };
 
-export default Information;
+export default FixInformation;
