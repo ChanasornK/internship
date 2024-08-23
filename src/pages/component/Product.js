@@ -1,7 +1,14 @@
 import { Button } from "flowbite-react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
-
+import { PiMonitor } from "react-icons/pi";
+import { MdLaptopMac } from "react-icons/md";
+import { BsMemory } from "react-icons/bs";
+import { LuCpu } from "react-icons/lu";
+import { PiGraphicsCard } from "react-icons/pi";
+import { PiMouseLight } from "react-icons/pi";
+import { FaRegKeyboard } from "react-icons/fa";
+import { BsFillMotherboardFill } from "react-icons/bs";
 const Product = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -67,51 +74,60 @@ const Product = () => {
         <ul>
           <li
             onClick={() => handleNavigation("../IT/Monitor")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Monitor
+            <PiMonitor className="mr-2" />
+            <span className="flex-grow">Monitor</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Laptop")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Laptop
+            <MdLaptopMac className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow">Laptop</span>
           </li>
+
           <li
             onClick={() => handleNavigation("../IT/Ram")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Ram
+            <BsMemory className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow">Ram</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Cpu")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            CPU
+            <LuCpu className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow">CPU</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Graphic")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Graphic Card
+            <PiGraphicsCard className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow">Graphic Card</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Mouse")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Mouse
+            <PiMouseLight className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow"> Mouse</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Keyboard")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Keyboard
+            <FaRegKeyboard className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow"> Keyboard</span>
           </li>
           <li
             onClick={() => handleNavigation("../IT/Mainboard")}
-            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2"
+            className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            Mainboard
+            <BsFillMotherboardFill className="mr-2 text-base flex-shrink-0" />
+            <span className="flex-grow"> Mainboard</span>
           </li>
         </ul>
       </div>
