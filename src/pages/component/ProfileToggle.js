@@ -16,6 +16,14 @@ const ProfileToggle = ({ profile }) => {
   };
   const defaultPhotoURL =
     "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
+    
+  const storedData = localStorage.getItem("profile");
+  if (storedData) {
+    const profile = JSON.parse(storedData);
+    const role = profile?.userData?.role;
+    console.log("User role:", role);
+    // ใช้ค่า role ตามต้องการ
+  }
   return (
     <>
       <div className="relative inline-block text-left flex">

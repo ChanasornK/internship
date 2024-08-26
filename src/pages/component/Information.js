@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
 import Upload from "./Upload";
 import axios from "axios";
 import RatingStarz from "./RatingStarz";
 import Dropdownz from "./Dropdownz";
 import { IoMdAddCircle } from "react-icons/io";
+
 const Information = () => {
-  const handleRatingSelect = (selectedRating) => {
-    setRating(selectedRating);
-  };
-  const handleTypeSelect = (selectedItem) => {
-    setType(selectedItem);
-  };
   const [openModal, setOpenModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
   const [price, setPrice] = useState("");
@@ -20,6 +15,21 @@ const Information = () => {
   const [type, setType] = useState(null);
   const [rating, setRating] = useState(0);
   const [link, setLink] = useState("");
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role || "user");
+    }
+  }, []);
+  const handleTypeSelect = (selectedItem) => {
+    setType(selectedItem);
+  };
+  const handleRatingSelect = (selectedRating) => {
+    setRating(selectedRating);
+  };
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("image", image);
@@ -49,15 +59,17 @@ const Information = () => {
 
   return (
     <>
-      <Button
-        className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 mt-44 "
-        onClick={() => setOpenModal(true)}
-      >
-        <div className="flex items-center">
-          <IoMdAddCircle className="mr-1 text-sm " />
-          <span className="text-sm">เพิ่มข้อมูล</span>
-        </div>
-      </Button>
+      {role !== "user" && (
+        <Button
+          className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 "
+          onClick={() => setOpenModal(true)}
+        >
+          <div className="flex items-center">
+            <IoMdAddCircle className="mr-1 text-sm " />
+            <span className="text-sm">เพิ่มข้อมูล</span>
+          </div>
+        </Button>
+      )}
 
       {openModal && (
         <>
@@ -69,10 +81,10 @@ const Information = () => {
             dismissible
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen "
+            className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen"
           >
             <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end"></Modal.Header>
-            <div className="w-auto p-10 ">
+            <div className="w-auto p-10">
               <Upload setImage={setImage} />
             </div>
             <input
@@ -97,7 +109,7 @@ const Information = () => {
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
-            <div className="flex items-center mt-6 ">
+            <div className="flex items-center mt-6">
               <Dropdownz
                 onSelectItem={handleTypeSelect}
                 value={type}
@@ -112,7 +124,7 @@ const Information = () => {
               </div>
             </div>
 
-            <div className="flex pb-4 justify-center gap-4 mt-12 ">
+            <div className="flex pb-4 justify-center gap-4 mt-12">
               <Button
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"

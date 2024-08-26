@@ -119,7 +119,7 @@ const Graphic = () => {
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
         <div className="flex justify-end w-full ">
-          <div className="mr-10">
+        <div className="mr-10 mt-44">
             <Information />
           </div>
         </div>

@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Searchform from "./component/Searchform";
 import Slide from "./Slide";
-import { Button } from "flowbite-react";
 import ProfileToggle from "./component/ProfileToggle";
-import axios from "axios";
-import Menu from "./component/Menu";
 const index = () => {
   const handleCpu = () => {
     router.push("./IT/Cpu");

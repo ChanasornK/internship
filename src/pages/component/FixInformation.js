@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
-import Upload from "./Upload";
 import axios from "axios";
 import RatingStarz from "./RatingStarz";
 import Dropdownz from "./Dropdownz";
@@ -9,6 +8,7 @@ import { IoTrashBin } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
 import ModalConfirm from "./ModalConfirm";
+
 const FixInformation = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -20,14 +20,7 @@ const FixInformation = ({ dataSource }) => {
   const [uploadStatus, setUploadStatus] = useState("");
   const [imageId, setImageId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleDeleteClick = () => {
-    setIsModalOpen(true);
-  };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-  // Add imageId state
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -37,8 +30,6 @@ const FixInformation = ({ dataSource }) => {
       setRating(dataSource.rating || 0);
       setImage(dataSource?.src || null);
       setImageId(dataSource?.id || null); // Set imageId from dataSource
-      // If image URL is provided, you can set it as well
-      // setImage(dataSource.image || null);
     }
   }, [dataSource]);
 
@@ -78,6 +69,15 @@ const FixInformation = ({ dataSource }) => {
       console.error("Error uploading file:", error);
     }
   };
+
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const deleteImage = async (imageId) => {
     try {
       console.log("Deleting image with ID:", imageId); // ตรวจสอบค่า imageId
@@ -98,6 +98,7 @@ const FixInformation = ({ dataSource }) => {
       alert("Error deleting image");
     }
   };
+
   return (
     <>
       <Button

@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
-import Product from "../component/Product";
-import { Button } from "flowbite-react";
 import FixInformation from "../component/FixInformation";
 
 const Monitor = () => {
@@ -38,6 +36,7 @@ const Monitor = () => {
                 type: image.type,
                 rating: image.rating,
                 views: image.view,
+               
               };
             });
 
@@ -119,7 +118,7 @@ const Monitor = () => {
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
         <div className="flex justify-end w-full ">
-          <div className="mr-10">
+          <div className="mr-10 mt-44">
             <Information />
           </div>
         </div>

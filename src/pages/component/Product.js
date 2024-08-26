@@ -6,7 +6,7 @@ import { MdLaptopMac } from "react-icons/md";
 import { BsMemory } from "react-icons/bs";
 import { LuCpu } from "react-icons/lu";
 import { PiGraphicsCard } from "react-icons/pi";
-import { PiMouseLight } from "react-icons/pi";
+import { BsFillMouse2Fill } from "react-icons/bs";
 import { FaRegKeyboard } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
 import { BsFillMotherboardFill } from "react-icons/bs";
@@ -114,7 +114,7 @@ const Product = () => {
             onClick={() => handleNavigation("../IT/Mouse")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
-            <PiMouseLight className="mr-3 text-base flex-shrink-0" />
+            <BsFillMouse2Fill className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow"> Mouse</span>
           </li>
           <li
