@@ -4,6 +4,7 @@ import Searchform from "./component/Searchform";
 import Slide from "./Slide";
 import ProfileToggle from "./component/ProfileToggle";
 import { BiSolidCategory } from "react-icons/bi";
+import { FaRegSmileWink } from "react-icons/fa";
 const index = () => {
   const handleCpu = () => {
     router.push("./IT/Cpu");
@@ -98,7 +99,7 @@ const index = () => {
         </div>
       </header>
       <div className=" w-full h-[55%] bg-[#F8F5FD] mt-36  ">
-        <div className="inline-flex items-center font-medium text-xl font-sans px-4 py-2 border-2 border-gray-300 rounded-lg ml-48 mt-4">
+        <div className="inline-flex items-center font-medium text-xl font-sans px-4 py-2 border-2 border-gray-300 rounded-lg ml-48 mt-4 bg-gradient-to-b from-purple-400 to-pink-300">
           <BiSolidCategory className="mr-2" />
           หมวดหมู่สินค้า
         </div>
@@ -201,9 +202,11 @@ const index = () => {
       </div>
 
       <div className="bg-[#F8F5FD]  w-full h-[500px] overflow-hidden">
-        <h1 className="ml-52 pt-10 mb-10 font-medium text-2xl font-sans ">
-          Most View
-        </h1>
+        <div className="inline-flex items-center font-medium text-xl font-sans px-4 py-2 border-2 border-gray-300 rounded-lg ml-48 mt-4 bg-gradient-to-b from-purple-400 to-pink-300">
+          <FaRegSmileWink className="mr-3" />
+          Mostview
+        </div>
+
         <Slide />
       </div>
     </div>
