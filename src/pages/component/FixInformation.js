@@ -20,7 +20,14 @@ const FixInformation = ({ dataSource }) => {
   const [uploadStatus, setUploadStatus] = useState("");
   const [imageId, setImageId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [role, setRole] = useState("");
+  useEffect(() => {
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role || "user");
+    }
+  }, []);
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -101,12 +108,15 @@ const FixInformation = ({ dataSource }) => {
 
   return (
     <>
-      <Button
-        onClick={() => setFixModal(true)}
-        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400"
-      >
-        แก้ไข
-      </Button>
+      {role !== "user" && (
+        <Button
+          onClick={() => setFixModal(true)}
+          className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400 scroll-py-1  "
+        >
+          แก้ไข
+        </Button>
+      )}
+
       {fixModal && (
         <>
           <div

@@ -145,7 +145,7 @@ const Cpu = () => {
                     </div>
                   )}
                 </button>
-                <div className="mt-28">
+                <div className="mt-32">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <RatingStarz getRating={image.rating} isEnabled={false} />
