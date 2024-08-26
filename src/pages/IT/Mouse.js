@@ -4,19 +4,25 @@ import { useRouter } from "next/router";
 import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
-import Product from "../component/Product";
-import { Button } from "flowbite-react";
 import FixInformation from "../component/FixInformation";
 
 const Mouse = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
-  const [loading, setLoading] = useState(true); // สถานะการโหลดข้อมูล
-  const [role, setRole] = useState(null); // เก็บค่า role
-  const [fixModal, setFixModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
+  const [storedEmail, setStoredEmail] = useState(null);
+
   useEffect(() => {
     setIsClient(true);
+
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role);
+      setStoredEmail(profile?.userData?.email); // Save email to state
+    }
   }, []);
 
   useEffect(() => {
@@ -38,6 +44,7 @@ const Mouse = () => {
                 type: image.type,
                 rating: image.rating,
                 views: image.view,
+                email: image.email,
               };
             });
 
@@ -45,7 +52,7 @@ const Mouse = () => {
         } catch (error) {
           console.error("Error fetching images:", error);
         } finally {
-          setLoading(false); // ปิดการโหลดข้อมูลเมื่อโหลดเสร็จแล้ว
+          setLoading(false);
         }
       };
 
@@ -64,7 +71,6 @@ const Mouse = () => {
       });
 
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         return { data };
       } else {
@@ -88,8 +94,7 @@ const Mouse = () => {
   };
 
   if (!isClient || loading) {
-    // แสดง spinner ถ้ายังโหลดข้อมูลอยู่
-    return <LoadingModal />; // แสดง LoadingModal ระหว่างโหลด
+    return <LoadingModal />;
   }
 
   const handleImageClick = async (id, link) => {
@@ -119,28 +124,28 @@ const Mouse = () => {
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
         <div className="flex justify-end w-full ">
-        <div className="mr-10 mt-44">
+          <div className="mr-10 mt-44">
             <Information />
           </div>
         </div>
 
         <div className="flex justify-center items-center -mt-5 ">
           <div className="flex flex-wrap justify-center w-4/5 mb-5">
-            {image.map((image, index) => (
+            {image.map((img, index) => (
               <div
                 key={index}
                 className="w-64 p-4 border-2 border-[#FF8FAB] rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10"
               >
-                <button onClick={() => handleImageClick(image.id, image.link)}>
-                  {image.src && (
+                <button onClick={() => handleImageClick(img.id, img.link)}>
+                  {img.src && (
                     <div className="relative z-20 flex justify-center items-center">
                       <img
-                        src={image.src}
+                        src={img.src}
                         alt={`Fetched Image ${index}`}
                         className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
                       />
                       <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
-                        {image.detail}
+                        {img.detail}
                       </span>
                     </div>
                   )}
@@ -148,16 +153,17 @@ const Mouse = () => {
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <RatingStarz getRating={image.rating} isEnabled={false} />
+                      <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
-                    <FixInformation dataSource={image} />
+                    {((img.email === storedEmail && role) ||
+                      role === "admin") && <FixInformation dataSource={img} />}
                   </div>
 
                   <div className="flex justify-between mt-2">
                     <span className="text-red-600 font-medium">
-                      {image.price}
+                      {img.price}
                     </span>
-                    <div className="ml-1">{image.views} views</div>
+                    <div className="ml-1">{img.views} views</div>
                   </div>
                 </div>
               </div>

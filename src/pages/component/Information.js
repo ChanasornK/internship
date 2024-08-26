@@ -5,7 +5,8 @@ import axios from "axios";
 import RatingStarz from "./RatingStarz";
 import Dropdownz from "./Dropdownz";
 import { IoMdAddCircle } from "react-icons/io";
-
+import { FaCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 const Information = () => {
   const [openModal, setOpenModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
@@ -132,13 +133,19 @@ const Information = () => {
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
               >
-                ยืนยัน
+                <div className="flex items-center">
+                  <FaCheck className="mr-2 text-sm " />
+                  <span className="text-sm">ยืนยัน</span>
+                </div>
               </Button>
               <Button
                 className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-red-700 active:bg-red-800 transition-colors duration-200"
                 onClick={() => setOpenModal(false)}
               >
-                ยกเลิก
+                <div className="flex items-center">
+                  <ImCross className="mr-2 text-sm " />
+                  <span className="text-sm">ยกเลิก</span>
+                </div>
               </Button>
             </div>
           </Modal>

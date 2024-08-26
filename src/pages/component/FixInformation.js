@@ -8,7 +8,7 @@ import { IoTrashBin } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
 import ModalConfirm from "./ModalConfirm";
-
+import { MdOutlineAutoFixHigh } from "react-icons/md";
 const FixInformation = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -26,11 +26,11 @@ const FixInformation = ({ dataSource }) => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
       const profile = JSON.parse(storedData);
-    setEmail(profile?.userData?.email)
-    setRole(profile?.userData?.role || "user");
+      setEmail(profile?.userData?.email);
+      setRole(profile?.userData?.role || "user");
     }
   }, []);
-  console.log(email)
+  console.log(email);
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -54,7 +54,7 @@ const FixInformation = ({ dataSource }) => {
 
   const handleConfirm = async () => {
     const formData = new FormData();
-    console.log("form", formData)
+    console.log("form", formData);
     if (image) formData.append("image", image);
     formData.append("price", price);
     formData.append("detail", detail);
@@ -114,14 +114,13 @@ const FixInformation = ({ dataSource }) => {
 
   return (
     <>
-      
-        <Button
-          onClick={() => setFixModal(true)}
-          className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400 scroll-py-1  "
-        >
-          แก้ไข
-        </Button>
-    
+      <button
+        onClick={() => setFixModal(true)}
+        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400 px-2 rounded-lg flex items-center"
+      >
+        <MdOutlineAutoFixHigh className="mr-1" />
+        แก้ไข
+      </button>
 
       {fixModal && (
         <>

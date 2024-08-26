@@ -13,7 +13,6 @@ const Monitor = () => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
-  const [fixModal, setFixModal] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -153,14 +152,14 @@ const Monitor = () => {
                 </button>
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
+                    <div className="flex items-center mb-1">
                       <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
-                    {(((img.email === storedEmail) && role) ||
+                    {((img.email === storedEmail && role) ||
                       role === "admin") && <FixInformation dataSource={img} />}
                   </div>
 
-                  <div className="flex justify-between mt-2">
+                  <div className="flex justify-between items-center mt-2">
                     <span className="text-red-600 font-medium">
                       {img.price}
                     </span>
