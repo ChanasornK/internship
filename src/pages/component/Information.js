@@ -16,12 +16,14 @@ const Information = () => {
   const [rating, setRating] = useState(0);
   const [link, setLink] = useState("");
   const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const storedData = localStorage.getItem("profile");
 
   useEffect(() => {
-    const storedData = localStorage.getItem("profile");
     if (storedData) {
       const profile = JSON.parse(storedData);
       setRole(profile?.userData?.role || "user");
+      setEmail(profile?.userData?.email);
     }
   }, []);
   const handleTypeSelect = (selectedItem) => {
@@ -38,6 +40,7 @@ const Information = () => {
     formData.append("type", type);
     formData.append("rating", rating);
     formData.append("link", link);
+    formData.append("email", email);
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -59,7 +62,7 @@ const Information = () => {
 
   return (
     <>
-      {role !== "user" && (
+      {role && (
         <Button
           className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 "
           onClick={() => setOpenModal(true)}

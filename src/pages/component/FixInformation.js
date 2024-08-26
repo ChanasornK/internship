@@ -21,13 +21,16 @@ const FixInformation = ({ dataSource }) => {
   const [imageId, setImageId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
       const profile = JSON.parse(storedData);
-      setRole(profile?.userData?.role || "user");
+    setEmail(profile?.userData?.email)
+    setRole(profile?.userData?.role || "user");
     }
   }, []);
+  console.log(email)
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -35,6 +38,7 @@ const FixInformation = ({ dataSource }) => {
       setLink(dataSource.link || "");
       setType(dataSource.type || "");
       setRating(dataSource.rating || 0);
+      setImage(dataSource?.src || null);
       setImage(dataSource?.src || null);
       setImageId(dataSource?.id || null); // Set imageId from dataSource
     }
@@ -50,6 +54,7 @@ const FixInformation = ({ dataSource }) => {
 
   const handleConfirm = async () => {
     const formData = new FormData();
+    console.log("form", formData)
     if (image) formData.append("image", image);
     formData.append("price", price);
     formData.append("detail", detail);
@@ -57,6 +62,7 @@ const FixInformation = ({ dataSource }) => {
     formData.append("rating", rating);
     formData.append("link", link);
     formData.append("id", dataSource?.id);
+    formData.append("email", email);
 
     try {
       const response = await axios.post(
@@ -108,14 +114,14 @@ const FixInformation = ({ dataSource }) => {
 
   return (
     <>
-      {role !== "user" && (
+      
         <Button
           onClick={() => setFixModal(true)}
           className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400 scroll-py-1  "
         >
           แก้ไข
         </Button>
-      )}
+    
 
       {fixModal && (
         <>
