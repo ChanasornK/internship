@@ -136,7 +136,7 @@ const Monitor = () => {
                       <img
                         src={image.src}
                         alt={`Fetched Image ${index}`}
-                        className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-110"
+                        className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
                       />
                       <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {image.detail}

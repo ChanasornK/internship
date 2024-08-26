@@ -12,6 +12,7 @@ const ProfileToggle = ({ profile }) => {
     window.location.reload();
   };
   const handleChangeAccout = () => {
+    localStorage.setItem("profile", JSON.stringify(null));
     router.push("../Login");
   };
   const defaultPhotoURL =

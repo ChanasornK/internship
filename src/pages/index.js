@@ -4,7 +4,7 @@ import Searchform from "./component/Searchform";
 import Slide from "./Slide";
 import ProfileToggle from "./component/ProfileToggle";
 import { BiSolidCategory } from "react-icons/bi";
-import { FaRegSmileWink } from "react-icons/fa";
+import { BsFillEmojiSmileFill } from "react-icons/bs";
 const index = () => {
   const handleCpu = () => {
     router.push("./IT/Cpu");
@@ -32,9 +32,11 @@ const index = () => {
     router.push("./IT/Ram");
   };
   const handleGoRegister = () => {
+    localStorage.setItem("profile", JSON.stringify(null));
     router.push("./Register");
   };
   const handleGoLogin = () => {
+    localStorage.setItem("profile", JSON.stringify(null));
     router.push("./Login");
   };
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -99,7 +101,7 @@ const index = () => {
         </div>
       </header>
       <div className=" w-full h-[55%] bg-[#F8F5FD] mt-36  ">
-        <div className="inline-flex items-center font-medium text-xl font-sans px-4 py-2 border-2 border-gray-300 rounded-lg ml-48 mt-4 bg-gradient-to-b from-purple-400 to-pink-300">
+        <div className="flex items-center font-medium text-xl font-sans px-4 py-2  ml-48 pt-10 ">
           <BiSolidCategory className="mr-2" />
           หมวดหมู่สินค้า
         </div>
@@ -202,8 +204,8 @@ const index = () => {
       </div>
 
       <div className="bg-[#F8F5FD]  w-full h-[500px] overflow-hidden">
-        <div className="inline-flex items-center font-medium text-xl font-sans px-4 py-2 border-2 border-gray-300 rounded-lg ml-48 mt-4 bg-gradient-to-b from-purple-400 to-pink-300">
-          <FaRegSmileWink className="mr-3" />
+        <div className="flex items-center font-medium text-xl font-sans px-4 py-2  ml-48 mt-4 ">
+          <BsFillEmojiSmileFill className="mr-3 " />
           Mostview
         </div>
 

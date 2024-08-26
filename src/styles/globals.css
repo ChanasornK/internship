@@ -3,3 +3,10 @@
 @tailwind utilities;
 
 
+@layer utilities {
+    .border-gradient-pink-purple {
+      border-width: 2px;
+      border-style: solid;
+      border-image: linear-gradient(to right, #9c27b0, #ff4081) 1;
+    }
+  }

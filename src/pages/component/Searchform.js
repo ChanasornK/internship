@@ -57,30 +57,39 @@ const Searchform = () => {
           id="default-search"
           value={searchTerm}
           onChange={handleSearchChange}
-          className="block w-full p-4 ps-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="block w-full p-4 ps-12 text-sm text-gray-900 border-2 border-pink-400 rounded-lg bg-gray-100 focus:ring-blue-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-purple-500"
           placeholder="ค้นหาสินค้า ประเภทสินค้า"
           required
         />
-        <button
-          type="button"
-          className="text-white absolute end-2.5 bottom-2.5 bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        <svg
+          className="w-5 h-5 absolute top-4 left-4"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
         >
-          <svg
-            className="w-4 h-4"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-            />
-          </svg>
-        </button>
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop
+                offset="0%"
+                style={{ stopColor: "#9F7AEA", stopOpacity: 1 }}
+              />{" "}
+              {/* สี purple-400 */}
+              <stop
+                offset="100%"
+                style={{ stopColor: "#F472B6", stopOpacity: 1 }}
+              />{" "}
+              {/* สี pink-300 */}
+            </linearGradient>
+          </defs>
+          <path
+            stroke="url(#gradient)"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
       </div>
 
       {/* Display search results */}
