@@ -48,7 +48,9 @@ const Menu = () => {
             </span>
             <Searchform />
           </div>
-          <Product />
+          <div className="absolute top-[90px] w-full">
+            <Product />
+          </div>
         </div>
         <div>
           {profile ? (

@@ -44,7 +44,7 @@ const Product = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <Button
-        className=" bg-gray-200  text-black ml-2 mt-1"
+        className=" bg-gray-200  text-black ml-1 mt-1"
         onClick={toggleDropdown}
       >
         <BiCategory className="mr-2 mt-1 text-base flex-shrink-0" />

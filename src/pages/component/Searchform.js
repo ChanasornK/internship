@@ -1,29 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const Searchform = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const dropdownRef = useRef(null);
+
+  const handleSearchChange = async (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.length > 0) {
+      try {
+        const response = await axios.get("http://localhost:8000/searchImage", {
+          params: { searchTerm: value },
+        });
+
+        setSearchResults(response.data.imageData || []);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      }
+    } else {
+      setSearchResults([]); // Clear results if search term is empty
+    }
+  };
+
+  const handleOpenLinkInNewTab = (result) => {
+    window.open(result.link, "_blank");
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setSearchResults([]);
+      setSearchTerm(""); // Close dropdown when clicking outside
+    }
+  };
 
   useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (searchTerm) {
-        try {
-          const response = await axios.post("/searchImage", { searchTerm });
-          setSearchResults(response.data.imageData);
-        } catch (error) {
-          console.error("Error during search:", error);
-        }
-      } else {
-        setSearchResults([]);
-      }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-    
-    fetchSearchResults();
-  }, [searchTerm]);
+  }, []);
 
   return (
-    <div className="w-[55%] ml-32 mt-10">
+    <div className="w-[55%] ml-32 mt-10" ref={dropdownRef}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -34,16 +55,15 @@ const Searchform = () => {
         <input
           type="search"
           id="default-search"
+          value={searchTerm}
+          onChange={handleSearchChange}
           className="block w-full p-4 ps-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="ค้นหาสินค้า ประเภทสินค้า"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
           required
         />
         <button
           type="button"
           className="text-white absolute end-2.5 bottom-2.5 bg-gradient-to-br from-purple-500 to-pink-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() => setSearchTerm(searchTerm)}
         >
           <svg
             className="w-4 h-4"
@@ -63,15 +83,20 @@ const Searchform = () => {
         </button>
       </div>
 
-      {/* แสดงผลการค้นหา */}
-      <div className="mt-5">
-        {searchResults.map((result, index) => (
-          <div key={index} className="p-4 border-b border-gray-300">
-            <h3 className="text-lg font-semibold">{result.detail}</h3>
-            {/* เพิ่มการแสดงผลของข้อมูลอื่นๆ ที่ต้องการ */}
-          </div>
-        ))}
-      </div>
+      {/* Display search results */}
+      {searchResults.length > 0 && (
+        <div className="mt-4 bg-white rounded-lg shadow-md">
+          <ul>
+            {searchResults.map((result) => (
+              <li key={result.id} className="p-2 border-b border-gray-200">
+                <button onClick={() => handleOpenLinkInNewTab(result)}>
+                  {result.detail} - {result.type}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
