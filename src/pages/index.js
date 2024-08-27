@@ -86,20 +86,20 @@ const index = () => {
             </div>
           ) : (
             <div className="flex ml-10 mt-8 mx-auto">
-              <button
+              <Button
                 onClick={handleGoLogin}
                 className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans"
               >
                 <GrLogin className="mr-2" />
                 Login
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleGoRegister}
                 className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans ml-3"
               >
                 <FaUserPlus className="mr-1" />
                 Sign up
-              </button>
+              </Button>
             </div>
           )}
         </div>

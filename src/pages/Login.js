@@ -251,7 +251,7 @@ const Login = () => {
             <button
               onClick={handleClickSignup}
               type="button"
-              className="text-[#4285F4] text-base font-bold ml-3"
+              className="text-[#4285F4] text-base font-bold ml-2"
             >
               Sign Up
             </button>

@@ -17,7 +17,9 @@ const Register = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+  const Already = () => {
+    router.push("./Login");
+  };
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
@@ -116,7 +118,7 @@ const Register = () => {
           <div className="mb-3">
             <label
               htmlFor="text"
-              className=" mb-7 text-xl font-medium text-pink-400 dark:text-white mt-10 flex justify-center"
+              className=" mb-10 text-xl font-medium text-black dark:text-white mt-7 flex justify-center"
             >
               Register
             </label>
@@ -152,7 +154,6 @@ const Register = () => {
             </button>
           </div>
           <div className="mb-5">
-            
             <div className="flex justify-center mb-7 mt-7">
               <div className="bg-white h-0.5 border-stone-300 w-full mt-3 "></div>
               <button className="mx-2">or</button>
@@ -224,36 +225,24 @@ const Register = () => {
             </div>
           </div>
           {error && <p className="text-red-500 mb-5">{error}</p>}
-          <div className="flex items-start mb-5">
-            <div className="flex items-center h-5">
-              <input
-                id="remember"
-                type="checkbox"
-                value=""
-                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                required
-              />
-            </div>
-            <div className="flex ">
-              <h1
-                htmlFor="remember"
-                className="ms-2 text-sm font-medium text-[#6B7280] dark:text-gray-300"
-              >
-                Remember me
-              </h1>
-              
-            </div>
-          </div>
-          <div className="text-base font-normal flex mt-1">
+          <div className="flex items-start"></div>
+          <div className="text-base font-normal flex  ">
             <button
-              onClick={handleSignup}
-              disabled={loading} // Disable button while loading
+              onClick={Already}
               type="button"
-              className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              className="text-[#4285F4] text-base font-bold "
             >
-              {loading ? "Signing up..." : "Sign up"}
+              Already have accout ?
             </button>
           </div>
+          <button
+            onClick={handleSignup}
+            disabled={loading} // Disable button while loading
+            type="button"
+            className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mt-5 w-full h-12"
+          >
+            {loading ? "Signing up..." : "Sign up"}
+          </button>
         </form>
       </div>
     </div>
