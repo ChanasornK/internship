@@ -53,36 +53,31 @@ const Register = () => {
     }
   };
   const handleSignup = async () => {
-    if (!email || !password) {
-      setError("กรุณากรอก Email และ Password.");
-      try {
-        const result = await register(email, password);
-        console.log(result?.data);
-        if (result) {
-          localStorage.setItem("profile", JSON.stringify(result?.data));
-          router.push("./");
-        } else {
-          setError("การเข้าสู้ระบบล้มเหลว โปรดตรวจสอบ email และ password");
-        }
-      } catch (error) {
-        // Handle unexpected errors (e.g., network issues)
-        console.error("Error during sign-in:", error);
-        setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
-      }
+    if (!email || !password || !confirmPassword) {
+      setError("กรุณากรอก Email, Password ");
+      return;
     }
-    setLoading(true); // Set loading state to true
-    setTimeout(() => {
-      router.push("./Login"); // Navigate to desired route after 2 seconds
-      setLoading(false); // Set loading state back to false
-    }, 1000);
 
-    // ตรวจสอบข้อมูลผู้ใช้
-    const verificationResult = await register(email, password);
-    if (verificationResult) {
-      console.log("Register successful");
-      router.push("./Login");
-    } else {
-      setError("Invalid email or password.");
+    if (password !== confirmPassword) {
+      setError("Password และ Confirm Password ไม่ตรงกัน.");
+      return;
+    }
+
+    try {
+      setLoading(true); // Set loading state to true
+      const result = await register(email, password);
+      if (result) {
+        localStorage.setItem("profile", JSON.stringify(result?.data));
+        alert("Sign Up Successful!"); // แจ้งเตือนเมื่อ Sign Up สำเร็จ
+        router.push("./Login");
+      } else {
+        setError("การลงทะเบียนล้มเหลว โปรดตรวจสอบ Email และ Password");
+      }
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+      setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
+    } finally {
+      setLoading(false); // Set loading state back to false
     }
   };
   const register = async (email, password) => {
@@ -169,10 +164,11 @@ const Register = () => {
               </label>
               <input
                 type="text"
+                placeholder="example@gmail.com"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
               />
             </div>
             <div>
@@ -190,7 +186,7 @@ const Register = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-10"
+                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
                   />
                   <div
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer mt-4"
@@ -212,7 +208,7 @@ const Register = () => {
                     id="confirm-password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-10"
+                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
                   />
                   <div
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer mt-4"
@@ -225,12 +221,12 @@ const Register = () => {
             </div>
           </div>
           {error && <p className="text-red-500 mb-5">{error}</p>}
-          <div className="flex items-start"></div>
-          <div className="text-base font-normal flex  ">
+
+          <div className="text-base font-normal flex ">
             <button
               onClick={Already}
               type="button"
-              className="text-[#4285F4] text-base font-bold "
+              className="font-bold text-[#1C64F2] text-sm  hover:text-purple-600 transition-colors duration-200 hover:underline "
             >
               Already have accout ?
             </button>
@@ -239,7 +235,7 @@ const Register = () => {
             onClick={handleSignup}
             disabled={loading} // Disable button while loading
             type="button"
-            className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mt-5 w-full h-12"
+            className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mt-7 w-full h-12"
           >
             {loading ? "Signing up..." : "Sign up"}
           </button>

@@ -182,10 +182,11 @@ const Login = () => {
               </label>
               <input
                 type="text"
+                placeholder="example@gmail.com"
                 id="email-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
               />
             </div>
             <div className="mb-5">
@@ -202,8 +203,9 @@ const Login = () => {
                   id="password-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-10"
+                  className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
                 />
+
                 <div
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={togglePasswordVisibility}
@@ -231,8 +233,8 @@ const Login = () => {
               </h1>
               <button
                 onClick={ResetPassword}
-                type="button" // เพิ่ม type="button"
-                className="text-[#1C64F2] flex justify-end text-sm ml-36"
+                type="button"
+                className="font-bold text-[#1C64F2] flex justify-end text-sm ml-36 hover:text-purple-600 transition-colors duration-200 hover:underline "
               >
                 Forget Password?
               </button>
@@ -251,7 +253,7 @@ const Login = () => {
             <button
               onClick={handleClickSignup}
               type="button"
-              className="text-[#4285F4] text-base font-bold ml-2"
+              className="text-[#4285F4] text-base font-bold ml-2 hover:underline  hover:text-purple-600"
             >
               Sign Up
             </button>
