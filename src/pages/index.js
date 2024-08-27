@@ -5,6 +5,8 @@ import Slide from "./Slide";
 import ProfileToggle from "./component/ProfileToggle";
 import { BiSolidCategory } from "react-icons/bi";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
+import { GrLogin } from "react-icons/gr";
+import { FaUserPlus } from "react-icons/fa6";
 const index = () => {
   const handleCpu = () => {
     router.push("./IT/Cpu");
@@ -83,18 +85,20 @@ const index = () => {
               <ProfileToggle profile={profile} />
             </div>
           ) : (
-            <div className="flex ml-3 mt-8 mx-auto">
+            <div className="flex ml-10 mt-8 mx-auto">
               <button
                 onClick={handleGoLogin}
-                className="bg-white text-blue-600 h-10 px-2 rounded hover:bg-[#D1D5DB]/90"
+                className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans"
               >
-                เข้าสู่ระบบ
+                <GrLogin className="mr-2" />
+                Login
               </button>
               <button
                 onClick={handleGoRegister}
-                className="bg-white text-blue-600 h-10 ml-3 px-2 rounded hover:bg-[#D1D5DB]/90"
+                className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans ml-3"
               >
-                ลงทะเบียน
+                <FaUserPlus className="mr-1" />
+                Sign up
               </button>
             </div>
           )}

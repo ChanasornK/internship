@@ -65,7 +65,7 @@ const Information = () => {
     <>
       {role && (
         <Button
-          className="bg-white text-black hover:bg-gray-300 border-2 border-blue-300 "
+          className="bg-gray-200 text-black hover:bg-gradient-to-br from-purple-400 to-pink-300 border-2 border-purple-400 "
           onClick={() => setOpenModal(true)}
         >
           <div className="flex items-center">
