@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { getAuth, FacebookAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithCredential, EmailAuthProvider } from "firebase/auth";
+import { getAuth,  } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyBylDDHpDgZq-D57rfekXxjXqzI957fJKs",
   authDomain: "form-f8d6c.firebaseapp.com",

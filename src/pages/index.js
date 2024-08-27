@@ -7,6 +7,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
+import { Button } from "flowbite-react";
 const index = () => {
   const handleCpu = () => {
     router.push("./IT/Cpu");
@@ -86,20 +87,20 @@ const index = () => {
             </div>
           ) : (
             <div className="flex ml-10 mt-8 mx-auto">
-              <Button
+              <button
                 onClick={handleGoLogin}
                 className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans"
               >
                 <GrLogin className="mr-2" />
                 Login
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={handleGoRegister}
                 className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans ml-3"
               >
                 <FaUserPlus className="mr-1" />
                 Sign up
-              </Button>
+              </button>
             </div>
           )}
         </div>
