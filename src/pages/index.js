@@ -8,6 +8,8 @@ import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
 import { Button } from "flowbite-react";
+import AutoSlider from "./AutoSlider";
+import Menu from "./component/Menu";
 const index = () => {
   const handleCpu = () => {
     router.push("./IT/Cpu");
@@ -68,43 +70,10 @@ const index = () => {
   console.log(userProfile);
   return (
     <div className="w-full h-auto  ">
-      <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-400 to-pink-300  flex z-50 h-36">
-        <div className=" w-4/5 ml-24 ">
-          <div className=" flex">
-            <span
-              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white "
-              onClick={handleHomePage}
-            >
-              Review.com
-            </span>
-            <Searchform />
-          </div>
-        </div>
-        <div>
-          {profile ? (
-            <div className="mr-2 mt-2">
-              <ProfileToggle profile={profile} />
-            </div>
-          ) : (
-            <div className="flex ml-10 mt-8 mx-auto">
-              <button
-                onClick={handleGoLogin}
-                className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans"
-              >
-                <GrLogin className="mr-2" />
-                Login
-              </button>
-              <button
-                onClick={handleGoRegister}
-                className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans ml-3"
-              >
-                <FaUserPlus className="mr-1" />
-                Sign up
-              </button>
-            </div>
-          )}
-        </div>
-      </header>
+      <Menu/>
+      <div className="mt-44">
+     <AutoSlider/>
+     </div>
       <div className=" w-full h-[55%] bg-[#F8F5FD] mt-36  ">
         <div className="flex items-center font-medium text-xl font-sans px-4 py-2  ml-48 pt-10 ">
           <BiSolidCategory className="mr-2" />

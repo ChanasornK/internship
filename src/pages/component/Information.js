@@ -7,6 +7,7 @@ import Dropdownz from "./Dropdownz";
 import { IoMdAddCircle } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
+
 const Information = () => {
   const [openModal, setOpenModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
@@ -16,23 +17,26 @@ const Information = () => {
   const [type, setType] = useState(null);
   const [rating, setRating] = useState(0);
   const [link, setLink] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("guest"); // ตั้งค่าเริ่มต้นเป็น "guest"
   const [email, setEmail] = useState("");
   const storedData = localStorage.getItem("profile");
 
   useEffect(() => {
     if (storedData) {
       const profile = JSON.parse(storedData);
-      setRole(profile?.userData?.role || "user");
+      setRole(profile?.userData?.role || "guest"); // ถ้าไม่มี role จะเป็น "guest"
       setEmail(profile?.userData?.email);
     }
   }, []);
+
   const handleTypeSelect = (selectedItem) => {
     setType(selectedItem);
   };
+
   const handleRatingSelect = (selectedRating) => {
     setRating(selectedRating);
   };
+
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("image", image);
@@ -42,6 +46,7 @@ const Information = () => {
     formData.append("rating", rating);
     formData.append("link", link);
     formData.append("email", email);
+
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -63,7 +68,7 @@ const Information = () => {
 
   return (
     <>
-      {role && (
+      {role !== "guest" && (
         <Button
           className="bg-gray-200 text-black hover:bg-gradient-to-br from-purple-400 to-pink-300 border-2 border-purple-400 "
           onClick={() => setOpenModal(true)}
