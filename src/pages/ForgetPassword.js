@@ -1,37 +1,58 @@
-import React, { useState } from 'react';
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import Head from "next/head";
+import Link from "next/link";
+import { useState } from "react";
 
-const ForgetPassword = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+export default function Home() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
+
     try {
-      await sendPasswordResetEmail(auth, email);
-      setMessage('ลิงก์สำหรับรีเซ็ตรหัสผ่านถูกส่งไปที่อีเมลของคุณแล้ว');
+      const res = await fetch("http://localhost:8000/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      setMessage(data.message);
     } catch (error) {
-      setMessage('เกิดข้อผิดพลาดในการส่งลิงก์รีเซ็ตรหัสผ่าน');
+      setMessage("Error sending reset link");
+      console.error(error);
     }
   };
 
   return (
     <div>
-      <h2>ลืมรหัสผ่าน</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="กรอกอีเมล"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">ส่งลิงก์รีเซ็ตรหัสผ่าน</button>
-      </form>
-      {message && <p>{message}</p>}
+      <Head>
+        <title>Next.js Reset Password</title>
+        <meta name="description" content="Reset your password" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main>
+        <h1>Reset Your Password</h1>
+        <form onSubmit={handleForgotPassword}>
+          <label htmlFor="email">Email Address:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button type="submit">Send Reset Link</button>
+        </form>
+        {message && <p>{message}</p>}
+      </main>
+
+      <footer>
+        <Link href="/reset-password">Already have a reset token?</Link>
+      </footer>
     </div>
   );
-};
-
-export default ForgetPassword;
+}
