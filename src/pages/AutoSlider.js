@@ -101,14 +101,14 @@ const AutoSlider = () => {
               style={{
                 backgroundColor: "pink",
                 width: "auto",
-                height: "450px",
+                height: "400px",
                 border: "2px solid lightgray",
-                borderRadius:"12px",
+                borderRadius: "12px",
                 overflow: "hidden",
               }}
             >
               <img
-                src="https://scontent.fbkk13-3.fna.fbcdn.net/v/t1.15752-9/456244270_1221966438935767_7749756092563509472_n.png?_nc_cat=110&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGajNPyGXST3y10SxllLuIud_0oR6ZYdOJ3_ShHplh04ohA-62Cab7cZDhsudHasCXkqPbyDNlaPSRlRzf_lop4&_nc_ohc=cN36yf9N76sQ7kNvgER3ygZ&_nc_ht=scontent.fbkk13-3.fna&oh=03_Q7cD1QEzVOzaXB3SQAEEZLvuZ1s1vpzqApvK-2mjavRLL2LbiA&oe=66F7C9E6"
+                src="https://scontent.fbkk8-2.fna.fbcdn.net/v/t1.15752-9/455977415_1988731918229749_9033544694730235664_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEI35HlTW4FgIUv_e9cxQcDkvUgCV6mO4WS9SAJXqY7hQEQeMYaSHfzi5JrY2Amm1v4zRpRyx4kAAUx7143MYvL&_nc_ohc=jnIocmcMWoIQ7kNvgH5YQvZ&_nc_ht=scontent.fbkk8-2.fna&oh=03_Q7cD1QFasiuwTNQLoaDvcsFlKnXWMcL2bZqTGuGxQOP0Vo_jRw&oe=66F8924D"
                 style={{ width: "full", height: "full", objectFit: "cover" }}
               ></img>
             </div>

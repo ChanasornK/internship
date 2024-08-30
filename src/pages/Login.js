@@ -87,7 +87,18 @@ const Login = () => {
           if (!result) return;
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential?.accessToken;
-          localStorage.setItem("profile", JSON.stringify(auth));
+          const user = {
+            role: "user", // ตั้งบทบาทเป็น "user"
+            email: result.user.email,
+            displayName: result.user.displayName,
+            photoURL: result.user.photoURL,
+          };
+          localStorage.setItem("profile", JSON.stringify({ userData: user }));
+          console.log(
+            "Saved auth to localStorage:",
+            JSON.parse(localStorage.getItem("profile"))
+          );
+
           router.push("./");
         })
         .catch(function (error) {
@@ -97,7 +108,7 @@ const Login = () => {
           const credential = error.credential;
           if (errorCode === "auth/account-exists-with-different-credential") {
             alert(
-              "You have already signed up with a different auth provider for that email.."
+              "You have already signed up with a different auth provider for that email."
             );
           } else {
             console.log(error);
@@ -107,6 +118,7 @@ const Login = () => {
       signOut(auth);
     }
   };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleClick();
@@ -138,7 +150,7 @@ const Login = () => {
             <Button
               onClick={loginAction}
               type="button"
-              className="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              className="text-black bg-[#f4f6f8] focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 text-center focus:ring-4 focus:outline-none  font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
             >
               <svg
                 className="w-4 h-4 me-2"
