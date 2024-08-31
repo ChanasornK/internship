@@ -24,33 +24,38 @@ const Register = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
   const loginAction = async () => {
-    console.log("this checkLogin", auth?.currentUser);
+    await signInWithPopup(auth, googleProvider)
+      .then(function (result) {
+        if (!result) return;
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = {
+          role: "user", // ตั้งบทบาทเป็น "user"
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+        };
+        localStorage.setItem("profile", JSON.stringify({ userData: user }));
+        console.log(
+          "Saved auth to localStorage:",
+          JSON.parse(localStorage.getItem("profile"))
+        );
 
-    if (!auth?.currentUser) {
-      await signInWithPopup(auth, googleProvider)
-        .then(function (result) {
-          if (!result) return;
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential?.accessToken;
-          localStorage.setItem("profile", JSON.stringify(auth));
-          router.push("./");
-        })
-        .catch(function (error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.email;
-          const credential = error.credential;
-          if (errorCode === "auth/account-exists-with-different-credential") {
-            alert(
-              "You have already signed up with a different auth provider for that email.."
-            );
-          } else {
-            console.log(error);
-          }
-        });
-    } else {
-      signOut(auth);
-    }
+        router.push("./");
+      })
+      .catch(function (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        if (errorCode === "auth/account-exists-with-different-credential") {
+          alert(
+            "You have already signed up with a different auth provider for that email."
+          );
+        } else {
+          console.log(error);
+        }
+      });
   };
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword) {
@@ -120,7 +125,7 @@ const Register = () => {
             <button
               onClick={loginAction}
               type="button"
-              className="text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              className="  border-pink-500 border text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
             >
               <svg
                 className="w-4 h-4 me-2"

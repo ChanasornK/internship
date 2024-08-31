@@ -6,6 +6,7 @@ import { Button } from "flowbite-react";
 import { auth, googleProvider } from "./test";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
+import { FaSignInAlt } from "react-icons/fa";
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -79,44 +80,38 @@ const Login = () => {
     }
   };
   const loginAction = async () => {
-    console.log("this checkLogin", auth?.currentUser);
+    await signInWithPopup(auth, googleProvider)
+      .then(function (result) {
+        if (!result) return;
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = {
+          role: "user", // ตั้งบทบาทเป็น "user"
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+        };
+        localStorage.setItem("profile", JSON.stringify({ userData: user }));
+        console.log(
+          "Saved auth to localStorage:",
+          JSON.parse(localStorage.getItem("profile"))
+        );
 
-    if (!auth?.currentUser) {
-      await signInWithPopup(auth, googleProvider)
-        .then(function (result) {
-          if (!result) return;
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential?.accessToken;
-          const user = {
-            role: "user", // ตั้งบทบาทเป็น "user"
-            email: result.user.email,
-            displayName: result.user.displayName,
-            photoURL: result.user.photoURL,
-          };
-          localStorage.setItem("profile", JSON.stringify({ userData: user }));
-          console.log(
-            "Saved auth to localStorage:",
-            JSON.parse(localStorage.getItem("profile"))
+        router.push("./");
+      })
+      .catch(function (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        if (errorCode === "auth/account-exists-with-different-credential") {
+          alert(
+            "You have already signed up with a different auth provider for that email."
           );
-
-          router.push("./");
-        })
-        .catch(function (error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.email;
-          const credential = error.credential;
-          if (errorCode === "auth/account-exists-with-different-credential") {
-            alert(
-              "You have already signed up with a different auth provider for that email."
-            );
-          } else {
-            console.log(error);
-          }
-        });
-    } else {
-      signOut(auth);
-    }
+        } else {
+          console.log(error);
+        }
+      });
   };
 
   const handleKeyDown = (e) => {
@@ -150,7 +145,7 @@ const Login = () => {
             <Button
               onClick={loginAction}
               type="button"
-              className="text-black bg-[#f4f6f8] focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 text-center focus:ring-4 focus:outline-none  font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              className="text-black bg-[#f4f6f8] focus:ring-purple-600 focus:border-purple-600  hover:bg-[#e2e6ea] text-center focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12 border border-pink-500 hover:border-pink-600"
             >
               <svg
                 className="w-4 h-4 me-2"
@@ -198,7 +193,7 @@ const Login = () => {
                 id="email-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
+                className=" h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
               />
             </div>
             <div className="mb-5">
@@ -258,6 +253,7 @@ const Login = () => {
             className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
           >
             Sign In
+            <FaSignInAlt className="ml-2" />
           </button>
 
           <div className="text-base font-normal flex mt-4">
