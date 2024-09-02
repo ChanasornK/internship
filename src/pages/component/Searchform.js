@@ -44,7 +44,7 @@ const Searchform = () => {
   }, []);
 
   return (
-    <div className="w-[55%] ml-32 mt-10" ref={dropdownRef}>
+    <div className="w-[55%] ml-44 mt-10" ref={dropdownRef}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -97,7 +97,7 @@ const Searchform = () => {
         <div className="mt-4 bg-white rounded-lg shadow-md">
           <ul>
             {searchResults.map((result) => (
-              <li key={result.id} className="p-2 border-b border-gray-200">
+              <li key={result.id} className="p-2 border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg">
                 <button onClick={() => handleOpenLinkInNewTab(result)}>
                   {result.detail} - {result.type}
                 </button>

@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import Product from "./Product";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
+import { SiReactos } from "react-icons/si";
+
 const Menu = () => {
   const handleHomePage = () => {
     router.push("./../");
@@ -39,15 +41,16 @@ const Menu = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-600 to-pink-300  flex z-50 h-36">
-        <div className=" w-4/5 ml-24 ">
-          <div className=" flex">
-            <span
-              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white "
+      <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-600 to-pink-300 flex z-50 h-36">
+        <div className="w-4/5 ml-24">
+          <div className="flex">
+            <div
+              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center"
               onClick={handleHomePage}
             >
-             Review.com
-            </span>
+              <SiReactos className="mr-4" />
+              Review
+            </div>
             <Searchform />
           </div>
           <div className="absolute top-[90px] w-full">
@@ -63,14 +66,14 @@ const Menu = () => {
             <div className="flex ml-10 mt-8 mx-auto">
               <button
                 onClick={handleGoLogin}
-                className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans"
+                className="bg-gray-200 text-purple-600 h-10 px-4 rounded-lg hover:bg-purple-300 flex items-center border-2 border-purple-600 font-sans"
               >
                 <GrLogin className="mr-2" />
                 Login
               </button>
               <button
                 onClick={handleGoRegister}
-                className="bg-gray-200 text-black  h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans ml-3"
+                className="bg-gray-200 text-pink-600 h-10 px-4 rounded-lg hover:bg-pink-300 flex items-center border-2 border-pink-600 font-sans ml-3 text-nowrap mr-3"
               >
                 <FaUserPlus className="mr-1" />
                 Sign up

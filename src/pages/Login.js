@@ -145,7 +145,7 @@ const Login = () => {
             <Button
               onClick={loginAction}
               type="button"
-              className="text-black bg-[#f4f6f8] focus:ring-purple-600 focus:border-purple-600  hover:bg-[#e2e6ea] text-center focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12 border border-pink-500 hover:border-pink-600"
+              className="text-black bg-[#f4f6f8] focus:ring-purple-600 focus:border-purple-600  hover:bg-pink-200  text-center focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12 border border-pink-500 hover:border-pink-600"
             >
               <svg
                 className="w-4 h-4 me-2"

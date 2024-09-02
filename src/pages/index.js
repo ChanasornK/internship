@@ -7,7 +7,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
-
+import { SiReactos } from "react-icons/si";
 const Index = () => {
   const router = useRouter();
 
@@ -43,13 +43,13 @@ const Index = () => {
       <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-600 to-pink-300 flex z-50 h-36">
         <div className="w-4/5 ml-24">
           <div className="flex">
-            <span
-              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white"
+            <div
+              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center"
               onClick={handleHomePage}
             >
-              Review.com
-            </span>
-
+              <SiReactos className="mr-4" />
+              Review
+            </div>
             <Searchform />
           </div>
         </div>
@@ -62,14 +62,14 @@ const Index = () => {
             <div className="flex ml-10 mt-8 mx-auto">
               <button
                 onClick={handleGoLogin}
-                className="bg-gray-200 text-black h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans"
+                className="bg-gray-200 text-purple-600 h-10 px-4 rounded-lg hover:bg-purple-300 flex items-center border-2 border-purple-600 font-sans"
               >
                 <GrLogin className="mr-2" />
                 Login
               </button>
               <button
                 onClick={handleGoRegister}
-                className="bg-gray-200 text-black h-10 px-2 rounded hover:bg-gray-300 flex items-center border-2 border-pink-500 font-sans ml-3"
+                className="bg-gray-200 text-pink-600 h-10 px-4 rounded-lg hover:bg-pink-300 flex items-center border-2 border-pink-600 font-sans ml-3 text-nowrap mr-3"
               >
                 <FaUserPlus className="mr-1" />
                 Sign up
@@ -86,7 +86,7 @@ const Index = () => {
         </div>
 
         <div className="flex justify-center items-center mt-10">
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Monitor")}>
               <div className="h-40 w-56">
                 <img
@@ -98,7 +98,7 @@ const Index = () => {
             </button>
           </div>
 
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Laptop")}>
               <div className="h-40 w-56 ">
                 <img
@@ -112,7 +112,7 @@ const Index = () => {
             </button>
           </div>
 
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Ram")}>
               <div className="h-40 w-56">
                 <img
@@ -124,7 +124,7 @@ const Index = () => {
             </button>
           </div>
 
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/cpu")}>
               <div className="h-40 w-56">
                 <img
@@ -140,7 +140,7 @@ const Index = () => {
 
       <div className="w-full h-[55%] bg-[#F8F5FD]">
         <div className="flex justify-center items-center">
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Graphic")}>
               <div className="h-40 w-56">
                 <img
@@ -152,7 +152,7 @@ const Index = () => {
             </button>
           </div>
 
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Mouse")}>
               <div className="h-40 w-56">
                 <img
@@ -164,7 +164,7 @@ const Index = () => {
             </button>
           </div>
 
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Keyboard")}>
               <div className="h-40 w-56">
                 <img
@@ -176,7 +176,7 @@ const Index = () => {
             </button>
           </div>
 
-          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-purple-300 hover:to-pink-300">
+          <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2">
             <button onClick={() => handleNavigation("./IT/Mainboard")}>
               <div className="h-40 w-56">
                 <img

@@ -125,7 +125,7 @@ const Register = () => {
             <button
               onClick={loginAction}
               type="button"
-              className="  border-pink-500 border text-black bg-[#f4f6f8] hover:bg-[#D1D5DB]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+              className="  border-pink-500 border text-black bg-[#f4f6f8] hover:bg-pink-300 ftext-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
             >
               <svg
                 className="w-4 h-4 me-2"

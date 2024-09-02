@@ -190,14 +190,14 @@ const Slide = () => {
                 {group.map((img) => (
                   <div
                     key={img.id}
-                    className="bg-[#eee8ff] w-1/3 h-[370px] mx-1 border rounded-lg overflow-hidden"
+                    className="bg-[#eee8ff] w-1/3 h-[370px] mx-1 border rounded-lg overflow-hidden transition-all duration-300 hover:bg-[#d1c4e9] hover:shadow-lg"
                   >
                     <button onClick={() => router.push(img.link)}>
                       <div className="relative z-20 flex justify-center items-center">
                         <img
                           src={img.src}
                           alt={`Fetched Image ${img.id}`}
-                          className="w-auto h-56 object-cover transition-transform duration-300 transform hover:scale-125 mt-10"
+                          className="w-auto h-56 object-cover transition-transform duration-300 transform hover:scale-110 mt-10"
                         />
                       </div>
                     </button>
