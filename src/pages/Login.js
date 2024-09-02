@@ -83,8 +83,8 @@ const Login = () => {
     await signInWithPopup(auth, googleProvider)
       .then(function (result) {
         if (!result) return;
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential?.accessToken;
         const user = {
           role: "user", // ตั้งบทบาทเป็น "user"
           email: result.user.email,
@@ -142,10 +142,10 @@ const Login = () => {
             >
               Welcome
             </label>
-            <Button
+            <button
               onClick={loginAction}
               type="button"
-              className="text-black bg-[#f4f6f8] focus:ring-purple-600 focus:border-purple-600  hover:bg-pink-200  text-center focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12 border border-pink-500 hover:border-pink-600"
+              className="  border-pink-500 border text-black bg-[#f4f6f8] hover:bg-pink-300 ftext-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
             >
               <svg
                 className="w-4 h-4 me-2"
@@ -171,7 +171,7 @@ const Login = () => {
                 />
               </svg>
               Sign in with Google
-            </Button>
+            </button>
           </div>
           <div className="mb-5">
             <div className="flex justify-center mb-7 mt-7">

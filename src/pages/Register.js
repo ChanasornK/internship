@@ -5,6 +5,8 @@ import { Button } from "flowbite-react";
 import { auth, googleProvider } from "./test";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
+import { RiGhostFill } from "react-icons/ri";
+
 const Register = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -26,9 +28,9 @@ const Register = () => {
   const loginAction = async () => {
     await signInWithPopup(auth, googleProvider)
       .then(function (result) {
-        if (!result) return;
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
+        if (!result) return;  
+         // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential?.accessToken;  
         const user = {
           role: "user", // ตั้งบทบาทเป็น "user"
           email: result.user.email,
@@ -243,6 +245,7 @@ const Register = () => {
             className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mt-7 w-full h-12"
           >
             {loading ? "Signing up..." : "Sign up"}
+            <RiGhostFill className="ml-2" />
           </button>
         </form>
       </div>

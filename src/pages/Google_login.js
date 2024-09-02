@@ -18,37 +18,29 @@ const Google_login = () => {
   const [photoURL, setPhotoURL] = useState("");
 
   const loginAction = async () => {
-    console.log("this checkLogin", auth?.currentUser);
-    if (!auth?.currentUser) {
-      await signInWithPopup(auth, googleProvider)
-        .then(function (result) {
-          if (!result) return;
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential?.accessToken;
-          console.log(result.user);
-          setUser(result.user);
-          setStr("Is Login ....");
-          setTextbtn("Logout");
-        })
-        .catch(function (error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.email;
-          const credential = error.credential;
-          if (errorCode === "auth/account-exists-with-different-credential") {
-            alert(
-              "You have already signed up with a different auth provider for that email."
-            );
-          } else {
-            console.log(error);
-          }
-        });
-    } else {
-      signOut(auth);
-      setUser(null);
-      setStr("not login");
-      setTextbtn("Login with Google");
-    }
+    await signInWithPopup(auth, googleProvider)
+      .then(function (result) {
+        if (!result) return;
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        console.log(result.user);
+        setUser(result.user);
+        setStr("Is Login ....");
+        setTextbtn("Logout");
+      })
+      .catch(function (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        if (errorCode === "auth/account-exists-with-different-credential") {
+          alert(
+            "You have already signed up with a different auth provider for that email."
+          );
+        } else {
+          console.log(error);
+        }
+      });
   };
   return (
     <div>
@@ -60,7 +52,6 @@ const Google_login = () => {
         {user ? "=>" : ""}
         {user?.email}
       </p>
-      
     </div>
   );
 };
