@@ -97,7 +97,7 @@ const Product = () => {
             <span className="flex-grow">Ram</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Cpu")}
+            onClick={() => handleNavigation("../IT/cpu")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <LuCpu className="mr-3 text-base flex-shrink-0" />

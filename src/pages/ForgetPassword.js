@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { IoArrowUndoCircleOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
+import { IoMdMail } from "react-icons/io";
 export default function Home() {
   const [email, setEmail] = useState("");
   const router = useRouter();
@@ -76,9 +77,10 @@ export default function Home() {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-7"
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-7 flex items-center justify-center hover:bg-blue-600 hover:shadow-lg"
           >
-            Send Reset Link
+            <IoMdMail className="text-white mr-2 text-lg" />
+            Send  Link To Gmail
           </button>
         </form>
         {message && (

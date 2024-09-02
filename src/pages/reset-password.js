@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { Button } from "flowbite-react";
 import { MdLockReset } from "react-icons/md";
+
 export default function ResetPassword() {
   const router = useRouter();
   const [token, setToken] = useState("");
@@ -71,7 +72,9 @@ export default function ResetPassword() {
           onSubmit={handleResetPassword}
         >
           <div className="flex flex-col w-80">
-            <label className="mt-10" htmlFor="newPassword">New Password</label>
+            <label className="mt-10" htmlFor="newPassword">
+              New Password
+            </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -90,7 +93,9 @@ export default function ResetPassword() {
               </div>
             </div>
 
-            <label className="mt-5" htmlFor="confirmPassword">Confirm Password</label>
+            <label className="mt-5" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}
@@ -110,12 +115,13 @@ export default function ResetPassword() {
             </div>
           </div>
           <Button
-            className="bg-blue-500 mt-6 flex  justify-center h-10 "
+            className="bg-blue-500 mt-6 flex justify-center items-center h-10 text-base font-medium hover:bg-blue-600 hover:shadow-lg"
             type="submit"
           >
             <MdLockReset className="mr-2 text-lg flex-shrink-0" />
-            <span className=" flex items-center">Reset Password</span>
+            <span className="flex items-center">Reset Password</span>
           </Button>
+
           {message && (
             <p className="mt-4 text-green-500 font-medium">{message}</p>
           )}

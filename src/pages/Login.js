@@ -250,7 +250,7 @@ const Login = () => {
           <button
             onClick={handleClick}
             type="button"
-            className="text-white bg-[#1A56DB] hover:bg-[#4285F4]/90 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
+            className="text-white bg-blue-500 hover:bg-blue-600 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mb-2 w-full h-12"
           >
             Sign In
             <FaSignInAlt className="ml-2" />

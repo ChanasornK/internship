@@ -18,6 +18,7 @@ const arrowStyles = {
 const Slide = () => {
   const router = useRouter();
   const [images, setImages] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAllImages = async () => {
@@ -40,14 +41,35 @@ const Slide = () => {
           .sort((a, b) => b.views - a.views)
           .slice(0, 12); // Limit to top 12 images
 
+        const cachedImages = JSON.stringify(validImageDataArray);
+
+        // Update localStorage only if the fetched data is different from the cached data
+        if (localStorage.getItem("cachedImages") !== cachedImages) {
+          localStorage.setItem("cachedImages", cachedImages);
+        }
+
         setImages(validImageDataArray);
+        setIsLoaded(true); // Mark as loaded after fetching data
       } catch (error) {
         console.error("Error fetching images:", error);
       }
     };
 
     fetchAllImages();
-  }, []);
+
+    const handleRouteChange = (url) => {
+      if (url === "/") {
+        setIsLoaded(false); // Reset loading state
+        fetchAllImages();
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
 
   const getImage = async () => {
     try {
@@ -82,7 +104,6 @@ const Slide = () => {
     return window.btoa(binary);
   };
 
-  // Split images array into chunks of 3, and limit to 4 pages
   const chunkedImages = [];
   for (let i = 0; i < Math.min(images.length, 12); i += 3) {
     chunkedImages.push(images.slice(i, i + 3));
@@ -90,110 +111,114 @@ const Slide = () => {
 
   return (
     <div className="flex justify-center items-center mt-10">
-      <div className="relative w-4/5 h-auto">
-        <Carousel
-          showThumbs={false}
-          showStatus={false}
-          infiniteLoop
-          useKeyboardArrows
-          renderArrowPrev={(onClickHandler, hasPrev, label) =>
-            hasPrev && (
-              <button
-                type="button"
-                onClick={onClickHandler}
-                title={label}
-                style={{
-                  ...arrowStyles,
-                  position: "absolute",
-                  left: 30,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  backgroundColor: "white",
-                }}
-              >
-                <svg
-                  className="w-6 h-6 text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 8 14"
+      {isLoaded ? (
+        <div className="relative w-4/5 h-auto">
+          <Carousel
+            showThumbs={false}
+            showStatus={false}
+            infiniteLoop
+            useKeyboardArrows
+            renderArrowPrev={(onClickHandler, hasPrev, label) =>
+              hasPrev && (
+                <button
+                  type="button"
+                  onClick={onClickHandler}
+                  title={label}
+                  style={{
+                    ...arrowStyles,
+                    position: "absolute",
+                    left: 30,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    backgroundColor: "white",
+                  }}
                 >
-                  <path
-                    stroke="#FF8FAB"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-                  />
-                </svg>
-              </button>
-            )
-          }
-          renderArrowNext={(onClickHandler, hasNext, label) =>
-            hasNext && (
-              <button
-                type="button"
-                onClick={onClickHandler}
-                title={label}
-                style={{
-                  ...arrowStyles,
-                  position: "absolute",
-                  right: 30,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  backgroundColor: "white",
-                }}
-              >
-                <svg
-                  className="w-6 h-6 text-gray-800"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 8 14"
+                  <svg
+                    className="w-6 h-6 text-gray-800"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 8 14"
+                  >
+                    <path
+                      stroke="#FF8FAB"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
+                    />
+                  </svg>
+                </button>
+              )
+            }
+            renderArrowNext={(onClickHandler, hasNext, label) =>
+              hasNext && (
+                <button
+                  type="button"
+                  onClick={onClickHandler}
+                  title={label}
+                  style={{
+                    ...arrowStyles,
+                    position: "absolute",
+                    right: 30,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    backgroundColor: "white",
+                  }}
                 >
-                  <path
-                    stroke="#FF8FAB"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-                  />
-                </svg>
-              </button>
-            )
-          }
-        >
-          {chunkedImages.map((group, index) => (
-            <div key={index} className="flex justify-between">
-              {group.map((img) => (
-                <div
-                  key={img.id}
-                  className="bg-[#eee8ff] w-1/3 h-[370px] mx-1 border rounded-lg  overflow-hidden"
-                >
-                  <button onClick={() => router.push(img.link)}>
-                    <div className="relative z-20 flex justify-center items-center">
-                      <img
-                        src={img.src}
-                        alt={`Fetched Image ${img.id}`}
-                        className="w-auto h-56 object-cover transition-transform duration-300 transform hover:scale-125 mt-10"
-                      />
-                    </div>
-                  </button>
+                  <svg
+                    className="w-6 h-6 text-gray-800"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 8 14"
+                  >
+                    <path
+                      stroke="#FF8FAB"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
+                    />
+                  </svg>
+                </button>
+              )
+            }
+          >
+            {chunkedImages.map((group, index) => (
+              <div key={index} className="flex justify-between">
+                {group.map((img) => (
+                  <div
+                    key={img.id}
+                    className="bg-[#eee8ff] w-1/3 h-[370px] mx-1 border rounded-lg overflow-hidden"
+                  >
+                    <button onClick={() => router.push(img.link)}>
+                      <div className="relative z-20 flex justify-center items-center">
+                        <img
+                          src={img.src}
+                          alt={`Fetched Image ${img.id}`}
+                          className="w-auto h-56 object-cover transition-transform duration-300 transform hover:scale-125 mt-10"
+                        />
+                      </div>
+                    </button>
 
-                  <div className="mt-2">
-                    <span className="text-pink-600 flex justify-center font-medium text-2xl font-sans">
-                      {img.price}
-                    </span>
-                    <div className="ml-1 mt-3 font-medium text-lg font-sans">
-                      {img.views} views
+                    <div className="mt-2">
+                      <span className="text-pink-600 flex justify-center font-medium text-2xl font-sans">
+                        {img.price}
+                      </span>
+                      <div className="ml-1 mt-3 font-medium text-lg font-sans">
+                        {img.views} views
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
-      </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+        </div>
+      ) : (
+        <div className="text-center mt-20"></div>
+      )}
     </div>
   );
 };
