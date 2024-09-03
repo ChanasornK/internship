@@ -51,7 +51,7 @@ const Upload2 = ({ setImage, image }) => {
                 </svg>
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 ml-2">
                   <span className="font-semibold">
-                    Click to upload SVG, PNG, JPG or GIF (MAX. 1920x1080px)
+                    Click to upload SVG, PNG, JPG or GIF (MAX.500 KB)
                   </span>
                 </p>
               </>

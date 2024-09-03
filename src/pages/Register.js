@@ -29,8 +29,8 @@ const Register = () => {
     await signInWithPopup(auth, googleProvider)
       .then(function (result) {
         if (!result) return;  
-         // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential?.accessToken;  
+         const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;  
         const user = {
           role: "user", // ตั้งบทบาทเป็น "user"
           email: result.user.email,
