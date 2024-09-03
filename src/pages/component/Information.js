@@ -70,12 +70,12 @@ const Information = () => {
     <>
       {role !== "guest" && (
         <Button
-          className="bg-gray-200 text-black hover:bg-gradient-to-br from-purple-400 to-pink-300 border-2 border-purple-400 "
+          className="bg-gray-200 text-pink-500 hover:bg-pink-300 border-2 border-pink-500 rounded-lg transform transition-transform duration-300 hover:scale-110"
           onClick={() => setOpenModal(true)}
         >
           <div className="flex items-center">
-            <IoMdAddCircle className="mr-1 text-sm " />
-            <span className="text-sm">เพิ่มข้อมูล</span>
+            <IoMdAddCircle className="mr-1 text-md " />
+            <span className="text-sm font-semibold">เพิ่มข้อมูล</span>
           </div>
         </Button>
       )}
@@ -99,7 +99,7 @@ const Information = () => {
             <input
               id="detail-input"
               placeholder="รายละเอียด"
-              className="bg-gray-50 text-gray-700 mt-2 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="bg-gray-50 text-gray-700 mt-2 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500 "
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
             />
@@ -107,14 +107,14 @@ const Information = () => {
             <input
               id="price-input"
               placeholder="ราคา"
-              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
             <input
               id="link-input"
               placeholder="Link"
-              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
