@@ -70,11 +70,11 @@ const Information = () => {
     <>
       {role !== "guest" && (
         <Button
-          className="bg-gray-200 text-pink-500 hover:bg-pink-300 border-2 border-pink-500 rounded-lg transform transition-transform duration-300 hover:scale-110"
+          className="bg-gray-200 text-pink-500  border-2 border-pink-500 rounded-lg transform transition-transform duration-300 hover:scale-110"
           onClick={() => setOpenModal(true)}
         >
           <div className="flex items-center">
-            <IoMdAddCircle className="mr-1 text-md " />
+            <IoMdAddCircle className="mr-1 text-sm " />
             <span className="text-sm font-semibold">เพิ่มข้อมูล</span>
           </div>
         </Button>
