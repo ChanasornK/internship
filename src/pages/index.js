@@ -48,7 +48,7 @@ const Index = () => {
               onClick={handleHomePage}
             >
               <SiReactos className="mr-4" />
-              Review
+              Review 
             </div>
             <Searchform />
           </div>
@@ -119,7 +119,7 @@ const Index = () => {
                   src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454741255_2830441413922118_486956867719846047_n.png?stp=dst-png_p206x206&_nc_cat=103&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHyHevdOtuT0Fi5pbL8eQz998iF7J9f6Yn3yIXsn1_piUO57erntEwbafcTUH2QWcrbgnCGSoKI_FJDYrMhndLl&_nc_ohc=YFGUwmaYdEEQ7kNvgGDf58f&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGyFa_p8wu4CjLc3kJmMtvtpDgZbskxz78uLhxyc5BVWw&oe=66EBCC56"
                   className="w-full h-full object-cover"
                 />
-                <h1 className="font-medium text-lg font-sans">Ram</h1>
+                <h1 className="font-medium text-lg font-sans ">Ram</h1>
               </div>
             </button>
           </div>
