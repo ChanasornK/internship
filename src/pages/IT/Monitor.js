@@ -8,57 +8,52 @@ import FixInformation from "../component/FixInformation";
 
 const Monitor = () => {
   const router = useRouter();
-  const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
 
   useEffect(() => {
-    setIsClient(true);
+    const fetchData = async () => {
+      // โหลดข้อมูลโปรไฟล์จาก localStorage
+      const storedData = localStorage.getItem("profile");
+      if (storedData) {
+        const profile = JSON.parse(storedData);
+        setRole(profile?.userData?.role);
+        setStoredEmail(profile?.userData?.email);
+      }
 
-    const storedData = localStorage.getItem("profile");
-    if (storedData) {
-      const profile = JSON.parse(storedData);
-      setRole(profile?.userData?.role);
-      setStoredEmail(profile?.userData?.email); // Save email to state
-    }
-  }, []);
+      // ดึงข้อมูลภาพจาก API
+      try {
+        const response = await getImage();
+        const imageDataArray = response.data.imageData;
+        const validImageDataArray = imageDataArray
+          .filter((image) => image.type === "Monitor")
+          .map((image) => {
+            const base64String = arrayBufferToBase64(image.image.data);
+            return {
+              id: image.id,
+              src: `data:image/png;base64,${base64String}`,
+              price: image.price,
+              detail: image.detail,
+              link: image.link,
+              type: image.type,
+              rating: image.rating,
+              views: image.view,
+              email: image.email,
+            };
+          });
 
-  useEffect(() => {
-    if (isClient) {
-      const fetchAllImages = async () => {
-        try {
-          const response = await getImage();
-          const imageDataArray = response.data.imageData;
-          const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Monitor")
-            .map((image) => {
-              const base64String = arrayBufferToBase64(image.image.data);
-              return {
-                id: image.id,
-                src: `data:image/png;base64,${base64String}`,
-                price: image.price,
-                detail: image.detail,
-                link: image.link,
-                type: image.type,
-                rating: image.rating,
-                views: image.view,
-                email: image.email,
-              };
-            });
+        setImages(validImageDataArray);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      } finally {
+        setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
+      }
+    };
 
-          setImages(validImageDataArray);
-        } catch (error) {
-          console.error("Error fetching images:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchAllImages();
-    }
-  }, [isClient]);
+    fetchData(); // เรียกใช้ฟังก์ชันเมื่อ component mount
+  }, []); // useEffect นี้ทำงานเมื่อ component mount เท่านั้น
 
   const getImage = async (id) => {
     try {
@@ -93,7 +88,7 @@ const Monitor = () => {
     return window.btoa(binary);
   };
 
-  if (!isClient || loading) {
+  if (loading) {
     return <LoadingModal />;
   }
 

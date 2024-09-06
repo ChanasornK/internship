@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 const ProfileToggle = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [profile, setProfile] = useState(null);
+  const dropdownRef = useRef(null); // ใช้ ref เพื่อจับตำแหน่งของ dropdown
+  const router = useRouter();
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  const router = useRouter();
 
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
@@ -33,9 +35,28 @@ const ProfileToggle = () => {
   const defaultPhotoURL =
     "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
 
+  // ฟังก์ชันตรวจสอบการคลิกนอก dropdown เพื่อปิด
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false); // ปิด dropdown
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
     <>
-      <div className="relative text-left flex">
+      <div className="relative text-left flex" ref={dropdownRef}>
         <button
           id="dropdownActionButton"
           data-dropdown-toggle="dropdownAction"

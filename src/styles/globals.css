@@ -10,3 +10,15 @@
       border-image: linear-gradient(to right, #9c27b0, #ff4081) 1;
     }
   }
+  .fade-in {
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

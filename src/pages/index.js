@@ -8,8 +8,22 @@ import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
 import { SiReactos } from "react-icons/si";
+import LoadingModal from "./component/loading";
+
 const Index = () => {
   const router = useRouter();
+  const [fadeIn, setFadeIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    // Simulate loading process
+    setTimeout(() => {
+      setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
+    }, 1000);
+
+    setFadeIn(true); // เพื่อทำ fade-in effect เมื่อหน้าโหลดเสร็จ
+  }, []);
 
   const handleNavigation = (path) => {
     router.push(path);
@@ -29,8 +43,6 @@ const Index = () => {
     router.push("./Login");
   };
 
-  const [profile, setProfile] = useState(null);
-
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -38,8 +50,13 @@ const Index = () => {
     }
   }, []);
 
+  // Show the loading modal while the page is loading
+  if (loading) {
+    return <LoadingModal />;
+  }
+
   return (
-    <div className="w-full h-auto">
+    <div className={`w-full h-auto ${fadeIn ? "fade-in" : ""}`}>
       <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-600 to-pink-300 flex z-50 h-36">
         <div className="w-4/5 ml-24">
           <div className="flex">
@@ -48,7 +65,7 @@ const Index = () => {
               onClick={handleHomePage}
             >
               <SiReactos className="mr-4" />
-              Review 
+              Review
             </div>
             <Searchform />
           </div>
