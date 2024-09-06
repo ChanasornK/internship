@@ -16,7 +16,9 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
   const [showPopup, setShowPopup] = useState(false); // State for success popup
-
+  const handleNavigation = (path) => {
+    router.push(path);
+  };
   useEffect(() => {
     // Simulate loading process
     setTimeout(() => {
