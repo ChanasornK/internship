@@ -9,7 +9,6 @@ import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
 import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
-import AutoSlider from "./AutoSlider";
 
 const Index = () => {
   const router = useRouter();
