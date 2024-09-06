@@ -49,7 +49,7 @@ const Menu = () => {
               onClick={handleHomePage}
             >
               <SiReactos className="mr-4" />
-              Review
+              Reviews
             </div>
             <Searchform />
           </div>

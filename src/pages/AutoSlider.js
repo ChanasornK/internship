@@ -22,6 +22,7 @@ const AutoSlider = () => {
           height: "300px",
           margin: "auto",
           position: "relative",
+        
         }}
       >
         <Carousel

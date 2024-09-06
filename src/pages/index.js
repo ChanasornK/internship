@@ -9,10 +9,10 @@ import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
 import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
+import AutoSlider from "./AutoSlider";
 
 const Index = () => {
   const router = useRouter();
-  const [fadeIn, setFadeIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
 
@@ -21,8 +21,6 @@ const Index = () => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
     }, 1000);
-
-    setFadeIn(true); // เพื่อทำ fade-in effect เมื่อหน้าโหลดเสร็จ
   }, []);
 
   const handleNavigation = (path) => {
@@ -56,7 +54,7 @@ const Index = () => {
   }
 
   return (
-    <div className={`w-full h-auto ${fadeIn ? "fade-in" : ""}`}>
+    <div className="w-full h-auto">
       <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-purple-600 to-pink-300 flex z-50 h-36">
         <div className="w-4/5 ml-24">
           <div className="flex">
@@ -65,7 +63,7 @@ const Index = () => {
               onClick={handleHomePage}
             >
               <SiReactos className="mr-4" />
-              Review
+              Reviews
             </div>
             <Searchform />
           </div>
