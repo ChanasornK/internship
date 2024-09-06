@@ -25,14 +25,24 @@ const Index = () => {
 
     // Check if the login was successful by looking at the query parameters
     if (router.query.loginSuccess === "true") {
-      setShowPopup(true);
+      setShowPopup(true); // Show success popup when loginSuccess is true
+      // ลบ query ทิ้งเพื่อไม่ให้แสดง popup ซ้ำอีกครั้งเมื่อเปลี่ยนหน้า
+      router.replace({ pathname: router.pathname }, undefined, {
+        shallow: true,
+      });
     }
   }, [router.query]);
 
-  const handleNavigation = (path) => {
-    router.push(path);
-  };
+  useEffect(() => {
+    // Check profile.role from localStorage
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setProfile(parsedData);
+    }
+  }, []);
 
+  // คุณสามารถใช้งาน SuccessPopup ได้ตามเดิม
   const handleHomePage = () => {
     window.location.reload();
   };
@@ -46,13 +56,6 @@ const Index = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("./Login");
   };
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("profile");
-    if (storedData) {
-      setProfile(JSON.parse(storedData));
-    }
-  }, []);
 
   // Show the loading modal while the page is loading
   if (loading) {
@@ -233,3 +236,4 @@ const Index = () => {
 };
 
 export default Index;
+

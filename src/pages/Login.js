@@ -39,7 +39,7 @@ const Login = () => {
         setTimeout(() => {
           router.push({
             pathname: "./",
-            query: { loginSuccess: "true" },
+            query: { loginSuccess: "true" }, // ส่ง query ไปที่หน้า Index หลังจาก login สำเร็จ
           });
           setLoading(false);
         }, 1000);
