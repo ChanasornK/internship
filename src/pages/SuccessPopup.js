@@ -10,26 +10,27 @@ const SuccessPopup = ({ message, showPopup, onClose }) => {
     if (showPopup) {
       setIsClosing(false); // Reset closing state when popup is shown
       setProgress(100); // Reset progress bar to full width
-  
+
       // Decrease progress every 20ms to complete in 3000ms
       interval = setInterval(() => {
-        setProgress((prev) => Math.max(prev - 1, 0));
+        setProgress((prev) => {
+          const newProgress = Math.max(prev - 1, 0);
+          if (newProgress === 0) {
+            setIsClosing(true); // Start closing animation
+            setTimeout(onClose, 500); // Close popup after animation finishes
+          }
+          return newProgress;
+        });
       }, 20);
-  
-      // Close popup after the progress bar reaches 0
-      const timer = setTimeout(() => {
-        setIsClosing(true); // Start closing animation
-        setTimeout(onClose, 500); // Close popup after animation finishes
-      }, 3500); // Show popup for 3.5 seconds (Progress 3000ms + Close Animation 500ms)
-  
+
       return () => {
-        clearTimeout(timer);
         clearInterval(interval);
       };
     } else {
       setIsClosing(false); // Reset closing state when popup is hidden
     }
   }, [showPopup, onClose]);
+
   const handleClose = () => {
     setIsClosing(true); // Start closing animation when user clicks close
     setTimeout(onClose, 500); // Delay to let the animation finish
@@ -63,8 +64,7 @@ const SuccessPopup = ({ message, showPopup, onClose }) => {
               className="h-full bg-green-500 rounded-full transition-all duration-300"
               style={{
                 width: `${progress}%`,
-                transformOrigin: "right",
-                transition: "width 0.3s linear",
+                transition: `width ${progress === 0 ? 0 : 0.03}s linear`, // Adjusted for smooth transition
               }}
             ></div>
           </div>
