@@ -10,17 +10,18 @@ const SuccessPopup = ({ message, showPopup, onClose }) => {
     if (showPopup) {
       setIsClosing(false); // Reset closing state when popup is shown
       setProgress(100); // Reset progress bar to full width
-
-      // Decrease progress every 25ms to complete in 2500ms
+  
+      // Decrease progress every 20ms to complete in 3000ms
       interval = setInterval(() => {
         setProgress((prev) => Math.max(prev - 1, 0));
-      }, 25);
-
+      }, 20);
+  
+      // Close popup after the progress bar reaches 0
       const timer = setTimeout(() => {
         setIsClosing(true); // Start closing animation
         setTimeout(onClose, 500); // Close popup after animation finishes
-      }, 3000); // Show popup for 3 seconds (Progress 2500ms + Close Animation 500ms)
-
+      }, 3500); // Show popup for 3.5 seconds (Progress 3000ms + Close Animation 500ms)
+  
       return () => {
         clearTimeout(timer);
         clearInterval(interval);
@@ -29,7 +30,6 @@ const SuccessPopup = ({ message, showPopup, onClose }) => {
       setIsClosing(false); // Reset closing state when popup is hidden
     }
   }, [showPopup, onClose]);
-
   const handleClose = () => {
     setIsClosing(true); // Start closing animation when user clicks close
     setTimeout(onClose, 500); // Delay to let the animation finish
@@ -37,7 +37,7 @@ const SuccessPopup = ({ message, showPopup, onClose }) => {
 
   return (
     showPopup && (
-      <div className="fixed inset-0 flex justify-center items-start z-50">
+      <div className="fixed inset-10 flex justify-center items-start z-50">
         <div
           className={`flex flex-col justify-center bg-white shadow-lg rounded-md p-4 gap-2 w-80 border border-gray-200 transform transition-all duration-500 ${
             isClosing
@@ -64,7 +64,7 @@ const SuccessPopup = ({ message, showPopup, onClose }) => {
               style={{
                 width: `${progress}%`,
                 transformOrigin: "right",
-                transition: "width 0.25s linear",
+                transition: "width 0.3s linear",
               }}
             ></div>
           </div>

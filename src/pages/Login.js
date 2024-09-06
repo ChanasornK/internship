@@ -86,10 +86,16 @@ const Login = () => {
           photoURL: result.user.photoURL,
         };
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
-        setShowPopup(true); // Show popup on successful login
+        console.log("Login successful");
+        setShowPopup(true); // Show success popup
         setTimeout(() => {
-          router.push("./");
+          router.push({
+            pathname: "./",
+            query: { loginSuccess: "true" }, // ส่ง query ไปที่หน้า Index หลังจาก login สำเร็จ
+          });
+          setLoading(false);
         }, 1000);
+     
       })
       .catch(function (error) {
         console.error(error);
@@ -266,7 +272,7 @@ const Login = () => {
 
             {showPopup && shouldShowPopup() && (
               <SuccessPopup
-                message="Login successful!"
+                message="Login Successful!"
                 showPopup={showPopup}
                 onClose={() => setShowPopup(false)}
               />

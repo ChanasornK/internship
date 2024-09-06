@@ -226,7 +226,7 @@ const Index = () => {
       {/* Show success popup if login was successful */}
       {showPopup && (
         <SuccessPopup
-          message="Login successful!"
+          message="Login Successful!"
           showPopup={showPopup}
           onClose={() => setShowPopup(false)}
         />
@@ -236,4 +236,3 @@ const Index = () => {
 };
 
 export default Index;
-
