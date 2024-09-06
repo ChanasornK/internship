@@ -7,6 +7,8 @@ import { auth, googleProvider } from "./test";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import { FaSignInAlt } from "react-icons/fa";
+import SuccessPopup from "./SuccessPopup";
+
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -15,6 +17,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [slideIn, setSlideIn] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -27,40 +30,24 @@ const Login = () => {
   const handleClick = async () => {
     if (!email || !password) {
       setError("กรุณากรอก Email และ Password.");
-      try {
-        const result = await VerifyUsers(email, password);
-        console.log(result?.data);
-        if (result) {
-          localStorage.setItem("profile", JSON.stringify(result?.data));
-          router.push("./");
-        } else {
-          setError("การเข้าสู้ระบบล้มเหลว โปรดตรวจสอบ email และ password");
-        }
-      } catch (error) {
-        console.error("Error during sign-in:", error);
-        setError("เกิดข้อผิดพลาดในการลงชื่อเข้าใช้ โปรดลองอีกครั้ง");
-      }
-      setLoading(true);
-      setTimeout(() => {
-        router.push("./");
-        setLoading(false);
-      }, 1000);
-    }
-
-    const verificationResult = await VerifyUsers(email, password);
-    if (verificationResult) {
-      console.log("Login successful");
-      router.push("./");
     } else {
-      setError("Incorrect email or password.");
+      setLoading(true);
+      const verificationResult = await VerifyUsers(email, password);
+      if (verificationResult) {
+        console.log("Login successful");
+        setShowPopup(true); // Show success popup
+        setTimeout(() => {
+          router.push({
+            pathname: "./",
+            query: { loginSuccess: "true" },
+          });
+          setLoading(false);
+        }, 1000);
+      } else {
+        setError("Incorrect email or password.");
+      }
     }
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setSlideIn(true); // ตั้งค่าเพื่อเริ่ม animation หลังจากโหลดหน้า
-    }, 150); // ปรับเวลาเริ่มต้นของเอฟเฟกต์
-  }, []);
 
   const VerifyUsers = async (email, password) => {
     try {
@@ -99,24 +86,13 @@ const Login = () => {
           photoURL: result.user.photoURL,
         };
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
-        console.log(
-          "Saved auth to localStorage:",
-          JSON.parse(localStorage.getItem("profile"))
-        );
-        router.push("./");
+        setShowPopup(true); // Show popup on successful login
+        setTimeout(() => {
+          router.push("./");
+        }, 1000);
       })
       .catch(function (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = error.credential;
-        if (errorCode === "auth/account-exists-with-different-credential") {
-          alert(
-            "You have already signed up with a different auth provider for that email."
-          );
-        } else {
-          console.log(error);
-        }
+        console.error(error);
       });
   };
 
@@ -136,6 +112,17 @@ const Login = () => {
   const handleClickSignup = () => {
     router.push("./Register");
   };
+
+  // Check if the current path is "./" to show popup
+  const shouldShowPopup = () => {
+    return router.pathname === "/";
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSlideIn(true); // เริ่ม animation หลังจากโหลดหน้า
+    }, 150); // ปรับเวลาเริ่มต้นของเอฟเฟกต์
+  }, []);
 
   return (
     <div className="flex">
@@ -276,6 +263,14 @@ const Login = () => {
                 Sign Up
               </button>
             </div>
+
+            {showPopup && shouldShowPopup() && (
+              <SuccessPopup
+                message="Login successful!"
+                showPopup={showPopup}
+                onClose={() => setShowPopup(false)}
+              />
+            )}
           </form>
         </div>
       </div>

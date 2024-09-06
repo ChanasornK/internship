@@ -64,9 +64,9 @@ const ProfileToggle = () => {
           className="relative text-left flex"
           onClick={toggleDropdown}
         >
-          <div className="w-10 h-10 rounded-full overflow-hidden border border-grey mt-8 ml-0">
+          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-600  mt-8 ml-0">
             <img
-              src={profile?.photoURL || defaultPhotoURL}
+              src={profile?.photoURL || defaultPhotoURL} 
               className="object-fill"
             />
           </div>

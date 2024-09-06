@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import Searchform from "./component/Searchform";
 import Slide from "./Slide";
 import ProfileToggle from "./component/ProfileToggle";
@@ -9,18 +9,25 @@ import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
 import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
+import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
 
 const Index = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // State for success popup
 
   useEffect(() => {
     // Simulate loading process
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
     }, 1000);
-  }, []);
+
+    // Check if the login was successful by looking at the query parameters
+    if (router.query.loginSuccess === "true") {
+      setShowPopup(true);
+    }
+  }, [router.query]);
 
   const handleNavigation = (path) => {
     router.push(path);
@@ -212,6 +219,15 @@ const Index = () => {
 
         <Slide />
       </div>
+
+      {/* Show success popup if login was successful */}
+      {showPopup && (
+        <SuccessPopup
+          message="Login successful!"
+          showPopup={showPopup}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 };
