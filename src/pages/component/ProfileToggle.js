@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import EditProfile from "./EditProfile"; // Import component EditProfile
-
+import { RiEdit2Fill } from "react-icons/ri";
 const ProfileToggle = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -114,18 +114,10 @@ const ProfileToggle = () => {
               <li>
                 <button
                   onClick={handleEditProfile} // เปิด modal แทนการไปหน้า edit
-                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
+                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center "
                 >
-                  <svg
-                    className="w-5 h-5 mr-3 text-gray-800 dark:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22c-5.5 0-10-4.5-10-10S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10zm-1-5l-4 1 1-4 7-7 3 3-7 7zm5-9l-1-1 2-2 1 1-2 2z" />
-                  </svg>
-                  <span className="pr-8 text-nowrap"> Edit Profile</span>
+                  <RiEdit2Fill className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
+                  <span className="text-sm pl-3">Edit Profile</span>
                 </button>
               </li>
 

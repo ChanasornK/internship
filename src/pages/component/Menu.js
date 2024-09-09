@@ -48,7 +48,7 @@ const Menu = () => {
               className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center"
               onClick={handleHomePage}
             >
-              <SiReactos className="mr-4" />
+              <SiReactos className="mr-4 hover:rotate-180 transition-transform duration-500" />
               Reviews
             </div>
             <Searchform />

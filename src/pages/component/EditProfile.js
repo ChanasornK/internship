@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
 import axios from "axios";
-import { MdAddAPhoto } from "react-icons/md";
 
 const EditProfile = ({ openModal, setOpenModal }) => {
   const [file, setFile] = useState(null);
@@ -80,7 +79,7 @@ const EditProfile = ({ openModal, setOpenModal }) => {
           <Modal
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 w-auto max-w-2xl mx-auto mt-28 h-screen"
+            className="relative z-50 w-auto max-w-2xl mx-auto mt-28 "
           >
             <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end"></Modal.Header>
 
