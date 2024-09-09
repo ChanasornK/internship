@@ -118,7 +118,7 @@ const Information = () => {
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
-            <div className="flex items-center mt-6  bg-gray-50">
+            <div className="flex items-center mt-6  ">
               <Dropdownz
                 onSelectItem={handleTypeSelect}
                 value={type}

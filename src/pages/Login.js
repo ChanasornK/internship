@@ -95,7 +95,6 @@ const Login = () => {
           });
           setLoading(false);
         }, 1000);
-     
       })
       .catch(function (error) {
         console.error(error);

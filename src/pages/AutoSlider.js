@@ -25,6 +25,7 @@ const AutoSlider = () => {
         }}
       >
         <Carousel
+          className="custom-carousel"
           autoPlay
           interval={3000} // ตั้งให้เลื่อนทุกๆ 5 วินาที
           infiniteLoop

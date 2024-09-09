@@ -42,4 +42,10 @@
   .animate-bounceInDown {
     animation: bounceInDown 0.8s ease-out;
   }
+  .custom-carousel .carousel .control-dots .dot {
+    width: 15px; /* ปรับขนาดให้ใหญ่ขึ้น */
+    height: 15px; /* ปรับขนาดให้ใหญ่ขึ้น */
+    background-color: whitesmoke; /* สีของปุ่ม */
+    margin: 5px; /* ระยะห่างระหว่างปุ่ม */
+  }
   

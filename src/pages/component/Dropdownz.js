@@ -10,7 +10,7 @@ const Dropdownz = ({ onSelectItem }) => {
   };
 
   return (
-    <div className="relative ml-10 0 w-24 text-gray-700 ">
+    <div className="relative ml-10  w-auto text-gray-700 ">
       <Dropdown
         label={<span className="text-pink-600 flex ">{selectedItem}<IoIosArrowDown className=" mt-[5px] ml-2" /></span>}
         dismissOnClick={true}

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import EditProfile from "./EditProfile"; // Import component EditProfile
 
 const ProfileToggle = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [profile, setProfile] = useState(null);
-  const dropdownRef = useRef(null); // ใช้ ref เพื่อจับตำแหน่งของ dropdown
+  const [openModal, setOpenModal] = useState(false); // เพิ่ม state สำหรับ modal
+  const dropdownRef = useRef(null);
   const router = useRouter();
 
   const toggleDropdown = () => {
@@ -16,9 +18,6 @@ const ProfileToggle = () => {
     if (storedData) {
       const profile = JSON.parse(storedData);
       setProfile(profile?.userData);
-      console.log("profile", profile);
-      const role = profile?.userData?.role;
-      console.log("User role:", role);
     }
   }, []);
 
@@ -31,19 +30,41 @@ const ProfileToggle = () => {
     window.location.reload();
   };
 
-  const handleChangeAccout = () => {
+  const handleChangeAccount = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("../Login");
+  };
+
+  const handleEditProfile = () => {
+    setOpenModal(true); // เปิด modal แทนการ redirect
   };
 
   const defaultPhotoURL =
     "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
 
-  // ฟังก์ชันตรวจสอบการคลิกนอก dropdown เพื่อปิด
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
+
+  const getProfileImageSrc = () => {
+    if (profile?.image?.data) {
+      const base64String = arrayBufferToBase64(profile.image.data);
+      return `data:image/png;base64,${base64String}`;
+    } else {
+      return profile?.image || defaultPhotoURL;
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false); // ปิด dropdown
+        setIsDropdownOpen(false);
       }
     };
 
@@ -68,10 +89,11 @@ const ProfileToggle = () => {
           className="relative text-left flex"
           onClick={toggleDropdown}
         >
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-600  mt-8 ml-0">
+          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-600 mt-8 ml-0">
             <img
-              src={profile?.photoURL || defaultPhotoURL}
+              src={getProfileImageSrc()}
               className="object-fill"
+              alt="Profile Image"
             />
           </div>
           <div className="w-auto h-10 mt-8 ml-2 flex justify-center items-center mr-3 text-black font-medium text-base font-sans">
@@ -89,9 +111,27 @@ const ProfileToggle = () => {
               className="py-1 text-sm text-gray-700 dark:text-gray-200"
               aria-labelledby="dropdownActionButton"
             >
-              <div className=" mt-[2px] flex">
+              <li>
                 <button
-                  onClick={handleChangeAccout}
+                  onClick={handleEditProfile} // เปิด modal แทนการไปหน้า edit
+                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
+                >
+                  <svg
+                    className="w-5 h-5 mr-3 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22c-5.5 0-10-4.5-10-10S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10zm-1-5l-4 1 1-4 7-7 3 3-7 7zm5-9l-1-1 2-2 1 1-2 2z" />
+                  </svg>
+                  <span className="pr-8 text-nowrap"> Edit Profile</span>
+                </button>
+              </li>
+
+              <li>
+                <button
+                  onClick={handleChangeAccount}
                   className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
                 >
                   <svg
@@ -111,7 +151,8 @@ const ProfileToggle = () => {
                   </svg>
                   Change Account
                 </button>
-              </div>
+              </li>
+
               <li>
                 <button
                   onClick={handleSignout}
@@ -141,6 +182,8 @@ const ProfileToggle = () => {
           </div>
         )}
       </div>
+      {/* แสดง EditProfile Modal */}
+      <EditProfile openModal={openModal} setOpenModal={setOpenModal} />
     </>
   );
 };
