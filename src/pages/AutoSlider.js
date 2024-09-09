@@ -18,142 +18,107 @@ const AutoSlider = () => {
     <div>
       <div
         style={{
-          width: "75%",
+          width: "78%",
           height: "300px",
           margin: "auto",
           position: "relative",
-        
         }}
       >
         <Carousel
+          autoPlay
+          interval={3000} // ตั้งให้เลื่อนทุกๆ 5 วินาที
+          infiniteLoop
           showThumbs={false}
           showStatus={false}
-          infiniteLoop
           useKeyboardArrows
-          // renderArrowPrev={(onClickHandler, hasPrev, label) =>
-          //   hasPrev && (
-          //     <button
-          //       type="button"
-          //       onClick={onClickHandler}
-          //       title={label}
-          //       style={{
-          //         ...arrowStyles,
-          //         position: "absolute",
-          //         left: 30,
-          //         top: "50%",
-          //         transform: "translateY(-50%)",
-          //         backgroundColor: "white",
-          //       }}
-          //     >
-          //       <svg
-          //         className="w-6 h-6 text-gray-800 dark:text-white"
-          //         aria-hidden="true"
-          //         xmlns="http://www.w3.org/2000/svg"
-          //         fill="none"
-          //         viewBox="0 0 8 14"
-          //       >
-          //         <path
-          //           stroke="currentColor"
-          //           stroke-linecap="round"
-          //           stroke-linejoin="round"
-          //           stroke-width="2"
-          //           d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-          //         />
-          //       </svg>
-          //     </button>
-          //   )
-          // }
-          // renderArrowNext={(onClickHandler, hasNext, label) =>
-          //   hasNext && (
-          //     <button
-          //       type="button"
-          //       onClick={onClickHandler}
-          //       title={label}
-          //       style={{
-          //         ...arrowStyles,
-          //         position: "absolute",
-          //         right: 30,
-          //         top: "50%",
-          //         transform: "translateY(-50%)",
-          //         backgroundColor: "white",
-          //       }}
-          //     >
-          //       <svg
-          //         className="w-6 h-6 text-gray-800 dark:text-white"
-          //         aria-hidden="true"
-          //         xmlns="http://www.w3.org/2000/svg"
-          //         fill="none"
-          //         viewBox="0 0 8 14"
-          //       >
-          //         <path
-          //           stroke="currentColor"
-          //           stroke-linecap="round"
-          //           stroke-linejoin="round"
-          //           stroke-width="2"
-          //           d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-          //         />
-          //       </svg>
-          //     </button>
-          //   )
-          // }
+          showArrows={false}
         >
-          <div className="flex justify-center bg-pink-600 border rounded-xl">
+          <div className="flex justify-center border rounded-3xl">
             <div
               style={{
                 backgroundColor: "pink",
-                width: "auto",
-                height: "400px",
-                border: "2px solid lightgray",
-                borderRadius: "12px",
+                width: "100%",
+                height: "500px",
+                border: "1px solid lightgray",
+                borderRadius: "24px",
                 overflow: "hidden",
               }}
             >
               <img
-                src="https://scontent.fbkk8-2.fna.fbcdn.net/v/t1.15752-9/455977415_1988731918229749_9033544694730235664_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEI35HlTW4FgIUv_e9cxQcDkvUgCV6mO4WS9SAJXqY7hQEQeMYaSHfzi5JrY2Amm1v4zRpRyx4kAAUx7143MYvL&_nc_ohc=jnIocmcMWoIQ7kNvgH5YQvZ&_nc_ht=scontent.fbkk8-2.fna&oh=03_Q7cD1QFasiuwTNQLoaDvcsFlKnXWMcL2bZqTGuGxQOP0Vo_jRw&oe=66F8924D"
-                style={{ width: "full", height: "full", objectFit: "cover" }}
-              ></img>
+                src="https://scontent.fbkk29-4.fna.fbcdn.net/v/t1.15752-9/457491743_501321222620989_3333539029455903832_n.webp?_nc_cat=110&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeG2IBv-3CWXHemjUGjNLfSsgfWqLfHa5LyB9aot8drkvGfF61WYUtbuvI_P4ZlXcbOic9AQaPEyUvW91CkZ6BVC&_nc_ohc=OXrZYOn9UAEQ7kNvgF2-aYf&_nc_ht=scontent.fbkk29-4.fna&_nc_gid=Ak_a15_NmyBbOWSLlDYoK0v&oh=03_Q7cD1QEtMBJ4A5eWJ3RhQz1ufW_XJUGm9KQHi_qa35ttJmtD5Q&oe=67060255"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "24px",
+                }}
+              />
             </div>
           </div>
-
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="flex justify-center border rounded-3xl">
             <div
               style={{
-                backgroundColor: "black",
-                width: "32%",
-                height: "400px",
-                marginRight: "2%",
-                borderRadius: "5%",
+                backgroundColor: "pink",
+                width: "100%",
+                height: "500px",
+                border: "1px solid lightgray",
+                borderRadius: "24px",
+                overflow: "hidden",
               }}
             >
-              sdfsdfsd
+              <img
+                src="https://storage-asset.msi.com/global/picture/banner/banner_1695860274cca8d0fdad8514150ac910e77b87ba63.jpeg"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "24px",
+                }}
+              />
             </div>
           </div>
-
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="flex justify-center border rounded-3xl">
             <div
               style={{
-                backgroundColor: "green",
-                width: "32%",
-                height: "400px",
-                marginRight: "2%",
-                borderRadius: "5%",
+                backgroundColor: "pink",
+                width: "100%",
+                height: "500px",
+                border: "1px solid lightgray",
+                borderRadius: "24px",
+                overflow: "hidden",
               }}
             >
-              sdfsdfsdf
+              <img
+                src="https://www.asrock.com/images/index_MonitorF.jpg"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "24px",
+                }}
+              />
             </div>
           </div>
-
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="flex justify-center  border rounded-3xl">
             <div
               style={{
-                backgroundColor: "red",
-                width: "32%",
-                height: "400px",
-                marginRight: "2%",
-                borderRadius: "5%",
+                backgroundColor: "pink",
+                width: "100%",
+                height: "500px",
+                border: "1px solid lightgray",
+                borderRadius: "24px",
+                overflow: "hidden",
               }}
             >
-              sdfsdfsd
+              <img
+                src="https://p2-ofp.static.pub/ShareResource/na/faqs/img/intel-glossary-hero-new-notext.jpg"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "24px",
+                }}
+              />
             </div>
           </div>
         </Carousel>

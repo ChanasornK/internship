@@ -10,6 +10,7 @@ import { FaUserPlus } from "react-icons/fa6";
 import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
 import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
+import AutoSlider from "./AutoSlider";
 
 const Index = () => {
   const router = useRouter();
@@ -106,8 +107,12 @@ const Index = () => {
       </header>
 
       <div className="w-full h-[55%] bg-[#F8F5FD] mt-36">
-        <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 pt-10">
-          <BiSolidCategory className="mr-2" />
+        <div className="mt-44">
+          <AutoSlider />
+        </div>
+
+        <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 pt-10 mt-48">
+          <BiSolidCategory className="mr-2 " />
           หมวดหมู่สินค้า
         </div>
 
