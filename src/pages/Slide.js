@@ -118,6 +118,7 @@ const Slide = () => {
             showStatus={false}
             infiniteLoop
             useKeyboardArrows
+            showIndicators={false}
             renderArrowPrev={(onClickHandler, hasPrev, label) =>
               hasPrev && (
                 <button

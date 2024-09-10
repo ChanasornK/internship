@@ -97,27 +97,28 @@ const Laptop = () => {
     return <LoadingModal />;
   }
 
-  const handleImageClick = async (id, link) => {
-    try {
-      const response = await fetch("http://localhost:8000/increment-view", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
+const handleImageClick = async (id, link) => {
+  try {
+    const response = await fetch("http://localhost:8000/increment-view", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
 
-      if (response.ok) {
-        console.log("View count incremented successfully");
-      } else {
-        console.error("Failed to increment view count");
-      }
-    } catch (error) {
-      console.error("Error incrementing view count:", error);
+    if (response.ok) {
+      console.log("View count incremented successfully");
+    } else {
+      console.error("Failed to increment view count");
     }
+  } catch (error) {
+    console.error("Error incrementing view count:", error);
+  }
 
-    router.push(link);
-  };
+  // เปิดลิงก์ในแท็บใหม่
+  window.open(link, "_blank");
+};
 
   return (
     <>
@@ -138,13 +139,13 @@ const Laptop = () => {
               >
                 <button onClick={() => handleImageClick(img.id, img.link)}>
                   {img.src && (
-                    <div className="relative z-20 flex justify-center items-center">
+                    <div className="relative z-20">
                       <img
                         src={img.src}
                         alt={`Fetched Image ${index}`}
                         className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
                       />
-                      <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                      <span className="absolute bottom- left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {img.detail}
                       </span>
                     </div>

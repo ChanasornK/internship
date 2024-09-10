@@ -111,9 +111,10 @@ const Monitor = () => {
       console.error("Error incrementing view count:", error);
     }
 
-    router.push(link);
+    // เปิดลิงก์ในแท็บใหม่
+    window.open(link, "_blank");
   };
-console.log(image)
+  console.log(image);
   return (
     <>
       <Menu />
@@ -133,13 +134,13 @@ console.log(image)
               >
                 <button onClick={() => handleImageClick(img.id, img.link)}>
                   {img.src && (
-                    <div className="relative z-20 flex justify-center items-center">
+                    <div className="relative z-20">
                       <img
                         src={img.src}
                         alt={`Fetched Image ${index}`}
                         className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
                       />
-                      <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                      <span className="absolute bottom- left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {img.detail}
                       </span>
                     </div>
@@ -147,14 +148,14 @@ console.log(image)
                 </button>
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center mb-1">
+                    <div className="flex items-center">
                       <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
                     {((img.email === storedEmail && role) ||
                       role === "admin") && <FixInformation dataSource={img} />}
                   </div>
 
-                  <div className="flex justify-between items-center mt-2">
+                  <div className="flex justify-between mt-2">
                     <span className="text-red-600 font-medium">
                       {img.price}
                     </span>

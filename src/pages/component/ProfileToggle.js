@@ -34,7 +34,9 @@ const ProfileToggle = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("../Login");
   };
-
+const handleMyReview =() =>{
+  router.push('../Myreview')
+}
   const handleEditProfile = () => {
     setOpenModal(true); // เปิด modal แทนการ redirect
   };
@@ -118,6 +120,15 @@ const ProfileToggle = () => {
                 >
                   <RiEdit2Fill className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
                   <span className="text-sm pl-3">Edit Profile</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={handleMyReview} // เปิด modal แทนการไปหน้า edit
+                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center "
+                >
+                  <RiEdit2Fill className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
+                  <span className="text-sm pl-3">MyReview</span>
                 </button>
               </li>
 

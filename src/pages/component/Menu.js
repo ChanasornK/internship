@@ -48,9 +48,10 @@ const Menu = () => {
               className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center group"
               onClick={handleHomePage}
             >
-              <SiReactos className="mr-4 transition-transform duration-500 group-hover:rotate-180" />
-              <span>Reviews</span>
+              <SiReactos className=" mr-4 transition-transform duration-500 group-hover:rotate-180   group-hover:text-black" />
+              <span className="hover:text-black">ReviewZone</span>
             </div>
+
             <Searchform />
           </div>
           <div className="absolute top-[90px] w-full">

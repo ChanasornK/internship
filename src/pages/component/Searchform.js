@@ -48,7 +48,7 @@ const Searchform = () => {
   }, []);
 
   return (
-    <div className="w-[55%] ml-44 mt-10" ref={dropdownRef}>
+    <div className="w-[55%] ml-36 mt-10" ref={dropdownRef}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

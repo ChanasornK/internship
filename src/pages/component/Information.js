@@ -92,7 +92,7 @@ const Information = () => {
             onClose={() => setOpenModal(false)}
             className="relative z-50 w-auto max-w-2xl mx-auto mt-2 h-screen"
           >
-            <Modal.Header className="modal-header h-10 w-auto mr-4  flex justify-end"></Modal.Header>
+            <Modal.Header className="modal-header h-10 w-auto mr-4 flex justify-end pt-4"></Modal.Header>
             <div className="w-auto p-10">
               <Upload setImage={setImage} />
             </div>
