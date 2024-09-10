@@ -7,7 +7,7 @@ const Searchform = () => {
   const dropdownRef = useRef(null);
 
   const handleSearchChange = async (e) => {
-    const value = e.target.value;
+    const value = e.target.value; // ไม่ต้องแปลง searchTerm ให้เป็นพิมพ์เล็ก
     setSearchTerm(value);
 
     if (value.length > 0) {
@@ -16,7 +16,11 @@ const Searchform = () => {
           params: { searchTerm: value },
         });
 
-        setSearchResults(response.data.imageData || []);
+        const filteredResults = response.data.imageData.filter(
+          (result) => result.detail.toLowerCase().includes(value.toLowerCase()) // แปลงเฉพาะการเปรียบเทียบเป็นพิมพ์เล็ก
+        );
+
+        setSearchResults(filteredResults || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
       }
@@ -97,7 +101,10 @@ const Searchform = () => {
         <div className="mt-4 bg-white rounded-lg shadow-md">
           <ul>
             {searchResults.map((result) => (
-              <li key={result.id} className="p-2 border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg">
+              <li
+                key={result.id}
+                className="p-2 border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg"
+              >
                 <button onClick={() => handleOpenLinkInNewTab(result)}>
                   {result.detail} - {result.type}
                 </button>

@@ -1,50 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Menu from "../component/Menu";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Information from "../component/Information";
 import RatingStarz from "../component/RatingStarz";
-import LoadingModal from "../component/loading";
+import Information from "../component/Information";
 import FixInformation from "../component/FixInformation";
-
-const Monitor = () => {
-  const router = useRouter();
-  const [image, setImages] = useState([]);
+import LoadingModal from "../component/loading";
+const ASUS = () => {
+  const [images, setImages] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState(null);
+  const router = useRouter();
   const [storedEmail, setStoredEmail] = useState(null);
-
+  const [role, setRole] = useState(null);
   useEffect(() => {
-    const fetchData = async () => {
-      // โหลดข้อมูลโปรไฟล์จาก localStorage
-      const storedData = localStorage.getItem("profile");
-      if (storedData) {
-        const profile = JSON.parse(storedData);
-        setRole(profile?.userData?.role);
-        setStoredEmail(profile?.userData?.email);
-      }
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role);
+      setStoredEmail(profile?.userData?.email);
+    }
 
-      // ดึงข้อมูลภาพจาก API
+    const fetchAllImages = async () => {
       try {
         const response = await getImage();
         const imageDataArray = response.data.imageData;
+
         const validImageDataArray = imageDataArray
-          .filter((image) => image.type === "Monitor")
           .map((image) => {
             const base64String = arrayBufferToBase64(image.image.data);
             return {
               id: image.id,
-              src: `data:image/png;base64,${base64String}`,
               price: image.price,
-              detail: image.detail,
-              link: image.link,
-              type: image.type,
               rating: image.rating,
               views: image.view,
-              email: image.email,
+              detail: image.detail, // เพิ่มการดึงรายละเอียดที่เกี่ยวข้อง
+              src: `data:image/png;base64,${base64String}`,
+              link: image.link,
+              email:image.email,
             };
-          });
+          })
+          .filter((image) => {
+            // ฟังก์ชันในการกรองเฉพาะรูปที่มีคำว่า "Asus" หรือคำที่คล้ายกัน
+            const regex = /asus/i;
+            return regex.test(image.detail);
+          })
+          .sort((a, b) => b.views - a.views)
+          .slice(0, 12); // Limit to top 12 images
+
+        const cachedImages = JSON.stringify(validImageDataArray);
+
+        // Update localStorage only if the fetched data is different from the cached data
+        if (localStorage.getItem("cachedImages") !== cachedImages) {
+          localStorage.setItem("cachedImages", cachedImages);
+        }
 
         setImages(validImageDataArray);
+        setIsLoaded(true); // Mark as loaded after fetching data
       } catch (error) {
         console.error("Error fetching images:", error);
       } finally {
@@ -52,20 +64,33 @@ const Monitor = () => {
       }
     };
 
-    fetchData(); // เรียกใช้ฟังก์ชันเมื่อ component mount
-  }, []); // useEffect นี้ทำงานเมื่อ component mount เท่านั้น
+    fetchAllImages();
 
-  const getImage = async (id) => {
+    const handleRouteChange = (url) => {
+      if (url === "/") {
+        setIsLoaded(false); // Reset loading state
+        fetchAllImages();
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
+
+  const getImage = async () => {
     try {
       const response = await fetch("http://localhost:8000/getAllImage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
       });
 
       const data = await response.json();
+
       if (response.ok) {
         return { data };
       } else {
@@ -87,33 +112,10 @@ const Monitor = () => {
     }
     return window.btoa(binary);
   };
-
   if (loading) {
     return <LoadingModal />;
   }
-
-  const handleImageClick = async (id, link) => {
-    try {
-      const response = await fetch("http://localhost:8000/increment-view", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-
-      if (response.ok) {
-        console.log("View count incremented successfully");
-      } else {
-        console.error("Failed to increment view count");
-      }
-    } catch (error) {
-      console.error("Error incrementing view count:", error);
-    }
-
-    router.push(link);
-  };
-console.log(image)
+  console.log(images)
   return (
     <>
       <Menu />
@@ -126,7 +128,7 @@ console.log(image)
 
         <div className="flex justify-center items-center -mt-5 ">
           <div className="flex flex-wrap justify-center w-4/5 mb-5">
-            {image.map((img, index) => (
+            {images.map((img, index) => (
               <div
                 key={index}
                 className="w-64 p-4 border-2 border-[#FF8FAB] rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10"
@@ -170,4 +172,4 @@ console.log(image)
   );
 };
 
-export default Monitor;
+export default ASUS;

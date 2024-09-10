@@ -92,7 +92,7 @@ const ProfileToggle = () => {
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-600 mt-8 ml-0">
             <img
               src={getProfileImageSrc()}
-              className="object-fill"
+              className="object-cover w-full h-full" // Use object-cover to maintain aspect ratio
               alt="Profile Image"
             />
           </div>

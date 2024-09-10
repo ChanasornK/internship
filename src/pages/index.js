@@ -11,7 +11,7 @@ import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
 import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
 import AutoSlider from "./AutoSlider";
-import { LuMonitor } from "react-icons/lu";
+import Logo from "./IT/Logo";
 const Index = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -111,10 +111,12 @@ const Index = () => {
         <div className="pt-44 ">
           <AutoSlider />
         </div>
-
-        <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 pt-10 mt-48">
-          <BiSolidCategory className="mr-2 " />
-          หมวดหมู่สินค้า
+        <div className="mt-56 ml-44">
+          <Logo />
+        </div>
+        <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 pt-8 mt-4">
+          <BiSolidCategory className="mr-2 text-purple-600" />
+          <span>หมวดหมู่สินค้า</span>
         </div>
 
         <div className="flex justify-center items-center mt-10">

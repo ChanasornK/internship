@@ -45,11 +45,11 @@ const Menu = () => {
         <div className="w-4/5 ml-24">
           <div className="flex">
             <div
-              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center"
+              className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center group"
               onClick={handleHomePage}
             >
-              <SiReactos className="mr-4 hover:rotate-180 transition-transform duration-500" />
-              Reviews
+              <SiReactos className="mr-4 transition-transform duration-500 group-hover:rotate-180" />
+              <span>Reviews</span>
             </div>
             <Searchform />
           </div>

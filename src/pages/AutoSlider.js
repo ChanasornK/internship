@@ -37,7 +37,7 @@ const AutoSlider = () => {
           <div className="flex justify-center border rounded-3xl">
             <div
               style={{
-                backgroundColor: "pink",
+                backgroundColor: "",
                 width: "100%",
                 height: "500px",
                 border: "1px solid lightgray",
@@ -59,7 +59,7 @@ const AutoSlider = () => {
           <div className="flex justify-center border rounded-3xl">
             <div
               style={{
-                backgroundColor: "pink",
+                backgroundColor: "",
                 width: "100%",
                 height: "500px",
                 border: "1px solid lightgray",
@@ -81,7 +81,7 @@ const AutoSlider = () => {
           <div className="flex justify-center border rounded-3xl">
             <div
               style={{
-                backgroundColor: "pink",
+                backgroundColor: "",
                 width: "100%",
                 height: "500px",
                 border: "1px solid lightgray",
@@ -103,7 +103,7 @@ const AutoSlider = () => {
           <div className="flex justify-center  border rounded-3xl">
             <div
               style={{
-                backgroundColor: "pink",
+                backgroundColor: "",
                 width: "100%",
                 height: "500px",
                 border: "1px solid lightgray",
