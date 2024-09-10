@@ -1,126 +1,105 @@
-import React from 'react'
-import Menu from './component/Menu'
-import { useState,useEffect } from 'react'
-import { useRouter } from 'next/router';
-import LoadingModal from './component/loading';
-import FixInformation from './component/FixInformation';
-import Information from './component/Information';
-import RatingStarz from './component/RatingStarz';
+import React from "react";
+import Menu from "./component/Menu";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import LoadingModal from "./component/loading";
+import FixInformation from "./component/FixInformation";
+import Information from "./component/Information";
+import RatingStarz from "./component/RatingStarz";
 const Myreview = () => {
-    const [images, setImages] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const router = useRouter();
-    const [storedEmail, setStoredEmail] = useState(null);
-    const [role, setRole] = useState(null);
-    useEffect(() => {
+  const [images, setImages] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const [storedEmail, setStoredEmail] = useState(null);
+  const [role, setRole] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      // โหลดข้อมูลโปรไฟล์จาก localStorage
       const storedData = localStorage.getItem("profile");
+      let storedEmail = "";
       if (storedData) {
         const profile = JSON.parse(storedData);
         setRole(profile?.userData?.role);
-        setStoredEmail(profile?.userData?.email);
+        storedEmail = profile?.userData?.email;
+        setStoredEmail(storedEmail);
       }
-  
-      const fetchAllImages = async () => {
-        try {
-          const response = await getImage();
-          const imageDataArray = response.data.imageData;
-  
-          const validImageDataArray = imageDataArray
-            .map((image) => {
-              const base64String = arrayBufferToBase64(image.image.data);
-              return {
-                id: image.id,
-                price: image.price,
-                rating: image.rating,
-                views: image.view,
-                detail: image.detail, // เพิ่มการดึงรายละเอียดที่เกี่ยวข้อง
-                src: `data:image/png;base64,${base64String}`,
-                link: image.link,
-                email:image.email,
-              };
-            })
-            .filter((image) => {
-              // ฟังก์ชันในการกรองเฉพาะรูปที่มีคำว่า "MSI" หรือคำที่คล้ายกัน
-              const regex = /msi/i;
-              return regex.test(image.detail);
-            })
-            .sort((a, b) => b.views - a.views)
-            .slice(0, 12); // Limit to top 12 images
-  
-          const cachedImages = JSON.stringify(validImageDataArray);
-  
-          // Update localStorage only if the fetched data is different from the cached data
-          if (localStorage.getItem("cachedImages") !== cachedImages) {
-            localStorage.setItem("cachedImages", cachedImages);
-          }
-  
-          setImages(validImageDataArray);
-          setIsLoaded(true); // Mark as loaded after fetching data
-        } catch (error) {
-          console.error("Error fetching images:", error);
-        } finally {
-          setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
-        }
-      };
-  
-      fetchAllImages();
-  
-      const handleRouteChange = (url) => {
-        if (url === "/") {
-          setIsLoaded(false); // Reset loading state
-          fetchAllImages();
-        }
-      };
-  
-      router.events.on("routeChangeComplete", handleRouteChange);
-  
-      return () => {
-        router.events.off("routeChangeComplete", handleRouteChange);
-      };
-    }, [router]);
-  
-    const getImage = async () => {
+
+      // ดึงข้อมูลภาพจาก API
       try {
-        const response = await fetch("http://localhost:8000/getAllImage", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-  
-        const data = await response.json();
-  
-        if (response.ok) {
-          return { data };
-        } else {
-          console.error("Fetch image failed:", data.message);
-          return false;
-        }
+        const response = await getImage();
+        const imageDataArray = response.data.imageData;
+        // กรองข้อมูลภาพจากอีเมลที่ตรงกับ storedEmail
+        const validImageDataArray = imageDataArray
+          .filter((image) => image.email === storedEmail)
+          .map((image) => {
+            const base64String = arrayBufferToBase64(image.image.data);
+            return {
+              id: image.id,
+              src: `data:image/png;base64,${base64String}`,
+              price: image.price,
+              detail: image.detail,
+              link: image.link,
+              type: image.type,
+              rating: image.rating,
+              views: image.view,
+              email: image.email,
+            };
+          });
+
+        setImages(validImageDataArray);
       } catch (error) {
-        console.error("Error during fetch image:", error);
+        console.error("Error fetching images:", error);
+      } finally {
+        setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
+      }
+    };
+
+    fetchData(); // เรียกใช้ฟังก์ชันเมื่อ component mount
+  }, []);
+  // useEffect นี้ทำงานเมื่อ component mount เท่านั้น
+
+  const getImage = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/getAllImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return { data };
+      } else {
+        console.error("Fetch image failed:", data.message);
         return false;
       }
-    };
-  
-    const arrayBufferToBase64 = (buffer) => {
-      let binary = "";
-      const bytes = new Uint8Array(buffer);
-      const len = bytes.byteLength;
-      for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-      }
-      return window.btoa(binary);
-    };
-    if (loading) {
-      return <LoadingModal />;
+    } catch (error) {
+      console.error("Error during fetch image:", error);
+      return false;
     }
-    console.log(images)
+  };
+
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
+  if (loading) {
+    return <LoadingModal />;
+  }
+  console.log(images);
   return (
     <div>
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
-      <div className="flex justify-end w-full ">
+        <div className="flex justify-end w-full ">
           <div className="mr-10 mt-44">
             <Information />
           </div>
@@ -135,13 +114,13 @@ const Myreview = () => {
               >
                 <button onClick={() => handleImageClick(img.id, img.link)}>
                   {img.src && (
-                    <div className="relative z-20 flex justify-center items-center">
+                    <div className="relative z-20">
                       <img
                         src={img.src}
                         alt={`Fetched Image ${index}`}
                         className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
                       />
-                      <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                      <span className="absolute bottom- left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
                         {img.detail}
                       </span>
                     </div>
@@ -149,14 +128,14 @@ const Myreview = () => {
                 </button>
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center mb-1">
+                    <div className="flex items-center">
                       <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
                     {((img.email === storedEmail && role) ||
                       role === "admin") && <FixInformation dataSource={img} />}
                   </div>
 
-                  <div className="flex justify-between items-center mt-2">
+                  <div className="flex justify-between mt-2">
                     <span className="text-red-600 font-medium">
                       {img.price}
                     </span>
@@ -169,7 +148,7 @@ const Myreview = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Myreview
+export default Myreview;
