@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import EditProfile from "./EditProfile"; // Import component EditProfile
 import { RiEdit2Fill } from "react-icons/ri";
+import { MdPostAdd } from "react-icons/md";
 const ProfileToggle = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [profile, setProfile] = useState(null);
@@ -34,9 +35,9 @@ const ProfileToggle = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("../Login");
   };
-const handleMyReview =() =>{
-  router.push('../Myreview')
-}
+  const handleMyReview = () => {
+    router.push("../Myreview");
+  };
   const handleEditProfile = () => {
     setOpenModal(true); // เปิด modal แทนการ redirect
   };
@@ -80,7 +81,7 @@ const handleMyReview =() =>{
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen]);
-
+  console.log(profile);
   return (
     <>
       <div className="relative text-left flex" ref={dropdownRef}>
@@ -100,7 +101,7 @@ const handleMyReview =() =>{
           </div>
           <div className="w-auto h-10 mt-8 ml-2 flex justify-center items-center mr-3 text-black font-medium text-base font-sans">
             <span className="whitespace-nowrap">
-              {profile?.displayName || profile?.email}
+              {profile?.username || profile?.displayName || profile?.email}
             </span>
           </div>
         </button>
@@ -127,8 +128,8 @@ const handleMyReview =() =>{
                   onClick={handleMyReview} // เปิด modal แทนการไปหน้า edit
                   className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center "
                 >
-                  <RiEdit2Fill className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
-                  <span className="text-sm pl-3">MyReview</span>
+                  <MdPostAdd className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
+                  <span className="text-sm pl-3">MyPost</span>
                 </button>
               </li>
 

@@ -6,7 +6,9 @@ const EditProfile = ({ openModal, setOpenModal }) => {
   const [file, setFile] = useState(null);
   const [profile, setProfile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-
+  const [username, setUsername] = useState(""); // Add state for username
+  const defaultPhotoURL =
+    "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -24,40 +26,58 @@ const EditProfile = ({ openModal, setOpenModal }) => {
   };
 
   const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("id", profile?.id);
-
     try {
-      const response = await axios.post(
-        "http://localhost:8000/uploadImageEditProfile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const base64Image = await convertToBase64(file);
-      const updatedProfile = { ...profile, image: base64Image };
+      let imageUrl = defaultPhotoURL; // เริ่มต้นด้วยรูป default
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("id", profile?.id);
+
+        // อัพโหลดรูปภาพหากมีไฟล์ใหม่
+        const uploadImageResponse = await axios.post(
+          "http://localhost:8000/uploadImageEditProfile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        // แปลงรูปที่อัพโหลดเป็น base64
+        imageUrl = await convertToBase64(file);
+      }
+
+      const updatedProfile = { ...profile, image: imageUrl };
       setProfile(updatedProfile);
+
+      // อัพเดท username หลังจากอัพเดทรูปภาพเสร็จแล้ว
+      const updateUsernameResponse = await axios.put(
+        "http://localhost:8000/updateUsername",
+        { id: profile?.id, username }
+      );
+
+      // อัพเดทข้อมูลใน localStorage ด้วย image และ username ใหม่
       localStorage.setItem(
         "profile",
-        JSON.stringify({ userData: updatedProfile })
+        JSON.stringify({
+          userData: { ...updatedProfile, username },
+        })
       );
-      window.location.reload();
-      console.log("Updated profile with Base64 image:", updatedProfile);
+
+      window.location.reload(); // รีโหลดหน้าหลังจากอัพเดทเสร็จ
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error updating profile or username:", error);
     }
   };
-
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
       const profile = JSON.parse(storedData);
       setProfile(profile?.userData);
       setPreviewImage(profile?.userData?.image);
+      setUsername(profile?.userData?.username || ""); // Set the current username
     }
   }, []);
 
@@ -114,7 +134,7 @@ const EditProfile = ({ openModal, setOpenModal }) => {
                               d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                             />
                           </svg>
-                          Click to upload photo (MAX.500 KB)
+                          Choose Photo Profile (MAX.500 KB)
                         </span>
                       </p>
                     </>
@@ -128,6 +148,14 @@ const EditProfile = ({ openModal, setOpenModal }) => {
                 />
               </label>
             </div>
+
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)} // Bind input to username state
+              className="bg-gray-100 flex justify-center w-[90%] mx-auto border-1 rounded-lg mt-4  focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 dark:focus:ring-purple-600 dark:focus:border-purple-600"
+            />
 
             <div className="flex justify-center gap-4 mt-4 mb-4">
               <Button

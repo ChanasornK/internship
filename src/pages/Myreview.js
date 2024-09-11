@@ -6,6 +6,7 @@ import LoadingModal from "./component/loading";
 import FixInformation from "./component/FixInformation";
 import Information from "./component/Information";
 import RatingStarz from "./component/RatingStarz";
+
 const Myreview = () => {
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -13,9 +14,9 @@ const Myreview = () => {
   const router = useRouter();
   const [storedEmail, setStoredEmail] = useState(null);
   const [role, setRole] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
-      // โหลดข้อมูลโปรไฟล์จาก localStorage
       const storedData = localStorage.getItem("profile");
       let storedEmail = "";
       if (storedData) {
@@ -25,11 +26,10 @@ const Myreview = () => {
         setStoredEmail(storedEmail);
       }
 
-      // ดึงข้อมูลภาพจาก API
       try {
         const response = await getImage();
         const imageDataArray = response.data.imageData;
-        // กรองข้อมูลภาพจากอีเมลที่ตรงกับ storedEmail
+
         const validImageDataArray = imageDataArray
           .filter((image) => image.email === storedEmail)
           .map((image) => {
@@ -51,13 +51,12 @@ const Myreview = () => {
       } catch (error) {
         console.error("Error fetching images:", error);
       } finally {
-        setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
+        setLoading(false);
       }
     };
 
-    fetchData(); // เรียกใช้ฟังก์ชันเมื่อ component mount
+    fetchData();
   }, []);
-  // useEffect นี้ทำงานเมื่อ component mount เท่านั้น
 
   const getImage = async () => {
     try {
@@ -91,12 +90,21 @@ const Myreview = () => {
     }
     return window.btoa(binary);
   };
-  if (loading) {
-    return <LoadingModal />;
-  }
-  console.log(images);
+
+  const handleImageClick = (id, link) => {
+    window.open(link, "_blank"); // Open the link in a new tab
+  };
+
+  // if (loading) {
+  //   return <LoadingModal />;
+  // }
+
   return (
-    <div>
+    <>
+    {loading ? (
+        <LoadingModal />
+      ) : (
+        <div>
       <Menu />
       <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
         <div className="flex justify-end w-full ">
@@ -147,7 +155,10 @@ const Myreview = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+          )}
+    
+    </>
   );
 };
 

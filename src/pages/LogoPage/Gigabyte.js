@@ -38,7 +38,7 @@ const Gigabyte = () => {
               detail: image.detail, // เพิ่มการดึงรายละเอียดที่เกี่ยวข้อง
               src: `data:image/png;base64,${base64String}`,
               link: image.link,
-              email:image.email,
+              email: image.email,
             };
           })
           .filter((image) => {
@@ -113,62 +113,73 @@ const Gigabyte = () => {
     }
     return window.btoa(binary);
   };
-  if (loading) {
-    return <LoadingModal />;
-  }
-  console.log(images)
+  // if (loading) {
+  //   return <LoadingModal />;
+  // }
+  console.log(images);
   return (
     <>
-      <Menu />
-      <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
-        <div className="flex justify-end w-full ">
-          <div className="mr-10 mt-44">
-            <Information />
-          </div>
-        </div>
-
-        <div className="flex justify-center items-center -mt-5 ">
-          <div className="flex flex-wrap justify-center w-4/5 mb-5">
-            {images.map((img, index) => (
-              <div
-                key={index}
-                className="w-64 p-4 border-2 border-[#FF8FAB] rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10"
-              >
-                <button onClick={() => handleImageClick(img.id, img.link)}>
-                  {img.src && (
-                    <div className="relative z-20 flex justify-center items-center">
-                      <img
-                        src={img.src}
-                        alt={`Fetched Image ${index}`}
-                        className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
-                      />
-                      <span className="absolute bottom-[-70px] left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
-                        {img.detail}
-                      </span>
-                    </div>
-                  )}
-                </button>
-                <div className="mt-32">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center mb-1">
-                      <RatingStarz getRating={img.rating} isEnabled={false} />
-                    </div>
-                    {((img.email === storedEmail && role) ||
-                      role === "admin") && <FixInformation dataSource={img} />}
-                  </div>
-
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-red-600 font-medium">
-                      {img.price}
-                    </span>
-                    <div className="ml-1">{img.views} views</div>
-                  </div>
-                </div>
+      {loading ? (
+        <LoadingModal />
+      ) : (
+        <div>
+          <Menu />
+          <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
+            <div className="flex justify-end w-full ">
+              <div className="mr-10 mt-44">
+                <Information />
               </div>
-            ))}
+            </div>
+
+            <div className="flex justify-center items-center -mt-5 ">
+              <div className="flex flex-wrap justify-center w-4/5 mb-5">
+                {images.map((img, index) => (
+                  <div
+                    key={index}
+                    className="w-64 p-4 border-2 border-[#FF8FAB] rounded-lg shadow-lg h-[450px] bg-gray-100 mx-3 overflow-hidden mt-10"
+                  >
+                    <button onClick={() => handleImageClick(img.id, img.link)}>
+                      {img.src && (
+                        <div className="relative z-20">
+                          <img
+                            src={img.src}
+                            alt={`Fetched Image ${index}`}
+                            className="w-auto h-56 object-cover transform transition-transform duration-200 hover:scale-125"
+                          />
+                          <span className="absolute bottom- left-0 bg-gray-100 bg-opacity-75 text-black flex justify-start text-left font-semibold text-base">
+                            {img.detail}
+                          </span>
+                        </div>
+                      )}
+                    </button>
+                    <div className="mt-32">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <RatingStarz
+                            getRating={img.rating}
+                            isEnabled={false}
+                          />
+                        </div>
+                        {((img.email === storedEmail && role) ||
+                          role === "admin") && (
+                          <FixInformation dataSource={img} />
+                        )}
+                      </div>
+
+                      <div className="flex justify-between mt-2">
+                        <span className="text-red-600 font-medium">
+                          {img.price}
+                        </span>
+                        <div className="ml-1">{img.views} views</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
