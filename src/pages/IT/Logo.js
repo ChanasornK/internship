@@ -73,6 +73,14 @@ const Logo = () => {
           />
         </div>
       </button>
+      <button onClick={() => goToPage("Lenovo")}>
+        <div className="w-32 h-11">
+          <img
+            src="https://scontent.fbkk29-5.fna.fbcdn.net/v/t1.15752-9/456812688_1550154775591509_699400311333807581_n.png?stp=dst-png_s2048x2048&_nc_cat=107&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHgOYU5uE9zwRWvcA13cPIqpuMPuwhLmfCm4w-7CEuZ8DaMesTZdpaiAibGjD0HIa-_9zuwomlWcFo0bJ-S7Ru8&_nc_ohc=hysxZYPOrxEQ7kNvgFRwtUE&_nc_ht=scontent.fbkk29-5.fna&_nc_gid=AraH1-tfD9ifspqZ_IxU6NM&oh=03_Q7cD1QH_P870dbG0LbCWJinPaWUdiRufhy89cOLRF2T3lxEzDw&oe=6708BA96"
+            className="w-full h-full object-contain transform transition-transform duration-200 hover:scale-125"
+          />
+        </div>
+      </button>
     </div>
   );
 };

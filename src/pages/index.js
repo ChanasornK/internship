@@ -114,7 +114,7 @@ const Index = () => {
             </div>
           </header>
 
-          <div className="w-full h-[55%] bg-[#F8F5FD] ">
+          <div className="w-full h-[55%] bg-stone-100  ">
             <div className="pt-44 ">
               <AutoSlider />
             </div>
@@ -179,7 +179,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="w-full h-[55%] bg-[#F8F5FD]">
+          <div className="w-full h-[55%] bg-stone-100 ">
             <div className="flex justify-center items-center">
               <div className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-pink-200 to-blue-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-pink-300 hover:to-blue-300">
                 <button onClick={() => handleNavigation("./IT/Graphic")}>
@@ -233,7 +233,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="bg-[#F8F5FD] w-full h-[500px] overflow-hidden">
+          <div className="bg-stone-100  w-full h-[500px] overflow-hidden">
             <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 mt-4">
               <BsFillEmojiSmileFill className="mr-3 text-pink-600" />
               Mostview
