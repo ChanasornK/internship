@@ -191,9 +191,9 @@ const Slide = () => {
                 {group.map((img) => (
                   <div
                     key={img.id}
-                    className="bg-[#eee8ff] w-1/3 h-[370px] mx-1 border rounded-lg overflow-hidden transition-all duration-300 hover:bg-[#d1c4e9] hover:shadow-lg"
+                    className="bg-[#D7DDE8] w-1/3 h-[370px] mx-1 border rounded-lg overflow-hidden transition-all duration-300 hover:bg-[#bdc3c7] hover:shadow-lg"
                   >
-                    <button onClick={() => router.push(img.link)}>
+                    <button onClick={() => window.open(img.link, "_blank")}>
                       <div className="relative z-20 flex justify-center items-center">
                         <img
                           src={img.src}

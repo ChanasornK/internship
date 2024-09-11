@@ -28,7 +28,7 @@ const Logo = () => {
         "https://scontent.fbkk29-4.fna.fbcdn.net/v/t1.15752-9/457510761_1222879655526200_8627781567526296244_n.png?stp=dst-png_s2048x2048&_nc_cat=110&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeF6M96ht1ltRKNlsV8ve6ne59vAzg-eOHfn28DOD544dwhbQb6zY2RxawwXksXDB85RMygALir8JcYMO9DKisZW&_nc_ohc=LeAVIpxuJdkQ7kNvgEluuO8&_nc_ht=scontent.fbkk29-4.fna&_nc_gid=ALUmejZjfFcT-lOekdWvlRi&oh=03_Q7cD1QEcOPRvpxd2ubRv0HQAWYxSruFlDph1yjl4X0QA1c8YPA&oe=670767B3",
     },
     {
-      name: "LG",
+      name: "Lg",
       imgUrl:
         "https://www.freepnglogos.com/uploads/lg-logo-png/lg-logo-partnership-with-bang-olufsen-yields-top-class-1.png",
     },
