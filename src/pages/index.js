@@ -74,7 +74,7 @@ const Index = () => {
         <LoadingModal />
       ) : (
         <div className="w-full h-auto">
-          <header className="fixed top-0 left-0 w-full bg-gradient-to-tl from-pink-300 to-purple-500 flex z-50 h-36">
+          <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#6A82FB] to-[#FC5C7D] flex z-50 h-36">
             <div className="w-4/5 ml-24">
               <div className="flex">
                 <div
