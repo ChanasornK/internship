@@ -5,6 +5,7 @@ const Logo = () => {
   const router = useRouter();
   const [visibleLogos, setVisibleLogos] = useState(8); // เริ่มต้นด้วยการแสดง 8 รูปแรก
   const [currentStart, setCurrentStart] = useState(0); // index ของรูปที่เริ่มต้นแสดงผล
+
   const logos = [
     {
       name: "MSI",
@@ -51,6 +52,16 @@ const Logo = () => {
       imgUrl:
         "https://scontent.fbkk29-5.fna.fbcdn.net/v/t1.15752-9/456812688_1550154775591509_699400311333807581_n.png?stp=dst-png_s2048x2048&_nc_cat=107&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHgOYU5uE9zwRWvcA13cPIqpuMPuwhLmfCm4w-7CEuZ8DaMesTZdpaiAibGjD0HIa-_9zuwomlWcFo0bJ-S7Ru8&_nc_ohc=hysxZYPOrxEQ7kNvgFRwtUE&_nc_ht=scontent.fbkk29-5.fna&_nc_gid=AraH1-tfD9ifspqZ_IxU6NM&oh=03_Q7cD1QH_P870dbG0LbCWJinPaWUdiRufhy89cOLRF2T3lxEzDw&oe=6708BA96",
     },
+    {
+      name: "Samsung",
+      imgUrl:
+        "https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/459099897_1054276246087809_6410559811456905430_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeE9A9dM9he32Mi5PPZ8l4uoSd2L51AQhcxJ3YvnUBCFzIxtj2QgQnDhIz-mibSSI6YPUt3qMU59653hpcwK7ujm&_nc_ohc=YiqPoSodvBsQ7kNvgHvMTMY&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AbmWlD6XykaCZTdYnh5mneN&oh=03_Q7cD1QGrLPKYapWKsh4f9PjdnQhzbNTuLj-nd-XMLW2Rt7C4-Q&oe=6708CEE3",
+    },
+    {
+      name: "Predator",
+      imgUrl:
+        "https://scontent.fbkk29-1.fna.fbcdn.net/v/t1.15752-9/457070509_1247376719748870_8094528576549176747_n.png?stp=dst-png_s2048x2048&_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHSApGL9baE3TxRrNHXs4dVA1_0JKEe_18DX_QkoR7_X03VtsoUpUWdOTpEu9lS1vPUKNG8k9zL6PaWQy_1yoC4&_nc_ohc=deuQh5AhR4gQ7kNvgFM2C2N&_nc_ht=scontent.fbkk29-1.fna&oh=03_Q7cD1QF6587kz73t8ucQkCvbX8XireHyVYirOK6YprhuNZcPQQ&oe=6708C590",
+    },
   ];
 
   useEffect(() => {
@@ -78,7 +89,7 @@ const Logo = () => {
           onClick={() => goToPage(logo.name)}
           className="logo-slide"
         >
-          <div className="w-32 h-12">
+          <div className="w-32 h-12 ml-1">
             <img
               src={logo.imgUrl}
               className="w-full h-full object-contain transform transition-transform duration-200 hover:scale-125"
