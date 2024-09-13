@@ -90,6 +90,28 @@ const AutoSlider = () => {
               }}
             >
               <img
+                src="https://dlcdnwebimgs.asus.com/gain/6E8AEDE3-3C93-459E-AFDB-C03436221DC9"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "24px",
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex justify-center border rounded-3xl">
+            <div
+              style={{
+                backgroundColor: "",
+                width: "100%",
+                height: "500px",
+                border: "1px solid lightgray",
+                borderRadius: "24px",
+                overflow: "hidden",
+              }}
+            >
+              <img
                 src="https://www.asrock.com/images/index_MonitorF.jpg"
                 style={{
                   width: "100%",
@@ -100,6 +122,7 @@ const AutoSlider = () => {
               />
             </div>
           </div>
+
           <div className="flex justify-center  border rounded-3xl">
             <div
               style={{

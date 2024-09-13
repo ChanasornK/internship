@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Logo = () => {
   const router = useRouter();
   const [visibleLogos, setVisibleLogos] = useState(8); // เริ่มต้นด้วยการแสดง 8 รูปแรก
   const [currentStart, setCurrentStart] = useState(0); // index ของรูปที่เริ่มต้นแสดงผล
+  const [fadeIn, setFadeIn] = useState(false); // ใช้สถานะเพื่อควบคุมการเฟดอิน
 
   const logos = [
     {
@@ -62,41 +65,43 @@ const Logo = () => {
       imgUrl:
         "https://scontent.fbkk29-1.fna.fbcdn.net/v/t1.15752-9/457070509_1247376719748870_8094528576549176747_n.png?stp=dst-png_s2048x2048&_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHSApGL9baE3TxRrNHXs4dVA1_0JKEe_18DX_QkoR7_X03VtsoUpUWdOTpEu9lS1vPUKNG8k9zL6PaWQy_1yoC4&_nc_ohc=deuQh5AhR4gQ7kNvgFM2C2N&_nc_ht=scontent.fbkk29-1.fna&oh=03_Q7cD1QF6587kz73t8ucQkCvbX8XireHyVYirOK6YprhuNZcPQQ&oe=6708C590",
     },
+    {
+      name: "AOC",
+      imgUrl:
+        "https://download.logo.wine/logo/AOC_International/AOC_International-Logo.wine.png",
+    },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStart((prevStart) => (prevStart + 1) % logos.length); // เปลี่ยนตำแหน่งที่เริ่มต้น
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [logos.length]);
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 8, // แสดงโลโก้ 4 รูปต่อหน้า
+    slidesToScroll: 1, // เลื่อนทีละ 1 รูป
+    autoplay: true,
+    autoplaySpeed: 2500, // สไลด์ทุก 3 วินาที
+  };
 
   const goToPage = (brand) => {
     router.push(`../LogoPage/${brand}`);
   };
-
-  const displayedLogos = [
-    ...logos.slice(currentStart, currentStart + visibleLogos),
-    ...logos.slice(0, Math.max(0, currentStart + visibleLogos - logos.length)),
-  ];
-
+  useEffect(() => {
+    setFadeIn(true); // เมื่อ component โหลดเสร็จ ให้เฟดอิน
+  }, []);
   return (
-    <div className="flex gap-10 overflow-hidden">
-      {displayedLogos.map((logo, index) => (
-        <button
-          key={index}
-          onClick={() => goToPage(logo.name)}
-          className="logo-slide"
-        >
-          <div className="w-32 h-12 ml-1">
+    <div className={`w-[90%] ${fadeIn ? "fade-in" : ""}`}>
+      <Slider {...settings}>
+        {logos.map((logo, index) => (
+          <div key={index} className=" h-11 ml-4">
             <img
               src={logo.imgUrl}
-              className="w-full h-full object-contain transform transition-transform duration-200 hover:scale-125"
+              alt={logo.name}
+              onClick={() => goToPage(logo.name)} // ย้าย onClick มาที่ img
+              className="w-24 h-12 object-contain transform transition-transform duration-200 hover:scale-125 cursor-pointer"
             />
           </div>
-        </button>
-      ))}
+        ))}
+      </Slider>
     </div>
   );
 };

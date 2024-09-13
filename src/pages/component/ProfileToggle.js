@@ -99,10 +99,11 @@ const ProfileToggle = () => {
               alt="Profile Image"
             />
           </div>
-          <div className="w-auto h-10 mt-8 ml-2 flex justify-center items-center mr-3 text-white font-medium text-base font-sans">
+          <div className="w-auto h-10 mt-8 ml-2 flex flex-col justify-center items-center mr-3 text-white font-medium text-base font-sans">
             <span className="whitespace-nowrap">
               {profile?.username || profile?.displayName || profile?.email}
             </span>
+            {/* <span className="whitespace-nowrap ">HEllo</span> */}
           </div>
         </button>
         {isDropdownOpen && (

@@ -1,62 +1,84 @@
 import React from "react";
-import Menu from "./component/Menu";
-import { useState, useEffect } from "react";
+import Menu from "../component/Menu";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import LoadingModal from "./component/loading";
-import FixInformation from "./component/FixInformation";
-import Information from "./component/Information";
-import RatingStarz from "./component/RatingStarz";
-
-const Myreview = () => {
+import RatingStarz from "../component/RatingStarz";
+import Information from "../component/Information";
+import FixInformation from "../component/FixInformation";
+import LoadingModal from "../component/loading";
+const AOC = () => {
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [storedEmail, setStoredEmail] = useState(null);
   const [role, setRole] = useState(null);
-
   useEffect(() => {
-    const fetchData = async () => {
-      const storedData = localStorage.getItem("profile");
-      let storedEmail = "";
-      if (storedData) {
-        const profile = JSON.parse(storedData);
-        setRole(profile?.userData?.role);
-        storedEmail = profile?.userData?.email;
-        setStoredEmail(storedEmail);
-      }
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role);
+      setStoredEmail(profile?.userData?.email);
+    }
 
+    const fetchAllImages = async () => {
       try {
         const response = await getImage();
         const imageDataArray = response.data.imageData;
 
         const validImageDataArray = imageDataArray
-          .filter((image) => image.email === storedEmail)
           .map((image) => {
             const base64String = arrayBufferToBase64(image.image.data);
             return {
               id: image.id,
-              src: `data:image/png;base64,${base64String}`,
               price: image.price,
-              detail: image.detail,
-              link: image.link,
-              type: image.type,
               rating: image.rating,
               views: image.view,
+              detail: image.detail, // เพิ่มการดึงรายละเอียดที่เกี่ยวข้อง
+              src: `data:image/png;base64,${base64String}`,
+              link: image.link,
               email: image.email,
             };
-          });
+          })
+          .filter((image) => {
+            // ฟังก์ชันในการกรองเฉพาะรูปที่มีคำว่า "AOC" หรือคำที่คล้ายกัน
+            const regex = /AOC/i;
+            return regex.test(image.detail);
+          })
+          .sort((a, b) => b.views - a.views)
+          .slice(0, 12); // Limit to top 12 images
+
+        const cachedImages = JSON.stringify(validImageDataArray);
+
+        // Update localStorage only if the fetched data is different from the cached data
+        if (localStorage.getItem("cachedImages") !== cachedImages) {
+          localStorage.setItem("cachedImages", cachedImages);
+        }
 
         setImages(validImageDataArray);
+        setIsLoaded(true); // Mark as loaded after fetching data
       } catch (error) {
         console.error("Error fetching images:", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
       }
     };
 
-    fetchData();
-  }, []);
+    fetchAllImages();
+
+    const handleRouteChange = (url) => {
+      if (url === "/") {
+        setIsLoaded(false); // Reset loading state
+        fetchAllImages();
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
 
   const getImage = async () => {
     try {
@@ -90,15 +112,32 @@ const Myreview = () => {
     }
     return window.btoa(binary);
   };
-
-  const handleImageClick = (id, link) => {
-    window.open(link, "_blank"); // Open the link in a new tab
-  };
-
   // if (loading) {
   //   return <LoadingModal />;
   // }
+  console.log(images);
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
 
+      if (response.ok) {
+        console.log("View count incremented successfully");
+      } else {
+        console.error("Failed to increment view count");
+      }
+    } catch (error) {
+      console.error("Error incrementing view count:", error);
+    }
+
+    // เปิดลิงก์ในแท็บใหม่
+    window.open(link, "_blank");
+  };
   return (
     <>
       {loading ? (
@@ -166,4 +205,4 @@ const Myreview = () => {
   );
 };
 
-export default Myreview;
+export default AOC;
