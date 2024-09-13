@@ -132,11 +132,11 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/455781387_996798958857539_7944499843495434905_n.png?stp=dst-png_p206x206&_nc_cat=101&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeFdj4wovrUL7vG0mFtHv4t6zwWf7y8pTUHPBZ_vLylNQVqIDZ3jgoKil3-ryVZUJm7OAdlfibq0efQ40lrDMG7S&_nc_ohc=GGZTEIvtp2AQ7kNvgFEw5tg&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QGJominLjV8mSShhZgc4hhmOTHQsKpTnDMschd1TQuWDw&oe=66EBC72E"
+                    src="https://www.autonetpc.com/wp-content/uploads/2023/07/imageedit_1_9528890449.png"
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-center">
-                    Monitors
+                    Monitor
                   </h1>
                 </div>
               </div>
@@ -162,7 +162,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454741255_2830441413922118_486956867719846047_n.png?stp=dst-png_p206x206&_nc_cat=103&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHyHevdOtuT0Fi5pbL8eQz998iF7J9f6Yn3yIXsn1_piUO57erntEwbafcTUH2QWcrbgnCGSoKI_FJDYrMhndLl&_nc_ohc=YFGUwmaYdEEQ7kNvgGDf58f&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGyFa_p8wu4CjLc3kJmMtvtpDgZbskxz78uLhxyc5BVWw&oe=66EBCC56"
+                    src="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458775275_1853795235148550_8265704230189766468_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEIATptC4-2qRbykpzeRO425ozDkelu_MvmjMOR6W78y78SZ9pCnqFOJamgbITGez6tm5Rx7BpRbzYztoK5YnM1&_nc_ohc=oDS7IbsZJ0MQ7kNvgEwDAR5&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=Al5B7BANIrw7moorXV_ETBT&oh=03_Q7cD1QFemRLB21U_AGK5W-ve5WOfSKRJXBuNVwvXBbHVYl6yqA&oe=670A1C5F"
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-center">
@@ -224,7 +224,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/346103947_539803734793246_515299174836356142_n.png?stp=dst-png_p206x206&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeEWJEnmvmoBtHWORVULRu3WcdNsGeDdFIFx02wZ4N0UgRz_8QbEe_wvH3GnUPkna_-cIdlo4eFxIMJOgnaG70iz&_nc_ohc=4HL-bJofi5YQ7kNvgF9TjDw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QFbMIUwr9GBLjKnoypskL_WWgQnFyV-sD1ssbbdLzfxKA&oe=66EBBE45"
+                    src="https://resource.logitech.com/content/dam/gaming/en/products/pro-x-keyboard/pro-x-keyboard-gallery-1.png"
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-center">Keyboard</h1>
@@ -237,7 +237,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456104035_483817987744850_1471080268211175341_n.png?stp=dst-png_p206x206&_nc_cat=105&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeE4zUiQpfzQcb91TCa9m-B-eztp9zvv2p97O2n3O-_an9KUE6SHvOe-HovDmzLcJdVUUy_yVpEAYGdAWH_SAZuJ&_nc_ohc=FOfjzCS7N8UQ7kNvgEZQemK&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD1QGhg5zR5KnANCJT86hf9cQ82mzUydBn2K4xMXx6xVJ4CA&oe=66EBAC57"
+                    src="https://dlcdnwebimgs.asus.com/gain/A3777166-EF70-4D33-915B-EC65CF77CAE5/w1000/h732"
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-center">Mainboard</h1>

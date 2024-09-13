@@ -116,6 +116,28 @@ const Samsung = () => {
   //   return <LoadingModal />;
   // }
   console.log(images);
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        console.log("View count incremented successfully");
+      } else {
+        console.error("Failed to increment view count");
+      }
+    } catch (error) {
+      console.error("Error incrementing view count:", error);
+    }
+
+    // เปิดลิงก์ในแท็บใหม่
+    window.open(link, "_blank");
+  };
   return (
     <>
       {loading ? (

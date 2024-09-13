@@ -12,7 +12,7 @@ const RatingStarz = ({ onRatingSelect, getRating, isEnabled = true }) => {
 
   const starStyle = {
     color: "#FFD700", // Yellow color
-    cursor: isEnabled ? "pointer" : "default", // Change cursor style based on isEnabled
+    cursor: isEnabled ? "pointer" : "default", 
   };
 
   return (
