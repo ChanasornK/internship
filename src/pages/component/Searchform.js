@@ -7,7 +7,7 @@ const Searchform = () => {
   const dropdownRef = useRef(null);
 
   const handleSearchChange = async (e) => {
-    const value = e.target.value;
+    const value = e.target.value; // ไม่ต้องแปลง searchTerm ให้เป็นพิมพ์เล็ก
     setSearchTerm(value);
 
     if (value.length > 0) {
@@ -16,31 +16,8 @@ const Searchform = () => {
           params: { searchTerm: value },
         });
 
-        // กำหนดคำค้นหาที่ต้องการให้แสดงในผลลัพธ์
-        const keywords = [
-          "ram",
-          "monitor",
-          "laptop",
-          "cpu",
-          "graphic card",
-          "keyboard",
-          "mouse",
-          "mainboard",
-        ];
-
-        // ฟิลเตอร์ผลลัพธ์จากคำใน detail ก่อน
-        const filteredResultsByDetail = response.data.imageData.filter(
-          (result) =>
-            keywords.some((keyword) =>
-              result.detail.toLowerCase().includes(keyword.toLowerCase())
-            )
-        );
-
-        // ฟิลเตอร์ผลลัพธ์ที่เหลือตามคำใน type
-        const filteredResults = filteredResultsByDetail.filter((result) =>
-          keywords.some((keyword) =>
-            result.type.toLowerCase().includes(keyword.toLowerCase())
-          )
+        const filteredResults = response.data.imageData.filter(
+          (result) => result.detail.toLowerCase().includes(value.toLowerCase()) // แปลงเฉพาะการเปรียบเทียบเป็นพิมพ์เล็ก
         );
 
         setSearchResults(filteredResults || []);
@@ -100,12 +77,13 @@ const Searchform = () => {
               <stop
                 offset="0%"
                 style={{ stopColor: "#9F7AEA", stopOpacity: 1 }}
-              />
-
+              />{" "}
+              {/* สี purple-400 */}
               <stop
                 offset="100%"
                 style={{ stopColor: "#F472B6", stopOpacity: 1 }}
-              />
+              />{" "}
+              {/* สี pink-300 */}
             </linearGradient>
           </defs>
           <path
@@ -120,18 +98,17 @@ const Searchform = () => {
 
       {/* Display search results */}
       {searchResults.length > 0 && (
-        <div className="mt-3 bg-white rounded-lg shadow-md">
+        <div className="mt-4 bg-white rounded-lg shadow-md">
           <ul>
             {searchResults.map((result) => (
-              <button
+              <li
                 key={result.id}
-                onClick={() => handleOpenLinkInNewTab(result)}
-                className="w-full text-left p-2 border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg"
+                className="p-2 border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg"
               >
-                <li>
+                <button onClick={() => handleOpenLinkInNewTab(result)}>
                   {result.detail} - {result.type}
-                </li>
-              </button>
+                </button>
+              </li>
             ))}
           </ul>
         </div>

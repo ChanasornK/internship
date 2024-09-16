@@ -6,7 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import FixInformation from "../component/FixInformation";
 
-const Laptop = () => {
+const Notebook = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
@@ -32,7 +32,7 @@ const Laptop = () => {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
           const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Laptop")
+            .filter((image) => image.type === "Notebook")
             .map((image) => {
               const base64String = arrayBufferToBase64(image.image.data);
               return {
@@ -176,4 +176,4 @@ const handleImageClick = async (id, link) => {
   );
 };
 
-export default Laptop;
+export default Notebook;

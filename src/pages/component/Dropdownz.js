@@ -32,10 +32,10 @@ const Dropdownz = ({ onSelectItem }) => {
             Monitor
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={() => handleSelect("Laptop")}
+            onClick={() => handleSelect("Notebook")}
             className="text-black hover:bg-gradient-to-t from-blue-200 to-pink-200"
           >
-            Laptop
+            Notebook
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => handleSelect("Ram")}

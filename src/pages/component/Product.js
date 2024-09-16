@@ -86,7 +86,7 @@ const Product = () => {
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <MdLaptopMac className="mr-3 text-base flex-shrink-0" />
-            <span className="flex-grow">Laptop</span>
+            <span className="flex-grow">Notebook</span>
           </li>
 
           <li

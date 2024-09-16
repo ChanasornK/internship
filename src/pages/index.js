@@ -151,7 +151,7 @@ const Index = () => {
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-gray-800 text-center">
-                    Laptops
+                  Notebook
                   </h1>
                 </div>
               </div>
