@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import stringSimilarity from "string-similarity";
 
 const Searchform = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -7,7 +8,7 @@ const Searchform = () => {
   const dropdownRef = useRef(null);
 
   const handleSearchChange = async (e) => {
-    const value = e.target.value; // ไม่ต้องแปลง searchTerm ให้เป็นพิมพ์เล็ก
+    const value = e.target.value;
     setSearchTerm(value);
 
     if (value.length > 0) {
@@ -16,16 +17,23 @@ const Searchform = () => {
           params: { searchTerm: value },
         });
 
-        const filteredResults = response.data.imageData.filter(
-          (result) => result.detail.toLowerCase().includes(value.toLowerCase()) // แปลงเฉพาะการเปรียบเทียบเป็นพิมพ์เล็ก
-        );
+        const filteredResults = response.data.imageData
+          .map((result) => ({
+            ...result,
+            similarity: stringSimilarity.compareTwoStrings(
+              result.detail.toLowerCase(),
+              value.toLowerCase()
+            ),
+          }))
+          .filter((result) => result.similarity > 0) // กรองเฉพาะผลลัพธ์ที่มีความคล้ายคลึงมากกว่า 0
+          .sort((a, b) => b.similarity - a.similarity); // เรียงลำดับตามคะแนนความคล้ายคลึง
 
         setSearchResults(filteredResults || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
       }
     } else {
-      setSearchResults([]); // Clear results if search term is empty
+      setSearchResults([]);
     }
   };
 
@@ -36,7 +44,7 @@ const Searchform = () => {
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setSearchResults([]);
-      setSearchTerm(""); // Close dropdown when clicking outside
+      setSearchTerm("");
     }
   };
 
@@ -77,13 +85,11 @@ const Searchform = () => {
               <stop
                 offset="0%"
                 style={{ stopColor: "#9F7AEA", stopOpacity: 1 }}
-              />{" "}
-              {/* สี purple-400 */}
+              />
               <stop
                 offset="100%"
                 style={{ stopColor: "#F472B6", stopOpacity: 1 }}
-              />{" "}
-              {/* สี pink-300 */}
+              />
             </linearGradient>
           </defs>
           <path

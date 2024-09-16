@@ -200,7 +200,7 @@ const Index = () => {
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-center">
-                    Graphic Card
+               GPU
                   </h1>
                 </div>
               </div>

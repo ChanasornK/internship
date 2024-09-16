@@ -66,21 +66,23 @@ const Register = () => {
       setError("กรุณากรอก Email, Password ");
       return;
     }
-
+  
     if (password !== confirmPassword) {
       setError("Password และ Confirm Password ไม่ตรงกัน.");
       return;
     }
-
+  
     try {
       setLoading(true); // Set loading state to true
       const result = await register(email, password);
       if (result) {
         localStorage.setItem("profile", JSON.stringify(result?.data));
-        alert("Sign Up Successful!"); // แจ้งเตือนเมื่อ Sign Up สำเร็จ
+        alert("Sign Up Successful!"); // Notify on successful sign-up
         router.push("./Login");
+      } else if (result.error === "email-already-in-use") {
+        setError("กรุณากรอก email ใหม่ มีผู้ใช้ email นี้แล้ว");
       } else {
-        setError("การลงทะเบียนล้มเหลว โปรดตรวจสอบ Email และ Password");
+        setError("การลงทะเบียนล้มเหลวมีผู้ใช้ email นี้แล้ว");
       }
     } catch (error) {
       console.error("Error during sign-up:", error);
@@ -89,6 +91,7 @@ const Register = () => {
       setLoading(false); // Set loading state back to false
     }
   };
+  
   const register = async (email, password) => {
     try {
       const response = await fetch("http://localhost:8000/register", {
@@ -98,13 +101,16 @@ const Register = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         console.log("Verification successful:", data);
         localStorage.setItem("profile", JSON.stringify(data));
         return { data }; // Indicate success
+      } else if (data.message === "email-already-in-use") {
+        // Handle email duplication
+        return { error: "email-already-in-use" };
       } else {
         console.error("Verification failed:", data.message);
         return false; // Indicate failure
@@ -114,6 +120,7 @@ const Register = () => {
       return false; // Handle network errors or other unexpected issues
     }
   };
+  
   useEffect(() => {
     setTimeout(() => {
       setSlideIn(true); // ตั้งค่าเพื่อเริ่ม animation หลังจากโหลดหน้า
