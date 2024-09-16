@@ -123,7 +123,7 @@ const Index = () => {
             </div>
             <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 pt-8 mt-4">
               <BiSolidCategory className="mr-2 text-purple-600 mt-1" />
-              <span >หมวดหมู่สินค้า</span>
+              <span>หมวดหมู่สินค้า</span>
             </div>
             <div className="flex justify-center items-center mt-10">
               <div
@@ -143,7 +143,7 @@ const Index = () => {
 
               <div
                 className="rounded-lg w-80 p-4 border-2 border-solid bg-gradient-to-t from-blue-200 to-pink-200 h-64 flex items-center justify-center mr-2 mb-2 hover:bg-gradient-to-t hover:from-blue-300 hover:to-pink-300 cursor-pointer"
-                onClick={() => handleNavigation("./IT/Laptop")}
+                onClick={() => handleNavigation("./IT/Notebook")}
               >
                 <div className="h-40 w-56">
                   <img
@@ -151,7 +151,7 @@ const Index = () => {
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-gray-800 text-center">
-                  Notebook
+                    Notebook
                   </h1>
                 </div>
               </div>
@@ -200,7 +200,7 @@ const Index = () => {
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-medium text-lg font-sans text-center">
-               GPU
+                    GPU
                   </h1>
                 </div>
               </div>
@@ -210,11 +210,13 @@ const Index = () => {
                 onClick={() => handleNavigation("./IT/Mouse")}
               >
                 <div className="h-40 w-56">
-                  <img 
+                  <img
                     src="https://resource.logitechg.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/gaming/en/products/pro-x-superlight-2/gallery-1-pro-x-superlight-2-gaming-mouse-black.png?v=1"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">Mouse</h1>
+                  <h1 className="font-medium text-lg font-sans text-center">
+                    Mouse
+                  </h1>
                 </div>
               </div>
 
@@ -227,7 +229,9 @@ const Index = () => {
                     src="https://resource.logitech.com/content/dam/gaming/en/products/pro-x-keyboard/pro-x-keyboard-gallery-1.png"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">Keyboard</h1>
+                  <h1 className="font-medium text-lg font-sans text-center">
+                    Keyboard
+                  </h1>
                 </div>
               </div>
 
@@ -240,7 +244,9 @@ const Index = () => {
                     src="https://dlcdnwebimgs.asus.com/gain/A3777166-EF70-4D33-915B-EC65CF77CAE5/w1000/h732"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">Mainboard</h1>
+                  <h1 className="font-medium text-lg font-sans text-center">
+                    Mainboard
+                  </h1>
                 </div>
               </div>
             </div>

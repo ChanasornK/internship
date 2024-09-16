@@ -56,14 +56,19 @@ const ProfileToggle = () => {
   };
 
   const getProfileImageSrc = () => {
-    if (profile?.image?.data) {
+    if (profile?.photoURL) {
+      // Use photoURL if the user logged in with Google
+      return profile?.photoURL;
+    } else if (profile?.image?.data) {
+      // Use the image data stored in the profile
       const base64String = arrayBufferToBase64(profile.image.data);
       return `data:image/png;base64,${base64String}`;
     } else {
+      // Use default image if none are available
       return profile?.image || defaultPhotoURL;
     }
   };
-
+  console.log()
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

@@ -115,7 +115,7 @@ const Searchform = () => {
             {searchResults.map((result) => (
               <li
                 key={result.id}
-                className=" border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg flex justify-between items-center cursor-pointer"
+                className=" rounded-lg border-b border-gray-200 hover:bg-pink-300 hover:shadow-lg flex justify-between items-center cursor-pointer"
                 onClick={() => handleOpenLinkInNewTab(result)} // ใช้ onClick ที่ li
               >
                 <div className="ml-3">
