@@ -7,7 +7,7 @@ const Searchform = () => {
   const dropdownRef = useRef(null);
 
   const handleSearchChange = async (e) => {
-    const value = e.target.value; // ไม่ต้องแปลง searchTerm ให้เป็นพิมพ์เล็ก
+    const value = e.target.value;
     setSearchTerm(value);
 
     if (value.length > 0) {
@@ -16,16 +16,20 @@ const Searchform = () => {
           params: { searchTerm: value },
         });
 
-        const filteredResults = response.data.imageData.filter(
-          (result) => result.detail.toLowerCase().includes(value.toLowerCase()) // แปลงเฉพาะการเปรียบเทียบเป็นพิมพ์เล็ก
-        );
+        const filteredResults = response.data.imageData.map((result) => {
+          const base64String = arrayBufferToBase64(result.image.data); // แปลงรูปเป็น Base64
+          return {
+            ...result,
+            src: `data:image/png;base64,${base64String}`, // เพิ่ม src สำหรับแสดงผลรูปภาพ
+          };
+        });
 
         setSearchResults(filteredResults || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
       }
     } else {
-      setSearchResults([]); // Clear results if search term is empty
+      setSearchResults([]);
     }
   };
 
@@ -36,7 +40,7 @@ const Searchform = () => {
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setSearchResults([]);
-      setSearchTerm(""); // Close dropdown when clicking outside
+      setSearchTerm("");
     }
   };
 
@@ -46,6 +50,16 @@ const Searchform = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
 
   return (
     <div className="w-[55%] ml-36 mt-10" ref={dropdownRef}>
@@ -77,13 +91,11 @@ const Searchform = () => {
               <stop
                 offset="0%"
                 style={{ stopColor: "#9F7AEA", stopOpacity: 1 }}
-              />{" "}
-              {/* สี purple-400 */}
+              />
               <stop
                 offset="100%"
                 style={{ stopColor: "#F472B6", stopOpacity: 1 }}
-              />{" "}
-              {/* สี pink-300 */}
+              />
             </linearGradient>
           </defs>
           <path
@@ -103,11 +115,20 @@ const Searchform = () => {
             {searchResults.map((result) => (
               <li
                 key={result.id}
-                className="p-2 border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg"
+                className=" border-b border-gray-200 hover:bg-[#d1c4e9] hover:shadow-lg flex justify-between items-center cursor-pointer"
+                onClick={() => handleOpenLinkInNewTab(result)} // ใช้ onClick ที่ li
               >
-                <button onClick={() => handleOpenLinkInNewTab(result)}>
-                  {result.detail} - {result.type}
-                </button>
+                <div className="ml-3">
+                  {result.detail} 
+                </div>
+
+                {result.src && (
+                  <img
+                    src={result.src}
+                    alt={result.detail}
+                    className="w-16 h-16 rounded-lg object-cover ml-4"
+                  />
+                )}
               </li>
             ))}
           </ul>
