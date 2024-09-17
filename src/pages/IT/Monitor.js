@@ -15,22 +15,12 @@ const Monitor = () => {
   const [storedEmail, setStoredEmail] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // โหลดข้อมูลโปรไฟล์จาก localStorage
-      const storedData = localStorage.getItem("profile");
-      if (storedData) {
-        const profile = JSON.parse(storedData);
-        setRole(profile?.userData?.role);
-        setStoredEmail(profile?.userData?.email);
-      }
-
-      // ดึงข้อมูลภาพจาก API
-      try {
-        const response = await getImage();
-        const imageDataArray = response.data.imageData;
-        const validImageDataArray = imageDataArray
-          .filter((image) => image.type === "Monitor")
-          .map((image) => {
+    
+      const fetchAllImages = async () => {
+        try {
+          const response = await getImage();
+          const imageDataArray = response.data.imageData;
+          const validImageDataArray = imageDataArray.map((image) => {
             const base64String = arrayBufferToBase64(image.image.data);
             return {
               id: image.id,
@@ -45,20 +35,21 @@ const Monitor = () => {
             };
           });
 
-        setImages(validImageDataArray);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      } finally {
-        setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
-      }
-    };
+          setImages(validImageDataArray);
+        } catch (error) {
+          console.error("Error fetching images:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchData(); // เรียกใช้ฟังก์ชันเมื่อ component mount
-  }, []); // useEffect นี้ทำงานเมื่อ component mount เท่านั้น
+      fetchAllImages();
+    
+  }, []);
 
   const getImage = async (id) => {
     try {
-      const response = await fetch("http://localhost:8000/getAllImage", {
+      const response = await fetch("http://localhost:8000/getMonitor", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

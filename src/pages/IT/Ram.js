@@ -32,22 +32,20 @@ const Ram = () => {
         try {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
-          const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Ram")
-            .map((image) => {
-              const base64String = arrayBufferToBase64(image.image.data);
-              return {
-                id: image.id,
-                src: `data:image/png;base64,${base64String}`,
-                price: image.price,
-                detail: image.detail,
-                link: image.link,
-                type: image.type,
-                rating: image.rating,
-                views: image.view,
-                email: image.email,
-              };
-            });
+          const validImageDataArray = imageDataArray.map((image) => {
+            const base64String = arrayBufferToBase64(image.image.data);
+            return {
+              id: image.id,
+              src: `data:image/png;base64,${base64String}`,
+              price: image.price,
+              detail: image.detail,
+              link: image.link,
+              type: image.type,
+              rating: image.rating,
+              views: image.view,
+              email: image.email,
+            };
+          });
 
           setImages(validImageDataArray);
         } catch (error) {
@@ -63,7 +61,7 @@ const Ram = () => {
 
   const getImage = async (id) => {
     try {
-      const response = await fetch("http://localhost:8000/getAllImage", {
+      const response = await fetch("http://localhost:8000/getRam", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

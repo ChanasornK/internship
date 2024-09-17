@@ -75,14 +75,14 @@ const Product = () => {
       >
         <ul>
           <li
-            onClick={() => handleNavigation("../IT/Monitor")}
+            onClick={() => router.push("../IT/Monitor")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <MdOutlineMonitor  className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow ">Monitor</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Notebook")}
+            onClick={() => router.push("../IT/Notebook")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <MdLaptopMac className="mr-3 text-base flex-shrink-0" />
@@ -90,42 +90,42 @@ const Product = () => {
           </li>
 
           <li
-            onClick={() => handleNavigation("../IT/Ram")}
+            onClick={() => router.push('../IT/Ram')}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <BsMemory className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow">Ram</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/cpu")}
+            onClick={() => router.push('../IT/cpu')}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <LuCpu className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow">CPU</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Graphic")}
+            onClick={() => router.push("../IT/Graphic")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <PiGraphicsCard className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow">Graphic Card</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Mouse")}
+            onClick={() => router.push("../IT/Mouse")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <BsFillMouse2Fill className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow"> Mouse</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Keyboard")}
+            onClick={() => router.push("../IT/Keyboard")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <FaRegKeyboard className="mr-3 text-base flex-shrink-0" />
             <span className="flex-grow"> Keyboard</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Mainboard")}
+            onClick={() => router.push("../IT/Mainboard")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <BsFillMotherboardFill className="mr-3 text-base flex-shrink-0" />

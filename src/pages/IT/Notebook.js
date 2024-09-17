@@ -32,22 +32,20 @@ const Notebook = () => {
         try {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
-          const validImageDataArray = imageDataArray
-            .filter((image) => image.type === "Notebook")
-            .map((image) => {
-              const base64String = arrayBufferToBase64(image.image.data);
-              return {
-                id: image.id,
-                src: `data:image/png;base64,${base64String}`,
-                price: image.price,
-                detail: image.detail,
-                link: image.link,
-                type: image.type,
-                rating: image.rating,
-                views: image.view,
-                email: image.email,
-              };
-            });
+          const validImageDataArray = imageDataArray.map((image) => {
+            const base64String = arrayBufferToBase64(image.image.data);
+            return {
+              id: image.id,
+              src: `data:image/png;base64,${base64String}`,
+              price: image.price,
+              detail: image.detail,
+              link: image.link,
+              type: image.type,
+              rating: image.rating,
+              views: image.view,
+              email: image.email,
+            };
+          });
 
           setImages(validImageDataArray);
         } catch (error) {
@@ -63,7 +61,7 @@ const Notebook = () => {
 
   const getImage = async (id) => {
     try {
-      const response = await fetch("http://localhost:8000/getAllImage", {
+      const response = await fetch("http://localhost:8000/getNotebook", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,32 +96,32 @@ const Notebook = () => {
     return <LoadingModal />;
   }
 
-const handleImageClick = async (id, link) => {
-  try {
-    const response = await fetch("http://localhost:8000/increment-view", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    });
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
 
-    if (response.ok) {
-      console.log("View count incremented successfully");
-    } else {
-      console.error("Failed to increment view count");
+      if (response.ok) {
+        console.log("View count incremented successfully");
+      } else {
+        console.error("Failed to increment view count");
+      }
+    } catch (error) {
+      console.error("Error incrementing view count:", error);
     }
-  } catch (error) {
-    console.error("Error incrementing view count:", error);
-  }
 
-  // เปิดลิงก์ในแท็บใหม่
-  window.open(link, "_blank");
-};
+    // เปิดลิงก์ในแท็บใหม่
+    window.open(link, "_blank");
+  };
 
   return (
     <>
-     <Head>
+      <Head>
         <title>Review_Notebook</title>
         <link
           rel="icon"
