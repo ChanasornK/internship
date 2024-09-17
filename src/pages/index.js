@@ -135,7 +135,7 @@ const Index = () => {
                     src="https://www.autonetpc.com/wp-content/uploads/2023/07/imageedit_1_9528890449.png"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
                     Monitor
                   </h1>
                 </div>
@@ -150,7 +150,7 @@ const Index = () => {
                     src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/455827025_553516126998035_2811257514390542398_n.png?stp=dst-png_p206x206&_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeGW82o8UJRooopHTNTp3dTCgnM2pRHP5PeCczalEc_k91NoHJkEpEoBcuNSs3-uQDBMOtpq-UNKHfnbr8hgGl5p&_nc_ohc=GKrTlcFXbFIQ7kNvgGRGcJL&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGa_1LFTEU4bxeOxeopSXqXa9bQ4HfNA1dz9QAnCurCPg&oe=66EBB911"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-gray-800 text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-pink-500 text-center ">
                     Notebook
                   </h1>
                 </div>
@@ -165,7 +165,7 @@ const Index = () => {
                     src="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458775275_1853795235148550_8265704230189766468_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEIATptC4-2qRbykpzeRO425ozDkelu_MvmjMOR6W78y78SZ9pCnqFOJamgbITGez6tm5Rx7BpRbzYztoK5YnM1&_nc_ohc=oDS7IbsZJ0MQ7kNvgEwDAR5&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=Al5B7BANIrw7moorXV_ETBT&oh=03_Q7cD1QFemRLB21U_AGK5W-ve5WOfSKRJXBuNVwvXBbHVYl6yqA&oe=670A1C5F"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
                     Ram
                   </h1>
                 </div>
@@ -180,7 +180,7 @@ const Index = () => {
                     src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454013932_8045529075567082_7996735512788385954_n.png?stp=dst-png_p206x206&_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHf-NhX6KAjpZmMhCPame2giOb1XGAXTxmI5vVcYBdPGVOj4A-BqkHMJvQ9kQALhbl6yIQGSe1S93UwAMMJPwkZ&_nc_ohc=PkX6LE4uJrYQ7kNvgGzGnOd&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QFFLiKRRWWbmmmMG7vpdvVGSZvMvmld8FBMnl6cDPmIyg&oe=66EBB7DF"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
                     CPU
                   </h1>
                 </div>
@@ -199,7 +199,7 @@ const Index = () => {
                     src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/454100142_1695084344660877_1592313795624777958_n.png?stp=dst-png_p206x206&_nc_cat=108&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeHZHLTMbJiPxni0JbXzUfWxLbpse851V4stumx7znVXixRqXnVCia0EGkcb9EXEdfz4ocR1wQNGroyd1AZcwFsx&_nc_ohc=KwM8IkSZZRkQ7kNvgFDK4a9&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent-atl3-1.xx&oh=03_Q7cD1QGm5kfVgsuWmmmkXD7gBkQMqd3F7xumB5xRXIzHXtMfbA&oe=66EBACE5"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-center text-blue-600">
                     GPU
                   </h1>
                 </div>
@@ -214,7 +214,7 @@ const Index = () => {
                     src="https://resource.logitechg.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/gaming/en/products/pro-x-superlight-2/gallery-1-pro-x-superlight-2-gaming-mouse-black.png?v=1"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-center text-blue-600">
                     Mouse
                   </h1>
                 </div>
@@ -229,7 +229,7 @@ const Index = () => {
                     src="https://resource.logitech.com/content/dam/gaming/en/products/pro-x-keyboard/pro-x-keyboard-gallery-1.png"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold  text-lg font-sans text-center text-blue-600">
                     Keyboard
                   </h1>
                 </div>
@@ -244,7 +244,7 @@ const Index = () => {
                     src="https://dlcdnwebimgs.asus.com/gain/A3777166-EF70-4D33-915B-EC65CF77CAE5/w1000/h732"
                     className="w-full h-full object-cover"
                   />
-                  <h1 className="font-medium text-lg font-sans text-center">
+                  <h1 className="font-semibold text-lg font-sans text-center text-blue-600">
                     Mainboard
                   </h1>
                 </div>
