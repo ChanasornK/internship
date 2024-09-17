@@ -11,6 +11,7 @@ import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
 import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
 import AutoSlider from "./AutoSlider";
+import Head from "next/head";
 import Logo from "./IT/Logo";
 const Index = () => {
   const router = useRouter();
@@ -70,6 +71,14 @@ const Index = () => {
 
   return (
     <>
+      <Head>
+        <title>ReviewZone</title>
+        <link
+          rel="icon"
+          href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
+          className="Kuromi "
+        />
+      </Head>
       {loading ? (
         <LoadingModal />
       ) : (
@@ -78,10 +87,13 @@ const Index = () => {
             <div className="w-4/5 ml-24">
               <div className="flex">
                 <div
-                  className="font-bold font-serif text-4xl cursor-pointer mt-10 h-10 text-white flex items-center group"
+                  className="font-bold font-serif text-3xl cursor-pointer mt-10 h-10 text-white flex items-center group"
                   onClick={handleHomePage}
                 >
-                  <SiReactos className=" mr-4 transition-transform duration-500 group-hover:rotate-180   group-hover:text-black" />
+                  <img
+                    src="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
+                    className="mr-4 transition-transform duration-500 group-hover:rotate-180 group-hover:text-black"
+                  />
                   <span className="hover:text-black">ReviewZone</span>
                 </div>
 
@@ -122,7 +134,12 @@ const Index = () => {
               <Logo />
             </div>
             <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 pt-8 mt-4">
-              <BiSolidCategory className="mr-2 text-purple-600 mt-1" />
+              <div className="font-medium font-sansew text-xl  h-10 text-black flex items-center ">
+                <img
+                  src="https://scontent.fbkk29-7.fna.fbcdn.net/v/t1.15752-9/457675499_500096466143891_5953399145609373544_n.png?_nc_cat=108&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFBE8zuBw51KyqouSP9IIfVpa-r8hB9Vielr6vyEH1WJ5rGwNNIfdEu4oHgum_SC_IJn7OzJrAQN_DID1dv1bCB&_nc_ohc=WIL5xthPyxEQ7kNvgGQHpSy&_nc_ht=scontent.fbkk29-7.fna&_nc_gid=AHr_4ysN5dZuxlBDOodU6Ov&oh=03_Q7cD1QHodkHgIPKT3oAGWUp1xZOAhYHrD9tnhKrKhxeRDQyTmQ&oe=67109CEF"
+                  className=" mr-3"
+                />
+              </div>
               <span>หมวดหมู่สินค้า</span>
             </div>
             <div className="flex justify-center items-center mt-10">
@@ -252,10 +269,15 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="bg-stone-100  w-full h-[500px] overflow-hidden">
-            <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 mt-4">
-              <BsFillEmojiSmileFill className="mr-3 text-pink-600" />
-              Mostview
+          <div className="bg-stone-100  w-full h-[500px] overflow-hidden pb-10">
+            <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 mt-4 ">
+              <div className="font-medium font-sansew text-xl  h-10 text-black flex items-center ">
+                <img
+                  src="https://scontent.fbkk29-9.fna.fbcdn.net/v/t1.15752-9/459829307_499545459503481_4301814089762483217_n.png?_nc_cat=104&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHdkT4YlKRX9stLe4aIOppUxBszUnOWDbbEGzNSc5YNtsNcdXsv1L8TpQ2_NlpmSD6lg6MZdJWzW2A8igQQCpoC&_nc_ohc=TzJdCM9Tx30Q7kNvgGwIxcC&_nc_ht=scontent.fbkk29-9.fna&oh=03_Q7cD1QFMo2FHHS4Yq3gRpJfW6qa2NdiBi9KPN8cxyyp-bD_k6Q&oe=671082F8"
+                  className=" mr-4"
+                />
+                <span className="text-black mt-1 text-nowrap">Most View</span>
+              </div>
             </div>
 
             <Slide />

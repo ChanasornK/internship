@@ -110,17 +110,19 @@ const Searchform = () => {
 
       {/* Display search results */}
       {searchResults.length > 0 && (
-        <div className="mt-4 bg-white rounded-lg shadow-md">
+        <div
+          className={`mt-4 bg-white rounded-lg shadow-md ${
+            searchResults.length > 9 ? "max-h-[500px] overflow-y-auto" : ""
+          }`}
+        >
           <ul>
             {searchResults.map((result) => (
               <li
                 key={result.id}
-                className=" rounded-lg border-b border-gray-200 hover:bg-pink-300 hover:shadow-lg flex justify-between items-center cursor-pointer"
-                onClick={() => handleOpenLinkInNewTab(result)} // ใช้ onClick ที่ li
+                className="rounded-lg border-b border-gray-200 hover:bg-pink-300 hover:shadow-lg flex justify-between items-center cursor-pointer hover:text-pink-600"
+                onClick={() => handleOpenLinkInNewTab(result)}
               >
-                <div className="ml-3">
-                  {result.detail} 
-                </div>
+                <div className="ml-3">{result.detail}</div>
 
                 {result.src && (
                   <img

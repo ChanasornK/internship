@@ -118,3 +118,6 @@
   img:focus {
     outline: none;
   }
+  .Kuromi {
+    border-radius: 100%;
+}
