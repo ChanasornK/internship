@@ -6,6 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import Information from "../component/Information";
 import FixInformation from "../component/FixInformation";
 import LoadingModal from "../component/loading";
+import Head from "next/head";
 const Lg = () => {
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,28 +21,28 @@ const Lg = () => {
       setRole(profile?.userData?.role);
       setStoredEmail(profile?.userData?.email);
     }
- const handleImageClick = async (id, link) => {
-    try {
-      const response = await fetch("http://localhost:8000/increment-view", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
+    const handleImageClick = async (id, link) => {
+      try {
+        const response = await fetch("http://localhost:8000/increment-view", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        });
 
-      if (response.ok) {
-        console.log("View count incremented successfully");
-      } else {
-        console.error("Failed to increment view count");
+        if (response.ok) {
+          console.log("View count incremented successfully");
+        } else {
+          console.error("Failed to increment view count");
+        }
+      } catch (error) {
+        console.error("Error incrementing view count:", error);
       }
-    } catch (error) {
-      console.error("Error incrementing view count:", error);
-    }
 
-    // เปิดลิงก์ในแท็บใหม่
-    window.open(link, "_blank");
-  };
+      // เปิดลิงก์ในแท็บใหม่
+      window.open(link, "_blank");
+    };
     const fetchAllImages = async () => {
       try {
         const response = await getImage();
@@ -161,6 +162,14 @@ const Lg = () => {
   };
   return (
     <>
+      <Head>
+        <title>Review_Lg</title>
+        <link
+          rel="icon"
+          href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
+          className="Kuromi "
+        />
+      </Head>
       {loading ? (
         <LoadingModal />
       ) : (

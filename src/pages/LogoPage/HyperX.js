@@ -6,6 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import Information from "../component/Information";
 import FixInformation from "../component/FixInformation";
 import LoadingModal from "../component/loading";
+import Head from "next/head";
 const Hyperx = () => {
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -140,6 +141,14 @@ const Hyperx = () => {
   };
   return (
     <>
+      <Head>
+        <title>Review_HyperX</title>
+        <link
+          rel="icon"
+          href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
+          className="Kuromi "
+        />
+      </Head>
       {loading ? (
         <LoadingModal />
       ) : (

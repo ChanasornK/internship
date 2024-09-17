@@ -82,7 +82,7 @@ const Product = () => {
             <span className="flex-grow ">Monitor</span>
           </li>
           <li
-            onClick={() => handleNavigation("../IT/Laptop")}
+            onClick={() => handleNavigation("../IT/Notebook")}
             className="py-2 hover:bg-blue-300 cursor-pointer w-full pl-2 flex items-center text-base"
           >
             <MdLaptopMac className="mr-3 text-base flex-shrink-0" />
