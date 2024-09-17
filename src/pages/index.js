@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import Searchform from "./component/Searchform";
 import Slide from "./Slide";
 import ProfileToggle from "./component/ProfileToggle";
-import { BiSolidCategory } from "react-icons/bi";
-import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
 import { SiReactos } from "react-icons/si";

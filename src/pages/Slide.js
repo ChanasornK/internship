@@ -220,7 +220,9 @@ const Slide = () => {
       ) : (
         <div className="text-center mt-20"></div>
       )}
+    <loading/>
     </div>
+    
   );
 };
 
