@@ -1,12 +1,12 @@
-import React from "react";
-import Menu from "../component/Menu";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import RatingStarz from "../component/RatingStarz";
 import Information from "../component/Information";
 import FixInformation from "../component/FixInformation";
 import LoadingModal from "../component/loading";
+import Menu from "../component/Menu";
 import Head from "next/head";
+
 const Predator = () => {
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -14,73 +14,50 @@ const Predator = () => {
   const router = useRouter();
   const [storedEmail, setStoredEmail] = useState(null);
   const [role, setRole] = useState(null);
-  useEffect(() => {
-    const storedData = localStorage.getItem("profile");
-    if (storedData) {
-      const profile = JSON.parse(storedData);
-      setRole(profile?.userData?.role);
-      setStoredEmail(profile?.userData?.email);
+
+  // Fetch images
+  const fetchAllImages = async () => {
+    try {
+      const response = await getImage();
+      const imageDataArray = response.data.imageData;
+
+      const validImageDataArray = imageDataArray
+        .map((image) => {
+          const base64String = arrayBufferToBase64(image.image.data);
+          return {
+            id: image.id,
+            price: image.price,
+            rating: image.rating,
+            views: image.view,
+            detail: image.detail,
+            src: `data:image/png;base64,${base64String}`,
+            link: image.link,
+            email: image.email,
+          };
+        })
+        .filter((image) => {
+          // Filter for images with "Predator"
+          const regex = /Predator/i;
+          return regex.test(image.detail);
+        });
+
+      const cachedImages = JSON.stringify(validImageDataArray);
+
+      // Update localStorage only if the fetched data is different from the cached data
+      if (localStorage.getItem("cachedImages") !== cachedImages) {
+        localStorage.setItem("cachedImages", cachedImages);
+      }
+
+      setImages(validImageDataArray);
+      setIsLoaded(true); // Mark as loaded after fetching data
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    } finally {
+      setLoading(false); // Close loading state after data fetching
     }
+  };
 
-    const fetchAllImages = async () => {
-      try {
-        const response = await getImage();
-        const imageDataArray = response.data.imageData;
-
-        const validImageDataArray = imageDataArray
-          .map((image) => {
-            const base64String = arrayBufferToBase64(image.image.data);
-            return {
-              id: image.id,
-              price: image.price,
-              rating: image.rating,
-              views: image.view,
-              detail: image.detail, // เพิ่มการดึงรายละเอียดที่เกี่ยวข้อง
-              src: `data:image/png;base64,${base64String}`,
-              link: image.link,
-              email: image.email,
-            };
-          })
-          .filter((image) => {
-            // ฟังก์ชันในการกรองเฉพาะรูปที่มีคำว่า "Predator" หรือคำที่คล้ายกัน
-            const regex = /Predator/i;
-            return regex.test(image.detail);
-          })
-          .sort((a, b) => b.views - a.views)
-          .slice(0, 12); // Limit to top 12 images
-
-        const cachedImages = JSON.stringify(validImageDataArray);
-
-        // Update localStorage only if the fetched data is different from the cached data
-        if (localStorage.getItem("cachedImages") !== cachedImages) {
-          localStorage.setItem("cachedImages", cachedImages);
-        }
-
-        setImages(validImageDataArray);
-        setIsLoaded(true); // Mark as loaded after fetching data
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      } finally {
-        setLoading(false); // ปิดสถานะการโหลดเมื่อดึงข้อมูลเสร็จ
-      }
-    };
-
-    fetchAllImages();
-
-    const handleRouteChange = (url) => {
-      if (url === "/") {
-        setIsLoaded(false); // Reset loading state
-        fetchAllImages();
-      }
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router]);
-
+  // Get image data
   const getImage = async () => {
     try {
       const response = await fetch("http://localhost:8000/getAllImage", {
@@ -104,6 +81,7 @@ const Predator = () => {
     }
   };
 
+  // Convert array buffer to base64 string
   const arrayBufferToBase64 = (buffer) => {
     let binary = "";
     const bytes = new Uint8Array(buffer);
@@ -113,10 +91,32 @@ const Predator = () => {
     }
     return window.btoa(binary);
   };
-  // if (loading) {
-  //   return <LoadingModal />;
-  // }
-  console.log(images);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role);
+      setStoredEmail(profile?.userData?.email);
+    }
+
+    // Fetch images when the component mounts
+    fetchAllImages();
+
+    const handleRouteChange = (url) => {
+      if (url === "/") {
+        setIsLoaded(false); // Reset loading state
+        fetchAllImages();
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
+
   const handleImageClick = async (id, link) => {
     try {
       const response = await fetch("http://localhost:8000/increment-view", {
@@ -136,13 +136,14 @@ const Predator = () => {
       console.error("Error incrementing view count:", error);
     }
 
-    // เปิดลิงก์ในแท็บใหม่
+    // Open link in a new tab
     window.open(link, "_blank");
   };
+
   return (
     <>
       <Head>
-        <title>Review_Predator</title>
+        <title>Review_MSI</title>
         <link
           rel="icon"
           href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
