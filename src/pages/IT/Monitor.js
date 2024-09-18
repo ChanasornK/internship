@@ -9,31 +9,45 @@ import Head from "next/head";
 
 const Monitor = () => {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
   const [image, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
 
   useEffect(() => {
-    
+    setIsClient(true);
+
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setRole(profile?.userData?.role);
+      setStoredEmail(profile?.userData?.email); // Save email to state
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
       const fetchAllImages = async () => {
         try {
           const response = await getImage();
           const imageDataArray = response.data.imageData;
-          const validImageDataArray = imageDataArray.map((image) => {
-            const base64String = arrayBufferToBase64(image.image.data);
-            return {
-              id: image.id,
-              src: `data:image/png;base64,${base64String}`,
-              price: image.price,
-              detail: image.detail,
-              link: image.link,
-              type: image.type,
-              rating: image.rating,
-              views: image.view,
-              email: image.email,
-            };
-          });
+          const validImageDataArray = imageDataArray
+            .filter((image) => image.type === "Monitor")
+            .map((image) => {
+              const base64String = arrayBufferToBase64(image.image.data);
+              return {
+                id: image.id,
+                src: `data:image/png;base64,${base64String}`,
+                price: image.price,
+                detail: image.detail,
+                link: image.link,
+                type: image.type,
+                rating: image.rating,
+                views: image.view,
+                email: image.email,
+              };
+            });
 
           setImages(validImageDataArray);
         } catch (error) {
@@ -44,12 +58,12 @@ const Monitor = () => {
       };
 
       fetchAllImages();
-    
-  }, []);
+    }
+  }, [isClient]);
 
   const getImage = async (id) => {
     try {
-      const response = await fetch("http://localhost:8000/getMonitor", {
+      const response = await fetch("http://localhost:8000/getAllImage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +94,7 @@ const Monitor = () => {
     return window.btoa(binary);
   };
 
-  if (loading) {
+  if (!isClient || loading) {
     return <LoadingModal />;
   }
 
@@ -106,11 +120,10 @@ const Monitor = () => {
     // เปิดลิงก์ในแท็บใหม่
     window.open(link, "_blank");
   };
-  console.log(image);
   return (
     <>
-      <Head>
-        <title>Review_Monitor</title>
+    <Head>
+        <title>Review_Mouse</title>
         <link
           rel="icon"
           href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
@@ -118,7 +131,7 @@ const Monitor = () => {
         />
       </Head>
       <Menu />
-      <div className="min-h-screen w-full bg-gradient-to-br from-blue-200 to-pink-200 overflow-auto">
+      <div className="min-h-screen w-full bg-gradient-to-t from-blue-200 to-pink-200 overflow-auto">
         <div className="flex justify-end w-full ">
           <div className="mr-10 mt-44">
             <Information />

@@ -24,7 +24,7 @@ const Index = () => {
     // Simulate loading process
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
-    }, 1000);
+    }, 500);
 
     // Check if the login was successful by looking at the query parameters
     if (router.query.loginSuccess === "true") {
