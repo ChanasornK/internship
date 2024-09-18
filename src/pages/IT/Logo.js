@@ -100,12 +100,17 @@ const Logo = () => {
       <Slider {...settings}>
         {logos.map((logo, index) => (
           <div key={index} className="h-11 ml-5">
-            <img
-              src={logo.imgUrl}
-              alt={logo.name}
-              onClick={() => goToPage(logo.name)} // ย้าย onClick มาที่ img
-              className="w-24 h-12 object-contain transform transition-transform duration-200 hover:scale-125 cursor-pointer"
-            />
+            <a
+              href={`../LogoPage/${logo.name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={logo.imgUrl}
+                alt={logo.name}
+                className="w-24 h-12 object-contain transform transition-transform duration-200 hover:scale-125 cursor-pointer"
+              />
+            </a>
           </div>
         ))}
       </Slider>
