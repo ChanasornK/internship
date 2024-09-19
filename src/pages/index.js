@@ -5,7 +5,6 @@ import Slide from "./Slide";
 import ProfileToggle from "./component/ProfileToggle";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
-import { SiReactos } from "react-icons/si";
 import LoadingModal from "./component/loading";
 import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
 import AutoSlider from "./AutoSlider";
@@ -59,14 +58,6 @@ const Index = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("./Login");
   };
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     return <LoadingModal />;
-  //   }
-
-  // }, [loading]);
-
   return (
     <>
       <Head>

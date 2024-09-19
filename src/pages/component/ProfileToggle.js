@@ -3,10 +3,11 @@ import { useRouter } from "next/router";
 import EditProfile from "./EditProfile"; // Import component EditProfile
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdPostAdd } from "react-icons/md";
+
 const ProfileToggle = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [profile, setProfile] = useState(null);
-  const [openModal, setOpenModal] = useState(false); // เพิ่ม state สำหรับ modal
+  const [openModal, setOpenModal] = useState(false); // State for modal
   const dropdownRef = useRef(null);
   const router = useRouter();
 
@@ -35,11 +36,9 @@ const ProfileToggle = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("../Login");
   };
-  const handleMyReview = () => {
-    router.push("../Myreview");
-  };
+
   const handleEditProfile = () => {
-    setOpenModal(true); // เปิด modal แทนการ redirect
+    setOpenModal(true); // Open modal instead of redirect
   };
 
   const defaultPhotoURL =
@@ -57,18 +56,15 @@ const ProfileToggle = () => {
 
   const getProfileImageSrc = () => {
     if (profile?.photoURL) {
-      // Use photoURL if the user logged in with Google
       return profile?.photoURL;
     } else if (profile?.image?.data) {
-      // Use the image data stored in the profile
       const base64String = arrayBufferToBase64(profile.image.data);
       return `data:image/png;base64,${base64String}`;
     } else {
-      // Use default image if none are available
       return profile?.image || defaultPhotoURL;
     }
   };
-  console.log()
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -86,7 +82,7 @@ const ProfileToggle = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen]);
-  console.log(profile);
+
   return (
     <>
       <div className="relative text-left flex" ref={dropdownRef}>
@@ -100,7 +96,7 @@ const ProfileToggle = () => {
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-600 mt-8 ml-0">
             <img
               src={getProfileImageSrc()}
-              className="object-cover w-full h-full" // Use object-cover to maintain aspect ratio
+              className="object-cover w-full h-full"
               alt="Profile Image"
             />
           </div>
@@ -108,91 +104,84 @@ const ProfileToggle = () => {
             <span className="whitespace-nowrap">
               {profile?.username || profile?.displayName || profile?.email}
             </span>
-            {/* <span className="whitespace-nowrap ">HEllo</span> */}
           </div>
         </button>
-        {isDropdownOpen && (
-          <div
-            id="dropdownAction"
-            className="absolute mt-20 w-48 bg-white rounded-md shadow-lg dark:bg-gray-800 left-1/2 transform -translate-x-1/2"
-          >
-            <ul
-              className="py-1 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownActionButton"
-            >
-              <li>
-                <button
-                  onClick={handleEditProfile} // เปิด modal แทนการไปหน้า edit
-                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center "
+        <div
+          id="dropdownAction"
+          className={`absolute left-0 mt-20 w-48 bg-white rounded-lg transform transition-all duration-300 ease-out ${
+            isDropdownOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+          } origin-top`}
+        >
+          <ul className="py-1 text-sm text-gray-700 dark:text-gray-200 overflow-hidden">
+            <li>
+              <button
+                onClick={handleEditProfile}
+                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
+              >
+                <RiEdit2Fill className="text-lg ml-4" />
+                <span className="text-sm pl-3">Edit Profile</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => router.push("../Myreview")}
+                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
+              >
+                <MdPostAdd className="text-lg ml-4" />
+                <span className="text-sm pl-3">MyPost</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={handleChangeAccount}
+                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
+              >
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <RiEdit2Fill className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
-                  <span className="text-sm pl-3">Edit Profile</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={handleMyReview} // เปิด modal แทนการไปหน้า edit
-                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center "
-                >
-                  <MdPostAdd className="text-lg ml-4" /> {/* ปรับขนาดไอคอน */}
-                  <span className="text-sm pl-3">MyPost</span>
-                </button>
-              </li>
-
-              <li>
-                <button
-                  onClick={handleChangeAccount}
-                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
-                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Change Account
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={handleSignout}
+                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
+              >
+                <div className="mt-[2px] flex items-center mr-8">
                   <svg
-                    className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
+                    className="w-4 h-4 mr-4 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
+                    fill="none"
+                    viewBox="0 0 16 16"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                      clipRule="evenodd"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
                     />
                   </svg>
-                  Change Account
-                </button>
-              </li>
-
-              <li>
-                <button
-                  onClick={handleSignout}
-                  className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
-                >
-                  <div className="mt-[2px] flex items-center mr-8">
-                    <svg
-                      className="w-4 h-4 mr-4 text-gray-800 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
-                      />
-                    </svg>
-                    <span className="text-start">Sign Out</span>
-                  </div>
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+                  <span className="text-start">Sign Out</span>
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-      {/* แสดง EditProfile Modal */}
       <EditProfile openModal={openModal} setOpenModal={setOpenModal} />
     </>
   );

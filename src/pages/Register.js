@@ -81,7 +81,7 @@ const Register = () => {
         alert("Sign Up Successful!"); // Notify on successful sign-up
         router.push("./Login");
       } else if (result.error === "email-already-in-use") {
-        setError("กรุณากรอก email ใหม่ มีผู้ใช้ email นี้แล้ว");
+        setError("");
       } else {
         setError("การลงทะเบียนล้มเหลวมีผู้ใช้ email นี้แล้ว");
       }
