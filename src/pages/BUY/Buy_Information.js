@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Menu from "../component/Menu";
 import RatingStarz from "../component/RatingStarz";
 import { FaCartShopping } from "react-icons/fa6";
-// Function to convert ArrayBuffer to Base64
+import LoadingModal from "../component/loading";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -17,7 +17,7 @@ const MonitorTest = () => {
   const router = useRouter();
   const { id } = router.query; // Get id from URL
   const [imageData, setImageData] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   // Function to fetch image data from the API
   const getImage = async (id) => {
     try {
@@ -41,7 +41,14 @@ const MonitorTest = () => {
       return null;
     }
   };
+  useEffect(() => {
+    // Simulate loading process
+    setTimeout(() => {
+      setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
+    }, 500);
 
+    // Check if the login was successful by looking at the query parameters
+  }, []);
   useEffect(() => {
     if (id) {
       // Fetch image data by id
@@ -82,44 +89,50 @@ const MonitorTest = () => {
 
   return (
     <>
-      <div className="h-dvh">
-        <Menu />
-        <div className="h-full pt-40 p-26 flex justify-center bg-gray-100">
-          <div className="w-96 h-[550px] gap-8 ml-28">
-            <img
-              className="object-cover w-auto h-96"
-              src={imageData ? imageData.src : "/path/to/placeholder-image.png"}
-              alt="Monitor Image"
-            />
-            {/* Center the RatingStarz component */}
-            <div className="flex justify-center mt-4">
-              <RatingStarz getRating={imageData?.rating} isEnabled={false} />
-            </div>
-          </div>
-
-          <div className=" ml-20 w-96 pt-16">
-            <div className="font-bold text-xl">{imageData?.detail}</div>
-            <div className="mt-10 text-pink-600 text-xl font-semibold">
-              {imageData?.price}
-            </div>
-            <button
-              className="bg-pink-600 mt-16 w-full rounded-lg h-10 flex items-center justify-center space-x-2"
-              onClick={() => {
-                if (imageData?.link) {
-                  window.open(imageData.link, "_blank"); // Opens the link in a new tab
-                } else {
-                  console.error("Link not available");
+      {loading ? (
+        <LoadingModal />
+      ) : (
+        <div className="h-dvh">
+          <Menu />
+          <div className="h-full pt-40 p-26 flex justify-center bg-gray-100">
+            <div className="w-96 h-[500px] gap-8 ml-28">
+              <img
+                className="object-cover w-auto h-96"
+                src={
+                  imageData ? imageData.src : "/path/to/placeholder-image.png"
                 }
-              }}
-            >
-              <FaCartShopping className="text-lg" />
-              <span className="text-lg">Buy</span>
-            </button>
-          </div>
+                alt="Monitor Image"
+              />
+              <div className="bg-pink-500 w-[850px] h-56">Hello</div>
+            </div>
 
-          <div className=" ml-32 w-80 bg-red-600 ">Comment</div>
+            <div className=" ml-20 w-96 pt-16 h-1/2">
+              <div className="font-bold text-xl">{imageData?.detail}</div>
+              <div className=" mt-9">
+                <RatingStarz getRating={imageData?.rating} isEnabled={false} />
+              </div>
+              <div className=" text-pink-600 text-2xl font-semibold">
+                {imageData?.price}
+              </div>
+              <button
+                className="bg-pink-600 mt-8 w-full rounded-lg h-10 flex items-center justify-center space-x-2 "
+                onClick={() => {
+                  if (imageData?.link) {
+                    window.open(imageData.link, "_blank"); // Opens the link in a new tab
+                  } else {
+                    console.error("Link not available");
+                  }
+                }}
+              >
+                <FaCartShopping className="text-lg " />
+                <span className="text-lg">Buy</span>
+              </button>
+            </div>
+
+            <div className=" ml-32 w-80 bg-red-600 mb-7 ">Comment</div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
