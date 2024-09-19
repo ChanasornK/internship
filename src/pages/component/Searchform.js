@@ -55,7 +55,9 @@ const Searchform = () => {
     }
 
     // Navigate to the desired page and send id through URL
-    router.push(`/BUY/Buy_Information?id=${id}`);
+    router.push(`/BUY/Buy_Information?id=${id}`).then(() => {
+      router.reload();
+    });
   };
 
   const handleClickOutside = (event) => {
@@ -139,7 +141,6 @@ const Searchform = () => {
           >
             <ul>
               {searchResults.map((result) => (
-                
                 <li
                   key={result.id}
                   className="rounded-lg border-b border-gray-200 hover:bg-pink-300 hover:shadow-lg flex justify-between items-center cursor-pointer hover:text-pink-600"

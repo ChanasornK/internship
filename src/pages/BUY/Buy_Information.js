@@ -80,6 +80,7 @@ const MonitorTest = () => {
       setMessage("Please provide all required fields.");
       return;
     }
+    setCommentText(""); // Clear the comment input
 
     try {
       const response = await fetch("http://localhost:8000/comment", {
@@ -98,7 +99,6 @@ const MonitorTest = () => {
       if (response.ok) {
         console.log("Comment submitted successfully");
         setMessage("Comment added successfully");
-        setCommentText(""); // Clear the comment input
         getComments(id); // Refresh comments
       } else {
         console.log("Error:", data.error);
@@ -188,7 +188,7 @@ const MonitorTest = () => {
       ) : (
         <div className="h-dvh">
           <Menu />
-          <div className="h-full pt-40 flex justify-center bg-gray-100">
+          <div className="h-full pt-40 flex justify-center bg-gray-200">
             <div className="w-96 h-[500px] ml-28">
               <img
                 className="object-cover w-auto h-96"
@@ -223,22 +223,28 @@ const MonitorTest = () => {
               </button>
             </div>
 
-            <div className="ml-32 w-[400px] bg-purple-300 mb-7 flex flex-col justify-end rounded-lg h-[550px]">
+            <div className="ml-32 w-[400px] bg-purple-300 mb- flex flex-col justify-end rounded-lg h-[550px] mt-14 ">
               <div className="relative w-full">
-                <div className="mt-4 max-h-[450px] overflow-y-auto">
+                <div className="mt-4 max-h-[450px] overflow-y-scroll scrollbar-hide">
                   {Array.isArray(comments) &&
                     comments.map((comment, index) => (
                       <div
                         key={index}
-                        ref={index === comments.length - 1 ? latestCommentRef : null}
+                        ref={
+                          index === comments.length - 1
+                            ? latestCommentRef
+                            : null
+                        }
                         className="bg-gray-200 p-2 rounded mb-2"
                       >
                         <p>
-                          <strong>{comment.user_name}:</strong> {comment.comment_text}
+                          <strong>{comment.user_name}:</strong>{" "}
+                          {comment.comment_text}
                         </p>
                       </div>
                     ))}
                 </div>
+
                 <div className="relative w-full">
                   <input
                     className="w-full h-12 pl-5 pr-20 bg-gray-200 border-2 border-gray-300 rounded-lg focus:outline-none"
