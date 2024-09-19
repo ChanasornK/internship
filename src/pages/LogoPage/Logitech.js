@@ -128,18 +128,17 @@ const Logitech = () => {
       });
 
       if (response.ok) {
-        console.log("View count incremented successfully");
+        console.log("เพิ่มจำนวนการเข้าชมสำเร็จ");
       } else {
-        console.error("Failed to increment view count");
+        console.error("ไม่สามารถเพิ่มจำนวนการเข้าชมได้");
       }
     } catch (error) {
-      console.error("Error incrementing view count:", error);
+      console.error("เกิดข้อผิดพลาดในการเพิ่มจำนวนการเข้าชม:", error);
     }
 
-    // Open link in a new tab
-    window.open(link, "_blank");
+    // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
+    router.push(`/BUY/Buy_Information?id=${id}`);
   };
-
   return (
     <>
       <Head>

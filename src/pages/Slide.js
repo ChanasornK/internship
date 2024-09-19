@@ -21,7 +21,7 @@ const Slide = () => {
   const router = useRouter();
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-const [openModal,setOpenModal] = useState(true)
+  const [openModal, setOpenModal] = useState(true);
   useEffect(() => {
     const fetchAllImages = async () => {
       try {
@@ -110,6 +110,28 @@ const [openModal,setOpenModal] = useState(true)
   for (let i = 0; i < Math.min(images.length, 12); i += 3) {
     chunkedImages.push(images.slice(i, i + 3));
   }
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        console.log("เพิ่มจำนวนการเข้าชมสำเร็จ");
+      } else {
+        console.error("ไม่สามารถเพิ่มจำนวนการเข้าชมได้");
+      }
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการเพิ่มจำนวนการเข้าชม:", error);
+    }
+
+    // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
+    router.push(`/BUY/Buy_Information?id=${id}`);
+  };
 
   return (
     <div className="flex justify-center items-center mt-10">
@@ -195,7 +217,7 @@ const [openModal,setOpenModal] = useState(true)
                     key={img.id}
                     className="bg-[#D7DDE8] w-1/3 h-[370px] mx-1 border rounded-lg overflow-hidden transition-all duration-300 hover:bg-[#bdc3c7] hover:shadow-lg"
                   >
-                    <button onClick={() => window.open(img.link, "_blank")}>
+                    <button onClick={() => handleImageClick(img.id, img.link)}>
                       <div className="relative z-20 flex justify-center items-center">
                         <img
                           src={img.src}
@@ -222,9 +244,7 @@ const [openModal,setOpenModal] = useState(true)
       ) : (
         <LoadingMostView />
       )}
-   
     </div>
-    
   );
 };
 

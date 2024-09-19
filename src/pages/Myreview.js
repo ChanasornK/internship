@@ -92,8 +92,27 @@ const Myreview = () => {
     return window.btoa(binary);
   };
 
-  const handleImageClick = (id, link) => {
-    window.open(link, "_blank"); // Open the link in a new tab
+  const handleImageClick = async (id, link) => {
+    try {
+      const response = await fetch("http://localhost:8000/increment-view", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        console.log("เพิ่มจำนวนการเข้าชมสำเร็จ");
+      } else {
+        console.error("ไม่สามารถเพิ่มจำนวนการเข้าชมได้");
+      }
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการเพิ่มจำนวนการเข้าชม:", error);
+    }
+
+    // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
+    router.push(`/BUY/Buy_Information?id=${id}`);
   };
 
   // if (loading) {
