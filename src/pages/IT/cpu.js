@@ -14,7 +14,7 @@ const Cpu = () => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
-
+  console.log(image);
   useEffect(() => {
     setIsClient(true);
 
@@ -109,17 +109,18 @@ const Cpu = () => {
       });
 
       if (response.ok) {
-        console.log("View count incremented successfully");
+        console.log("เพิ่มจำนวนการเข้าชมสำเร็จ");
       } else {
-        console.error("Failed to increment view count");
+        console.error("ไม่สามารถเพิ่มจำนวนการเข้าชมได้");
       }
     } catch (error) {
-      console.error("Error incrementing view count:", error);
+      console.error("เกิดข้อผิดพลาดในการเพิ่มจำนวนการเข้าชม:", error);
     }
 
-    // เปิดลิงก์ในแท็บใหม่
-    window.open(link, "_blank");
+    // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
+    router.push(`/BUY/Buy_Information?id=${id}`);
   };
+
   return (
     <>
       <Head>
@@ -161,7 +162,7 @@ const Cpu = () => {
                 </button>
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
+                    <div className="flex items-center ">
                       <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
                     {((img.email === storedEmail && role) ||

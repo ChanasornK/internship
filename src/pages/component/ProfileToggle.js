@@ -112,7 +112,7 @@ const ProfileToggle = () => {
             isDropdownOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
           } origin-top`}
         >
-          <ul className="py-1 text-sm text-gray-700 dark:text-gray-200 overflow-hidden">
+          <ul className="font-semibold py-1 text-sm text-gray-700 dark:text-gray-200 overflow-hidden">
             <li>
               <button
                 onClick={handleEditProfile}
@@ -125,7 +125,7 @@ const ProfileToggle = () => {
             <li>
               <button
                 onClick={() => router.push("../Myreview")}
-                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
+                className="font-semibold w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
               >
                 <MdPostAdd className="text-lg ml-4" />
                 <span className="text-sm pl-3">MyPost</span>
@@ -134,7 +134,7 @@ const ProfileToggle = () => {
             <li>
               <button
                 onClick={handleChangeAccount}
-                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
+                className="font-semibold w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
               >
                 <svg
                   className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
@@ -157,7 +157,7 @@ const ProfileToggle = () => {
             <li>
               <button
                 onClick={handleSignout}
-                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
+                className="font-semibold w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center"
               >
                 <div className="mt-[2px] flex items-center mr-8">
                   <svg

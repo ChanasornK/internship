@@ -14,7 +14,7 @@ const Mouse = () => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
-
+  console.log(image);
   useEffect(() => {
     setIsClient(true);
 
@@ -109,21 +109,22 @@ const Mouse = () => {
       });
 
       if (response.ok) {
-        console.log("View count incremented successfully");
+        console.log("เพิ่มจำนวนการเข้าชมสำเร็จ");
       } else {
-        console.error("Failed to increment view count");
+        console.error("ไม่สามารถเพิ่มจำนวนการเข้าชมได้");
       }
     } catch (error) {
-      console.error("Error incrementing view count:", error);
+      console.error("เกิดข้อผิดพลาดในการเพิ่มจำนวนการเข้าชม:", error);
     }
 
-    // เปิดลิงก์ในแท็บใหม่
-    window.open(link, "_blank");
+    // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
+    router.push(`/BUY/Buy_Information?id=${id}`);
   };
+
   return (
     <>
-    <Head>
-        <title>Review_Mouse</title>
+      <Head>
+        <title>Review_Monitor</title>
         <link
           rel="icon"
           href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"

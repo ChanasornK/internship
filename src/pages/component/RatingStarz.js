@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Rating, RatingStar } from "flowbite-react";
 
 const RatingStarz = ({ onRatingSelect, getRating, isEnabled = true }) => {
   const [rating, setRating] = useState(getRating);
+
+  useEffect(() => {
+    setRating(getRating);
+  }, [getRating]);
+
   const handleClick = (value) => {
     if (isEnabled) {
       setRating(value);

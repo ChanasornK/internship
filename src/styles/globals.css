@@ -73,8 +73,8 @@
   }
   
   img:hover {
-    transform: scale(1.1); /* ซูมเข้าภาพ */
-    filter: brightness(1.2); /* เพิ่มความสว่าง */
+    /* transform: scale(1.1); 
+    filter: brightness(1.2);  */
   }
   .logo-slider-container {
     overflow: hidden;
