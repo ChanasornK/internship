@@ -6,7 +6,6 @@ import { FaCartShopping } from "react-icons/fa6";
 import LoadingModal from "../component/loading";
 import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
-import FixInformation from "../component/FixInformation";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -22,12 +21,11 @@ const MonitorTest = () => {
   const [imageData, setImageData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [commentText, setCommentText] = useState("");
-  const [userName, setUserName] = useState("");
   const [message, setMessage] = useState(null);
-  const [profile, setProfile] = useState("");
+  const [profile, setProfile] = useState(null); // Set initial state to null
   const [comments, setComments] = useState([]); // State to store comments
 
-  // Ref for the latest comment
+
   const latestCommentRef = useRef(null);
   // Ref for storing the previous comments length
   const previousCommentsLengthRef = useRef(0);
@@ -126,7 +124,9 @@ const MonitorTest = () => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
       const profile = JSON.parse(storedData);
-      setProfile(profile?.userData);
+      setProfile(profile?.userData || null); // Handle case where profile is null
+    } else {
+      setProfile(null); // Ensure profile is null if not found
     }
   }, []);
 

@@ -25,10 +25,6 @@ const ProfileToggle = () => {
 
   const handleSignout = () => {
     localStorage.setItem("profile", JSON.stringify(null));
-    router.push({
-      pathname: "./",
-      query: { loginSuccess: "false" },
-    });
     window.location.reload();
   };
 
