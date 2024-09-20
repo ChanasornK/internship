@@ -139,12 +139,16 @@ const reviewProduct = () => {
   useEffect(() => {
     if (id) {
       getComments(id);
-
-      const interval = setInterval(() => {
+  
+      // ใช้ setTimeout แทน setInterval เพื่อจำกัดการดึงข้อมูลแค่บางครั้ง
+      const fetchCommentsWithDelay = () => {
         getComments(id);
-      }, 500); // Fetch new comments every 500 milliseconds
-
-      return () => clearInterval(interval);
+        setTimeout(fetchCommentsWithDelay, 5000); // ดึงข้อมูลทุก 5 วินาทีแทน
+      };
+  
+      fetchCommentsWithDelay();
+  
+      return () => clearTimeout(fetchCommentsWithDelay); // ลบ timeout เมื่อ component ถูก unmount
     }
   }, [id]);
   useEffect(() => {
