@@ -30,7 +30,7 @@ const Upload = ({ setImage }) => {
               <img
                 src={imagePreview}
                 alt="Uploaded"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             ) : (
               <>
