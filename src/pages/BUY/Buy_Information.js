@@ -30,7 +30,7 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
-  // Ref for storing the previous comments length
+  const [popupDisplayed, setPopupDisplayed] = useState(false);
   const previousCommentsLengthRef = useRef(0);
 
   const getImage = async (id) => {
@@ -136,14 +136,21 @@ const reviewProduct = () => {
   useEffect(() => {
     if (id) {
       getComments(id);
-
+  
       const interval = setInterval(() => {
         getComments(id);
       }, 500); // Fetch new comments every 500 milliseconds
-
-      return () => clearInterval(interval);
+  
+      return () => clearInterval(interval); // ล้าง interval เมื่อ component ถูก unmount
     }
   }, [id]);
+  useEffect(() => {
+    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
+    }
+  }, []);
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -153,7 +160,7 @@ const reviewProduct = () => {
       setProfile(null); // Ensure profile is null if not found
     }
   }, []);
-
+  
   useEffect(() => {
     if (id) {
       const fetchCommentData = async () => {
@@ -205,17 +212,6 @@ const reviewProduct = () => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
     }, 500);
-
-    // Check if the login was successful by looking at the query parameters
-    const loginSucess = sessionStorage.getItem("loginSucess");
-
-    if (loginSucess === "true") {
-      // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
-      console.log("Login successful!");
-      setShowPopup(true);
-      // ลบค่าออกหลังใช้งานเสร็จ
-      sessionStorage.removeItem("loginSucess");
-    }
   }, [router.query]);
   useEffect(() => {
     if (id) {
