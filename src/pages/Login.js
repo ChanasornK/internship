@@ -87,10 +87,7 @@ const Login = () => {
         console.log("Login successful");
         setShowPopup(true); // Show success popup
         setTimeout(() => {
-          router.push({
-            pathname: "./",
-            query: { loginSuccess: "true" }, // ส่ง query ไปที่หน้า Index หลังจาก login สำเร็จ
-          });
+            router.back();
           setLoading(false);
         }, 1000);
       })

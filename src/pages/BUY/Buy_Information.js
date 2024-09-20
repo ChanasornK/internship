@@ -15,7 +15,7 @@ const arrayBufferToBase64 = (buffer) => {
   return window.btoa(binary);
 };
 
-const MonitorTest = () => {
+const reviewProduct = () => {
   const router = useRouter();
   const { id } = router.query; // Get id from URL
   const [imageData, setImageData] = useState(null);
@@ -24,7 +24,6 @@ const MonitorTest = () => {
   const [message, setMessage] = useState(null);
   const [profile, setProfile] = useState(null); // Set initial state to null
   const [comments, setComments] = useState([]); // State to store comments
-
 
   const latestCommentRef = useRef(null);
   // Ref for storing the previous comments length
@@ -95,7 +94,7 @@ const MonitorTest = () => {
         body: JSON.stringify({
           post_id: id,
           comment_text: commentText,
-          user_name: profile.username || "Anonymous",
+          user_name: profile.username || profile?.displayName,
         }),
       });
 
@@ -188,7 +187,26 @@ const MonitorTest = () => {
       getComments(id); // Fetch comments when id changes
     }
   }, [id]);
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
 
+  const getProfileImageSrc = () => {
+    if (profile?.photoURL) {
+      return profile?.photoURL;
+    } else if (profile?.image?.data) {
+      const base64String = arrayBufferToBase64(profile.image.data);
+      return `data:image/png;base64,${base64String}`;
+    } else {
+      return profile?.image || defaultPhotoURL;
+    }
+  };
   return (
     <>
       {loading ? (
@@ -208,13 +226,13 @@ const MonitorTest = () => {
           <div className="h-full pt-40 flex justify-center  bg-gradient-to-t from-blue-200 to-pink-200 ">
             <div className="w-96 h-[500px] ml-48">
               <img
-                className="object-cover w-auto h-96"
+                className="object-cover w-auto h-[350px]"
                 src={
                   imageData ? imageData.src : "/path/to/placeholder-image.png"
                 }
                 alt="Monitor Image"
               />
-              <div className="w-[850px] h-56 bg-gray-200 rounded-xl ">
+              <div className="w-[850px] h-56 bg-gray-200 rounded-xl  ">
                 <p className="text-xl font-semibold  pl-4 pt-3 flex">
                   Review <BsChatHeart className="ml-3" />
                 </p>
@@ -231,7 +249,7 @@ const MonitorTest = () => {
                 {imageData?.price}
               </div>
               <button
-                className="bg-pink-600 mt-8 w-full rounded-lg h-10 flex items-center justify-center space-x-2"
+                className="bg-pink-600 mt-8 w-full rounded-lg h-10 flex items-center justify-center space-x-2 transform transition-transform duration-200 hover:scale-110"
                 onClick={() => {
                   if (imageData?.link) {
                     window.open(imageData.link, "_blank");
@@ -257,12 +275,24 @@ const MonitorTest = () => {
                             ? latestCommentRef
                             : null
                         }
-                        className="p-2 rounded mb-2 px-3"
+                        className="p-2 rounded-full  mb-2 px-3 flex items-start space-x-4  "
                       >
-                        <p className="px-2">
-                          <strong>{comment.user_name} : </strong>{" "}
-                          {comment.comment_text}
-                        </p>
+                        {/* Profile image */}
+                        <img
+                          src={
+                            comment?.user_image ||
+                            "/path/to/default-profile.png "
+                          }
+                          alt={`${comment.user_name}'s profile`}
+                          className="w-10 h-10 rounded-full object-cover border-2 border-pink-600"
+                        />
+                        {/* Comment text */}
+                        <div className="flex-1">
+                          <p className="pt-2">
+                            <strong>{comment.user_name}:</strong>{" "}
+                            {comment.comment_text}
+                          </p>
+                        </div>
                       </div>
                     ))}
                 </div>
@@ -297,4 +327,4 @@ const MonitorTest = () => {
   );
 };
 
-export default MonitorTest;
+export default reviewProduct;
