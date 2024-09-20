@@ -28,7 +28,7 @@ const reviewProduct = () => {
   const [profile, setProfile] = useState(null); // Set initial state to null
   const [comments, setComments] = useState([]); // State to store comments
   const [showPopup, setShowPopup] = useState(false);
-  const [isChatVisible, setIsChatVisible] = useState(false);
+  const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
   // Ref for storing the previous comments length
   const previousCommentsLengthRef = useRef(0);
