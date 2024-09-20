@@ -30,7 +30,7 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
-  const [popupDisplayed, setPopupDisplayed] = useState(false);
+  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] = useState(false);
   const previousCommentsLengthRef = useRef(0);
 
   const getImage = async (id) => {
@@ -129,28 +129,24 @@ const reviewProduct = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, []);
+    if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
+      // เลื่อนไปที่คอมเมนต์ล่าสุดเมื่อหน้าโหลดเสร็จและยังไม่เคยเลื่อนไป
+      latestCommentRef.current?.scrollIntoView({ behavior: "smooth" });
+      setHasScrolledToLatestComment(true); // ตั้งค่าให้ไม่เลื่อนอัตโนมัติอีก
+    }
+  }, [loading, comments, hasScrolledToLatestComment]);
+  
   useEffect(() => {
     if (id) {
       getComments(id);
-  
+
       const interval = setInterval(() => {
         getComments(id);
       }, 500); // Fetch new comments every 500 milliseconds
-  
-      return () => clearInterval(interval); // ล้าง interval เมื่อ component ถูก unmount
+
+      return () => clearInterval(interval);
     }
   }, [id]);
-  useEffect(() => {
-    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
-    if (localStorage.getItem("loginSuccess") === "true") {
-      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
-      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
-    }
-  }, []);
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -160,7 +156,7 @@ const reviewProduct = () => {
       setProfile(null); // Ensure profile is null if not found
     }
   }, []);
-  
+
   useEffect(() => {
     if (id) {
       const fetchCommentData = async () => {
@@ -212,6 +208,17 @@ const reviewProduct = () => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
     }, 500);
+
+    // Check if the login was successful by looking at the query parameters
+    const loginSucess = sessionStorage.getItem("loginSucess");
+
+    if (loginSucess === "true") {
+      // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
+      console.log("Login successful!");
+      setShowPopup(true);
+      // ลบค่าออกหลังใช้งานเสร็จ
+      sessionStorage.removeItem("loginSucess");
+    }
   }, [router.query]);
   useEffect(() => {
     if (id) {
@@ -352,22 +359,20 @@ const reviewProduct = () => {
                     {Array.isArray(comments) &&
                       comments.map((comment, index) => (
                         <div
-                          key={index}
-                          className="p-2 rounded mb-2 px-3 flex items-center"
-                        >
-                          <img
-                            src={
-                              comment.userImage ||
-                              "/path/to/placeholder-image.png"
-                            }
-                            alt="User Profile"
-                            className="w-10 h-10 rounded-full"
-                          />
-                          <p className="px-2">
-                            <strong>{comment.user_name} : </strong>
-                            {comment.comment_text}
-                          </p>
-                        </div>
+                        key={index}
+                        ref={index === comments.length - 1 ? latestCommentRef : null} // Add ref to the last comment
+                        className="p-2 rounded mb-2 px-3 flex items-center"
+                      >
+                        <img
+                          src={comment.userImage || "/path/to/placeholder-image.png"}
+                          alt="User Profile"
+                          className="w-10 h-10 rounded-full"
+                        />
+                        <p className="px-2">
+                          <strong>{comment.user_name} : </strong>
+                          {comment.comment_text}
+                        </p>
+                      </div>
                       ))}
                   </div>
 
