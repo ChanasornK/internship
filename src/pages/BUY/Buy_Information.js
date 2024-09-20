@@ -7,6 +7,7 @@ import LoadingModal from "../component/loading";
 import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
 import SuccessPopup from "../SuccessPopup";
+import { motion, AnimatePresence } from "framer-motion"; // นำเข้า AnimatePresence
 
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
@@ -27,7 +28,7 @@ const reviewProduct = () => {
   const [profile, setProfile] = useState(null); // Set initial state to null
   const [comments, setComments] = useState([]); // State to store comments
   const [showPopup, setShowPopup] = useState(false);
-
+  const [isChatVisible, setIsChatVisible] = useState(false);
   const latestCommentRef = useRef(null);
   // Ref for storing the previous comments length
   const previousCommentsLengthRef = useRef(0);
@@ -94,7 +95,7 @@ const reviewProduct = () => {
       return;
     }
     if (!id || !commentText) {
-      setMessage("Please provide all required fields.");
+      setMessage("");
       return;
     }
     setCommentText(""); // Clear the comment input
@@ -326,59 +327,115 @@ const reviewProduct = () => {
               </button>
             </div>
 
-            <div className="ml-32 w-[400px] bg-purple-300  flex flex-col justify-end rounded-lg h-[550px] mt-10 ">
-              <div className="relative w-full">
-                <div className="mt-4 max-h-[450px] overflow-y-scroll scrollbar-hide">
-                  {Array.isArray(comments) &&
-                    comments.map((comment, index) => (
-                      <div
-                        key={index}
-                        ref={
-                          index === comments.length - 1
-                            ? latestCommentRef
-                            : null
-                        }
-                        className="p-2 rounded mb-2 px-3 flex items-center"
-                      >
-                        <img
-                          src={
-                            comment.userImage
-                              ? comment.userImage
-                              : "/path/to/placeholder-image.png"
-                          }
-                          alt="User Profile"
-                          className="w-10 h-10 rounded-full"
-                        />
-                        <p className="px-2">
-                          <strong>{comment.user_name} : </strong>{" "}
-                          {comment.comment_text}
-                        </p>
-                      </div>
-                    ))}
-                </div>
+            <div>
+              {!isChatVisible && (
+                <button
+                  onClick={() => setIsChatVisible(true)}
+                  className="fixed bottom-10 right-16 w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center"
+                >
+                  💬
+                </button>
+              )}
+
+              {/* กล่องแชท */}
+              <div
+                className={`ml-32 w-[400px] bg-purple-300 flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
+                  isChatVisible ? "fade-in" : "fade-out"
+                }`}
+              >
+                {/* ปุ่มปิดแชท */}
+                <button
+                  className="absolute top-2 right-2 text-white bg-red-500 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-600"
+                  onClick={() => setIsChatVisible(false)}
+                >
+                  &times;
+                </button>
 
                 <div className="relative w-full">
-                  <input
-                    className="w-full h-12 pl-5 pr-20 bg-gray-200 border-2 border-gray-300 rounded-lg focus:outline-none"
-                    type="text"
-                    placeholder="Comment Text"
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        submitComment();
-                      }
-                    }}
-                  />
-                  <button
-                    className="absolute top-0 right-0 h-12 bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
-                    onClick={submitComment}
-                  >
-                    Send
-                  </button>
+                  <div className="mt-4 max-h-[450px] overflow-y-scroll scrollbar-hide">
+                    {Array.isArray(comments) &&
+                      comments.map((comment, index) => (
+                        <div
+                          key={index}
+                          className="p-2 rounded mb-2 px-3 flex items-center"
+                        >
+                          <img
+                            src={
+                              comment.userImage ||
+                              "/path/to/placeholder-image.png"
+                            }
+                            alt="User Profile"
+                            className="w-10 h-10 rounded-full"
+                          />
+                          <p className="px-2">
+                            <strong>{comment.user_name} : </strong>
+                            {comment.comment_text}
+                          </p>
+                        </div>
+                      ))}
+                  </div>
+
+                  {/* Input สำหรับพิมพ์ข้อความ */}
+                  <div className="relative w-full">
+                    <input
+                      className="w-full h-12 pl-5 pr-20 bg-gray-200 border-2 border-gray-300 rounded-lg focus:outline-none"
+                      type="text"
+                      placeholder="Comment Text"
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          submitComment();
+                        }
+                      }}
+                    />
+                    <button
+                      className="absolute top-0 right-0 h-12 bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
+                      onClick={submitComment}
+                    >
+                      Send
+                    </button>
+                  </div>
                 </div>
+                {message && <div className="mt-2 text-red-500">{message}</div>}
               </div>
-              {message && <div className="mt-2 text-red-500">{message}</div>}
+
+              {/* CSS animation */}
+              <style jsx>{`
+                .chat-box {
+                  animation: fadeIn 0.5s ease-in-out forwards;
+                }
+
+                .fade-in {
+                  animation: fadeIn 0.5s ease-in-out forwards;
+                }
+
+                .fade-out {
+                  animation: fadeOut 0.5s ease-in-out forwards;
+                }
+
+                @keyframes fadeIn {
+                  from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                  }
+                  to {
+                    opacity: 1;
+                    transform: scale(1);
+                  }
+                }
+
+                @keyframes fadeOut {
+                  from {
+                    opacity: 1;
+                    transform: scale(1);
+                  }
+                  to {
+                    opacity: 0;
+                    transform: scale(0.9);
+                  }
+                }
+              `}</style>
             </div>
           </div>
           {showPopup && (
