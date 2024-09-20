@@ -6,6 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import FixInformation from "../component/FixInformation";
 import Head from "next/head";
+import SuccessPopup from "../SuccessPopup";
 
 const Keyboard = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const Keyboard = () => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
   console.log(image);
   useEffect(() => {
     setIsClient(true);
@@ -23,6 +25,13 @@ const Keyboard = () => {
       const profile = JSON.parse(storedData);
       setRole(profile?.userData?.role);
       setStoredEmail(profile?.userData?.email); // Save email to state
+    }
+  }, []);
+  useEffect(() => {
+    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
     }
   }, []);
 
@@ -124,7 +133,7 @@ const Keyboard = () => {
   return (
     <>
       <Head>
-        <title>Review_Monitor</title>
+        <title>Review_Keyboard</title>
         <link
           rel="icon"
           href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
@@ -162,7 +171,7 @@ const Keyboard = () => {
                 </button>
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
+                    <div className="flex items-center ">
                       <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
                     {((img.email === storedEmail && role) ||
@@ -180,6 +189,13 @@ const Keyboard = () => {
             ))}
           </div>
         </div>
+        {showPopup && (
+            <SuccessPopup
+              message="Login Successful!"
+              showPopup={showPopup}
+              onClose={() => setShowPopup(false)}
+            />
+          )}
       </div>
     </>
   );

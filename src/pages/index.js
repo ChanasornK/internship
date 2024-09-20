@@ -26,16 +26,15 @@ const Index = () => {
     }, 500);
 
     // Check if the login was successful by looking at the query parameters
-    const loginSucess = sessionStorage.getItem("loginSucess");
-  
-  if (loginSucess === "true") {
-    // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
-    console.log("Login successful!");
-    setShowPopup(true);
-    // ลบค่าออกหลังใช้งานเสร็จ
-    sessionStorage.removeItem("loginSucess");
-  }
+    
   }, [router.query]);
+  useEffect(() => {
+    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
+    }
+  }, []);
 
   useEffect(() => {
     // Check profile.role from localStorage

@@ -6,6 +6,7 @@ import RatingStarz from "../component/RatingStarz";
 import LoadingModal from "../component/loading";
 import FixInformation from "../component/FixInformation";
 import Head from "next/head";
+import SuccessPopup from "../SuccessPopup";
 
 const Monitor = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const Monitor = () => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // State for success popup
   console.log(image);
   useEffect(() => {
     setIsClient(true);
@@ -23,6 +25,13 @@ const Monitor = () => {
       const profile = JSON.parse(storedData);
       setRole(profile?.userData?.role);
       setStoredEmail(profile?.userData?.email); // Save email to state
+    }
+  }, []);
+  useEffect(() => {
+    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
     }
   }, []);
 
@@ -162,7 +171,7 @@ const Monitor = () => {
                 </button>
                 <div className="mt-32">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
+                    <div className="flex items-center ">
                       <RatingStarz getRating={img.rating} isEnabled={false} />
                     </div>
                     {((img.email === storedEmail && role) ||
@@ -180,6 +189,13 @@ const Monitor = () => {
             ))}
           </div>
         </div>
+        {showPopup && (
+            <SuccessPopup
+              message="Login Successful!"
+              showPopup={showPopup}
+              onClose={() => setShowPopup(false)}
+            />
+          )}
       </div>
     </>
   );

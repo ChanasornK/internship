@@ -6,6 +6,7 @@ import FixInformation from "../component/FixInformation";
 import LoadingModal from "../component/loading";
 import Menu from "../component/Menu";
 import Head from "next/head";
+import SuccessPopup from "../SuccessPopup";
 
 const MSI = () => {
   const [images, setImages] = useState([]);
@@ -14,7 +15,7 @@ const MSI = () => {
   const router = useRouter();
   const [storedEmail, setStoredEmail] = useState(null);
   const [role, setRole] = useState(null);
-
+  const [showPopup, setShowPopup] = useState(false); // State for success popup
   // Fetch images
   const fetchAllImages = async () => {
     try {
@@ -37,7 +38,7 @@ const MSI = () => {
         })
         .filter((image) => {
           // Filter for images with "MSI"
-          const regex = /msi/i;
+          const regex = /MSI/i;
           return regex.test(image.detail);
         });
 
@@ -139,6 +140,14 @@ const MSI = () => {
     // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
     router.push(`/BUY/Buy_Information?id=${id}`);
   };
+  useEffect(() => {
+    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
+    }
+  }, []);
+
 
   return (
     <>
@@ -209,6 +218,13 @@ const MSI = () => {
               </div>
             </div>
           </div>
+          {showPopup && (
+            <SuccessPopup
+              message="Login Successful!"
+              showPopup={showPopup}
+              onClose={() => setShowPopup(false)}
+            />
+          )}
         </div>
       )}
     </>

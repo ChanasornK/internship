@@ -33,20 +33,28 @@ const Login = () => {
       setError("กรุณากรอก Email และ Password.");
     } else {
       setLoading(true);
-      const verificationResult = await VerifyUsers(email, password);
-      if (verificationResult) {
-        console.log("Login successful");
-        setShowPopup(true); // Show success popup
-        sessionStorage.setItem("loginSucess", "true");
-        setTimeout(() => {
-          router.back(); // กลับไปยังหน้าก่อนหน้านี้
-          setLoading(false);
-        }, 1000);
-      } else {
-        setError("Incorrect email or password.");
+      try {
+        const verificationResult = await VerifyUsers(email, password);
+        if (verificationResult) {
+          console.log("Login successful");
+          setShowPopup(true); // แสดงป๊อปอัปสำเร็จ
+          localStorage.setItem("loginSuccess", "true"); // เก็บสถานะใน localStorage
+          setTimeout(() => {
+            router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
+            setLoading(false);
+          }, 1000);
+        } else {
+          setError("Incorrect email or password.");
+        }
+      } catch (error) {
+        console.error("Error during verification:", error);
+        setError("An error occurred during login. Please try again.");
+      } finally {
+        setLoading(false); // Ensure loading state is stopped after process
       }
     }
   };
+  
 
   const VerifyUsers = async (email, password) => {
     try {
@@ -86,9 +94,13 @@ const Login = () => {
         };
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
         console.log("Login successful");
+        
+        // เก็บสถานะการล็อกอินสำเร็จใน localStorage
+        localStorage.setItem("loginSuccess", "true");
+        
         setShowPopup(true); // Show success popup
         setTimeout(() => {
-            router.back();
+          router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
           setLoading(false);
         }, 1000);
       })
@@ -96,6 +108,7 @@ const Login = () => {
         console.error(error);
       });
   };
+  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

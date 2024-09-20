@@ -6,6 +6,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import LoadingModal from "../component/loading";
 import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
+import SuccessPopup from "../SuccessPopup";
 
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
@@ -54,7 +55,6 @@ const reviewProduct = () => {
     }
   };
 
-  // Function to fetch comments from the API
   const getComments = async (id) => {
     try {
       const response = await fetch("http://localhost:8000/getComment", {
@@ -193,7 +193,7 @@ const reviewProduct = () => {
   // Scroll to the latest comment only when there is a new comment
   useEffect(() => {
     if (comments.length > previousCommentsLengthRef.current) {
-      // Scroll to the latest comment
+      // Scroll to the latest comment only if there are new comments
       latestCommentRef.current?.scrollIntoView({ behavior: "smooth" });
     }
     // Update the previous comments length
@@ -263,7 +263,13 @@ const reviewProduct = () => {
       return profile?.image || defaultPhotoURL;
     }
   };
-
+  useEffect(() => {
+    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
+    }
+  }, []);
   return (
     <>
       {loading ? (
@@ -332,7 +338,7 @@ const reviewProduct = () => {
                             ? latestCommentRef
                             : null
                         }
-                        className="p-2 rounded mb-2 px-3"
+                        className="p-2 rounded mb-2 px-3 flex items-center"
                       >
                         <img
                           src={
@@ -375,6 +381,13 @@ const reviewProduct = () => {
               {message && <div className="mt-2 text-red-500">{message}</div>}
             </div>
           </div>
+          {showPopup && (
+            <SuccessPopup
+              message="Login Successful!"
+              showPopup={showPopup}
+              onClose={() => setShowPopup(false)}
+            />
+          )}
         </div>
       )}
     </>
