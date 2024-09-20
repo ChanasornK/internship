@@ -4,7 +4,9 @@ import Menu from "../component/Menu";
 import RatingStarz from "../component/RatingStarz";
 import { FaCartShopping } from "react-icons/fa6";
 import LoadingModal from "../component/loading";
-
+import { BsChatHeart } from "react-icons/bs";
+import Head from "next/head";
+import FixInformation from "../component/FixInformation";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -76,6 +78,10 @@ const MonitorTest = () => {
   };
 
   const submitComment = async () => {
+    if (!profile) {
+      setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น.");
+      return;
+    }
     if (!id || !commentText) {
       setMessage("Please provide all required fields.");
       return;
@@ -165,6 +171,7 @@ const MonitorTest = () => {
                 rating: imageData.rating,
                 views: imageData.view,
                 email: imageData.email,
+                review: imageData.review,
               };
 
               setImageData(validImageData);
@@ -181,15 +188,25 @@ const MonitorTest = () => {
       getComments(id); // Fetch comments when id changes
     }
   }, [id]);
+
   return (
     <>
       {loading ? (
         <LoadingModal />
       ) : (
         <div className="h-dvh">
+          <Head>
+            <title>Review_Product</title>
+            <link
+              rel="icon"
+              href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
+              className="Kuromi "
+            />
+          </Head>
           <Menu />
-          <div className="h-full pt-40 flex justify-center bg-gray-200">
-            <div className="w-96 h-[500px] ml-28">
+
+          <div className="h-full pt-40 flex justify-center  bg-gradient-to-t from-blue-200 to-pink-200 ">
+            <div className="w-96 h-[500px] ml-48">
               <img
                 className="object-cover w-auto h-96"
                 src={
@@ -197,7 +214,12 @@ const MonitorTest = () => {
                 }
                 alt="Monitor Image"
               />
-              <div className="bg-pink-500 w-[850px] h-56">Hello</div>
+              <div className="w-[850px] h-56 bg-gray-200 rounded-xl ">
+                <p className="text-xl font-semibold  pl-4 pt-3 flex">
+                  Review <BsChatHeart className="ml-3" />
+                </p>
+                <div className="pl-4 pt-5"> {imageData?.review || ""}</div>
+              </div>
             </div>
 
             <div className="ml-20 w-96 pt-16 h-1/2">
@@ -223,7 +245,7 @@ const MonitorTest = () => {
               </button>
             </div>
 
-            <div className="ml-32 w-[400px] bg-purple-300 mb- flex flex-col justify-end rounded-lg h-[550px] mt-14 ">
+            <div className="ml-32 w-[400px] bg-purple-300  flex flex-col justify-end rounded-lg h-[550px] mt-10 ">
               <div className="relative w-full">
                 <div className="mt-4 max-h-[450px] overflow-y-scroll scrollbar-hide">
                   {Array.isArray(comments) &&
@@ -235,10 +257,10 @@ const MonitorTest = () => {
                             ? latestCommentRef
                             : null
                         }
-                        className="bg-gray-200 p-2 rounded mb-2"
+                        className="p-2 rounded mb-2 px-3"
                       >
-                        <p>
-                          <strong>{comment.user_name}:</strong>{" "}
+                        <p className="px-2">
+                          <strong>{comment.user_name} : </strong>{" "}
                           {comment.comment_text}
                         </p>
                       </div>
@@ -252,12 +274,17 @@ const MonitorTest = () => {
                     placeholder="Comment Text"
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        submitComment();
+                      }
+                    }}
                   />
                   <button
                     className="absolute top-0 right-0 h-12 bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
                     onClick={submitComment}
                   >
-                    Submit
+                    Send
                   </button>
                 </div>
               </div>

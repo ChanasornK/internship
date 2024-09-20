@@ -20,7 +20,7 @@ const Information = () => {
   const [role, setRole] = useState("guest"); // ตั้งค่าเริ่มต้นเป็น "guest"
   const [email, setEmail] = useState("");
   const storedData = localStorage.getItem("profile");
-
+  const [review, setReview] = useState("");
   useEffect(() => {
     if (storedData) {
       const profile = JSON.parse(storedData);
@@ -46,7 +46,7 @@ const Information = () => {
     formData.append("rating", rating);
     formData.append("link", link);
     formData.append("email", email);
-
+    formData.append("review", review);
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -112,6 +112,13 @@ const Information = () => {
               onChange={(e) => setPrice(e.target.value)}
             />
             <input
+              id="review-input"
+              placeholder="รีวิว"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+            />
+            <input
               id="link-input"
               placeholder="Link"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
@@ -133,7 +140,7 @@ const Information = () => {
               </div>
             </div>
 
-            <div className="flex pb-4 justify-center gap-4 mt-12">
+            <div className="flex pb-4 justify-center gap-4 mt-8">
               <Button
                 onClick={handleConfirm}
                 className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
