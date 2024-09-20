@@ -37,6 +37,7 @@ const Login = () => {
       if (verificationResult) {
         console.log("Login successful");
         setShowPopup(true); // Show success popup
+        sessionStorage.setItem("loginSucess", "true");
         setTimeout(() => {
           router.back(); // กลับไปยังหน้าก่อนหน้านี้
           setLoading(false);

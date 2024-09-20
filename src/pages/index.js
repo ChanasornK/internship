@@ -26,13 +26,15 @@ const Index = () => {
     }, 500);
 
     // Check if the login was successful by looking at the query parameters
-    if (router.query.loginSuccess === "true") {
-      setShowPopup(true); // Show success popup when loginSuccess is true
-      // ลบ query ทิ้งเพื่อไม่ให้แสดง popup ซ้ำอีกครั้งเมื่อเปลี่ยนหน้า
-      router.replace({ pathname: router.pathname }, undefined, {
-        shallow: true,
-      });
-    }
+    const loginSucess = sessionStorage.getItem("loginSucess");
+  
+  if (loginSucess === "true") {
+    // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
+    console.log("Login successful!");
+    setShowPopup(true);
+    // ลบค่าออกหลังใช้งานเสร็จ
+    sessionStorage.removeItem("loginSucess");
+  }
   }, [router.query]);
 
   useEffect(() => {

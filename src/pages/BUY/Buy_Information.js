@@ -6,6 +6,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import LoadingModal from "../component/loading";
 import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
+
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -24,6 +25,7 @@ const reviewProduct = () => {
   const [message, setMessage] = useState(null);
   const [profile, setProfile] = useState(null); // Set initial state to null
   const [comments, setComments] = useState([]); // State to store comments
+  const [showPopup, setShowPopup] = useState(false);
 
   const latestCommentRef = useRef(null);
   // Ref for storing the previous comments length
@@ -65,7 +67,19 @@ const reviewProduct = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setComments(data?.imageData); // Update state with comments
+        // Process comments data
+        const processedComments = data.imageData.map((comment) => {
+          if (comment.userImage && comment.userImage.data) {
+            const base64String = arrayBufferToBase64(comment.userImage.data);
+            return {
+              ...comment,
+              userImage: `data:image/png;base64,${base64String}`,
+            };
+          }
+          return comment;
+        });
+        setComments(processedComments); // Update state with processed comments
+        return data;
       } else {
         console.error("Fetch comments failed:", data.message);
       }
@@ -118,7 +132,17 @@ const reviewProduct = () => {
       setLoading(false);
     }, 500);
   }, []);
+  useEffect(() => {
+    if (id) {
+      getComments(id);
 
+      const interval = setInterval(() => {
+        getComments(id);
+      }, 500); // Fetch new comments every 500 milliseconds
+
+      return () => clearInterval(interval);
+    }
+  }, [id]);
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -131,13 +155,38 @@ const reviewProduct = () => {
 
   useEffect(() => {
     if (id) {
-      getComments(id);
-
-      const interval = setInterval(() => {
-        getComments(id);
-      }, 500); // Fetch new comments every 500 milliseconds
-
-      return () => clearInterval(interval);
+      const fetchCommentData = async () => {
+        console.log(id);
+        try {
+          const data = await getComments(id);
+          console.log(data);
+          if (data) {
+            const imageData = data.imageData;
+            if (imageData) {
+              console.log(imageData);
+              // Process comments data
+              const processedComments = imageData.map((comment) => {
+                if (comment.userImage && comment.userImage.data) {
+                  const base64String = arrayBufferToBase64(
+                    comment.userImage.data
+                  );
+                  return {
+                    ...comment,
+                    userImage: `data:image/png;base64,${base64String}`,
+                  };
+                }
+                return comment;
+              });
+              setComments(processedComments);
+            } else {
+              console.error("imageData is not available:", imageData);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching images:", error);
+        }
+      };
+      fetchCommentData();
     }
   }, [id]);
 
@@ -150,7 +199,23 @@ const reviewProduct = () => {
     // Update the previous comments length
     previousCommentsLengthRef.current = comments.length;
   }, [comments]);
+  useEffect(() => {
+    // Simulate loading process
+    setTimeout(() => {
+      setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
+    }, 500);
 
+    // Check if the login was successful by looking at the query parameters
+    const loginSucess = sessionStorage.getItem("loginSucess");
+
+    if (loginSucess === "true") {
+      // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
+      console.log("Login successful!");
+      setShowPopup(true);
+      // ลบค่าออกหลังใช้งานเสร็จ
+      sessionStorage.removeItem("loginSucess");
+    }
+  }, [router.query]);
   useEffect(() => {
     if (id) {
       const fetchImageData = async () => {
@@ -187,15 +252,6 @@ const reviewProduct = () => {
       getComments(id); // Fetch comments when id changes
     }
   }, [id]);
-  const arrayBufferToBase64 = (buffer) => {
-    let binary = "";
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
-  };
 
   const getProfileImageSrc = () => {
     if (profile?.photoURL) {
@@ -207,6 +263,7 @@ const reviewProduct = () => {
       return profile?.image || defaultPhotoURL;
     }
   };
+
   return (
     <>
       {loading ? (
@@ -275,24 +332,21 @@ const reviewProduct = () => {
                             ? latestCommentRef
                             : null
                         }
-                        className="p-2 rounded-full  mb-2 px-3 flex items-start space-x-4  "
+                        className="p-2 rounded mb-2 px-3"
                       >
-                        {/* Profile image */}
                         <img
                           src={
-                            comment?.user_image ||
-                            "/path/to/default-profile.png "
+                            comment.userImage
+                              ? comment.userImage
+                              : "/path/to/placeholder-image.png"
                           }
-                          alt={`${comment.user_name}'s profile`}
-                          className="w-10 h-10 rounded-full object-cover border-2 border-pink-600"
+                          alt="User Profile"
+                          className="w-10 h-10 rounded-full"
                         />
-                        {/* Comment text */}
-                        <div className="flex-1">
-                          <p className="pt-2">
-                            <strong>{comment.user_name}:</strong>{" "}
-                            {comment.comment_text}
-                          </p>
-                        </div>
+                        <p className="px-2">
+                          <strong>{comment.user_name} : </strong>{" "}
+                          {comment.comment_text}
+                        </p>
                       </div>
                     ))}
                 </div>
