@@ -152,22 +152,14 @@ const reviewProduct = () => {
     }
   }, [id]);
   useEffect(() => {
-    // Simulate loading process
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
     }, 500);
-
-    // Check if the login was successful by looking at the query parameters
-    const loginSucess = sessionStorage.getItem("loginSucess");
-
-    if (loginSucess === "true") {
-      // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
-      console.log("Login successful!");
-      setShowPopup(true);
-      // ลบค่าออกหลังใช้งานเสร็จ
-      sessionStorage.removeItem("loginSucess");
+    if (localStorage.getItem("loginSuccess") === "true") {
+      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
+      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
     }
-  }, [router.query]);
+  }, []);
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -272,13 +264,7 @@ const reviewProduct = () => {
       return profile?.image || defaultPhotoURL;
     }
   };
-  useEffect(() => {
-    // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
-    if (localStorage.getItem("loginSuccess") === "true") {
-      setShowPopup(true); // แสดงป๊อปอัปเมื่อ loginSuccess เป็น true
-      localStorage.removeItem("loginSuccess"); // ลบข้อมูลหลังแสดงผลเพื่อไม่ให้แสดงอีกครั้ง
-    }
-  }, []);
+  
   return (
     <>
       {loading ? (
