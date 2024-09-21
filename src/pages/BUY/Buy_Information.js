@@ -143,7 +143,7 @@ const reviewProduct = () => {
       // ใช้ setTimeout แทน setInterval เพื่อจำกัดการดึงข้อมูลแค่บางครั้ง
       const fetchCommentsWithDelay = () => {
         getComments(id);
-        setTimeout(fetchCommentsWithDelay, 5000); // ดึงข้อมูลทุก 5 วินาทีแทน
+        setTimeout(fetchCommentsWithDelay, 500); // ดึงข้อมูลทุก 5 วินาทีแทน
       };
   
       fetchCommentsWithDelay();
@@ -151,6 +151,23 @@ const reviewProduct = () => {
       return () => clearTimeout(fetchCommentsWithDelay); // ลบ timeout เมื่อ component ถูก unmount
     }
   }, [id]);
+  useEffect(() => {
+    // Simulate loading process
+    setTimeout(() => {
+      setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
+    }, 500);
+
+    // Check if the login was successful by looking at the query parameters
+    const loginSucess = sessionStorage.getItem("loginSucess");
+
+    if (loginSucess === "true") {
+      // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
+      console.log("Login successful!");
+      setShowPopup(true);
+      // ลบค่าออกหลังใช้งานเสร็จ
+      sessionStorage.removeItem("loginSucess");
+    }
+  }, [router.query]);
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -207,23 +224,7 @@ const reviewProduct = () => {
     // Update the previous comments length
     previousCommentsLengthRef.current = comments.length;
   }, [comments]);
-  useEffect(() => {
-    // Simulate loading process
-    setTimeout(() => {
-      setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
-    }, 500);
-
-    // Check if the login was successful by looking at the query parameters
-    const loginSucess = sessionStorage.getItem("loginSucess");
-
-    if (loginSucess === "true") {
-      // ทำงานตามต้องการ เช่น แสดงข้อความ หรือทำ redirect
-      console.log("Login successful!");
-      setShowPopup(true);
-      // ลบค่าออกหลังใช้งานเสร็จ
-      sessionStorage.removeItem("loginSucess");
-    }
-  }, [router.query]);
+ 
   useEffect(() => {
     if (id) {
       const fetchImageData = async () => {
