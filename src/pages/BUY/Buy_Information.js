@@ -30,7 +30,8 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
-  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] = useState(false);
+  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] =
+    useState(false);
   const previousCommentsLengthRef = useRef(0);
 
   const getImage = async (id) => {
@@ -89,79 +90,81 @@ const reviewProduct = () => {
     }
   };
 
- const submitComment = async () => {
-  if (!profile) {
-    setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น.");
-    return;
-  }
-  if (!id || !commentText) {
-    setMessage("");
-    return;
-  }
+  const submitComment = async () => {
+    if (!profile) {
+      setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น.");
+      return;
+    }
+    if (!id || !commentText) {
+      setMessage("");
+      return;
+    }
 
-  // Optimistically update the comment list with the user's profile image
-  const newComment = {
-    post_id: id,
-    comment_text: commentText,
-    user_name: profile.username || profile?.displayName,
-    userImage: getProfileImageSrc(), // Include the profile image
-    comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
-  };
+    // Optimistically update the comment list with the user's profile image
+    const newComment = {
+      post_id: id,
+      comment_text: commentText,
+      user_name: profile.username || profile?.displayName,
+      userImage: getProfileImageSrc(), // Include the profile image
+      comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
+    };
 
-  setComments((prevComments) => [...prevComments, newComment]);
-  setCommentText(""); // Clear the comment input
+    setComments((prevComments) => [...prevComments, newComment]);
+    setCommentText(""); // Clear the comment input
 
-  try {
-    const response = await fetch("http://localhost:8000/comment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        post_id: id,
-        comment_text: commentText,
-        user_name: profile.username || profile?.displayName,
-        userImage: getProfileImageSrc(), // Pass the profile image to the server
-      }),
-    });
+    try {
+      const response = await fetch("http://localhost:8000/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: id,
+          comment_text: commentText,
+          user_name: profile.username || profile?.displayName,
+          userImage: getProfileImageSrc(), // Pass the profile image to the server
+        }),
+      });
 
-    const data = await response.json();
-    if (response.ok) {
-      console.log("Comment submitted successfully");
-      setMessage("Comment added successfully");
-      // Optionally replace the temp comment with the real one by refreshing comments
-      getComments(id); // Refresh comments to get actual data
-    } else {
-      console.log("Error:", data.error);
-      setMessage(data.error);
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Comment submitted successfully");
+        setMessage("Comment added successfully");
+        // Optionally replace the temp comment with the real one by refreshing comments
+        getComments(id); // Refresh comments to get actual data
+      } else {
+        console.log("Error:", data.error);
+        setMessage(data.error);
+        // Optionally, remove the optimistic comment on error
+        setComments((prevComments) =>
+          prevComments.filter(
+            (comment) => comment.comment_id !== newComment.comment_id
+          )
+        );
+      }
+    } catch (error) {
+      console.log("Error submitting comment:", error.message);
+      setMessage("Error submitting comment: " + error.message);
       // Optionally, remove the optimistic comment on error
       setComments((prevComments) =>
-        prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
+        prevComments.filter(
+          (comment) => comment.comment_id !== newComment.comment_id
+        )
       );
     }
-  } catch (error) {
-    console.log("Error submitting comment:", error.message);
-    setMessage("Error submitting comment: " + error.message);
-    // Optionally, remove the optimistic comment on error
-    setComments((prevComments) =>
-      prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
-    );
-  }
-};
+  };
 
-// Helper function to get the user's profile image
-const getProfileImageSrc2 = () => {
-  if (profile?.photoURL) {
-    return profile?.photoURL;
-  } else if (profile?.image?.data) {
-    const base64String = arrayBufferToBase64(profile.image.data);
-    return `data:image/png;base64,${base64String}`;
-  } else {
-    return "/path/to/placeholder-image.png"; // Fallback to placeholder image
-  }
-};
-
-  
+  // Helper function to get the user's profile image
+  const getProfileImageSrc2 = () => {
+    if (profile?.photoURL) {
+      return profile?.photoURL;
+    } else if (profile?.image?.data) {
+      const base64String = arrayBufferToBase64(profile.image.data);
+      return `data:image/png;base64,${base64String}`;
+    } else {
+      return "/path/to/placeholder-image.png"; // Fallback to placeholder image
+    }
+  };
 
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
@@ -170,8 +173,7 @@ const getProfileImageSrc2 = () => {
       setHasScrolledToLatestComment(true); // ตั้งค่าให้ไม่เลื่อนอัตโนมัติอีก
     }
   }, [loading, comments, hasScrolledToLatestComment]);
-  
-  
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
@@ -237,7 +239,7 @@ const getProfileImageSrc2 = () => {
     // Update the previous comments length
     previousCommentsLengthRef.current = comments.length;
   }, [comments]);
- 
+
   useEffect(() => {
     if (id) {
       const fetchImageData = async () => {
@@ -285,7 +287,7 @@ const getProfileImageSrc2 = () => {
       return profile?.image || defaultPhotoURL;
     }
   };
-  
+
   return (
     <>
       {loading ? (
@@ -371,20 +373,27 @@ const getProfileImageSrc2 = () => {
                     {Array.isArray(comments) &&
                       comments.map((comment, index) => (
                         <div
-                        key={index}
-                        ref={index === comments.length - 1 ? latestCommentRef : null} // Add ref to the last comment
-                        className="p-2 rounded mb-2 px-3 flex items-center"
-                      >
-                        <img
-                          src={comment.userImage || "/path/to/placeholder-image.png"}
-                          alt="User Profile"
-                          className="w-10 h-10 rounded-full"
-                        />
-                        <p className="px-2">
-                          <strong>{comment.user_name} : </strong>
-                          {comment.comment_text}
-                        </p>
-                      </div>
+                          key={comment.comment_id} // ใช้ comment_id เป็น key
+                          ref={
+                            index === comments.length - 1
+                              ? latestCommentRef
+                              : null
+                          } // เพิ่ม ref สำหรับคอมเมนต์ล่าสุด
+                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation" // เพิ่ม class comment-animation
+                        >
+                          <img
+                            src={
+                              comment.userImage ||
+                              "/path/to/placeholder-image.png"
+                            }
+                            alt="User Profile"
+                            className="w-10 h-10 rounded-full"
+                          />
+                          <p className="px-2">
+                            <strong>{comment.user_name} : </strong>
+                            {comment.comment_text}
+                          </p>
+                        </div>
                       ))}
                   </div>
 
@@ -446,6 +455,18 @@ const getProfileImageSrc2 = () => {
                   to {
                     opacity: 0;
                     transform: scale(0.9);
+                  }
+                }
+                .comment-animation {
+                  opacity: 0;
+                  transform: translateY(20px);
+                  animation: fadeInUp 1s ease forwards; /* ใช้อนิเมชัน */
+                }
+
+                @keyframes fadeInUp {
+                  to {
+                    opacity: 1;
+                    transform: translateY(0);
                   }
                 }
               `}</style>
