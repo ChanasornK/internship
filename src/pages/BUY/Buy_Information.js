@@ -89,44 +89,79 @@ const reviewProduct = () => {
     }
   };
 
-  const submitComment = async () => {
-    if (!profile) {
-      setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น.");
-      return;
-    }
-    if (!id || !commentText) {
-      setMessage("");
-      return;
-    }
-    setCommentText(""); // Clear the comment input
+ const submitComment = async () => {
+  if (!profile) {
+    setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น.");
+    return;
+  }
+  if (!id || !commentText) {
+    setMessage("");
+    return;
+  }
 
-    try {
-      const response = await fetch("http://localhost:8000/comment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          post_id: id,
-          comment_text: commentText,
-          user_name: profile.username || profile?.displayName,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Comment submitted successfully");
-        setMessage("Comment added successfully");
-        getComments(id); // Refresh comments
-      } else {
-        console.log("Error:", data.error);
-        setMessage(data.error);
-      }
-    } catch (error) {
-      console.log("Error submitting comment:", error.message);
-      setMessage("Error submitting comment: " + error.message);
-    }
+  // Optimistically update the comment list with the user's profile image
+  const newComment = {
+    post_id: id,
+    comment_text: commentText,
+    user_name: profile.username || profile?.displayName,
+    userImage: getProfileImageSrc(), // Include the profile image
+    comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
   };
+
+  setComments((prevComments) => [...prevComments, newComment]);
+  setCommentText(""); // Clear the comment input
+
+  try {
+    const response = await fetch("http://localhost:8000/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        post_id: id,
+        comment_text: commentText,
+        user_name: profile.username || profile?.displayName,
+        userImage: getProfileImageSrc(), // Pass the profile image to the server
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Comment submitted successfully");
+      setMessage("Comment added successfully");
+      // Optionally replace the temp comment with the real one by refreshing comments
+      getComments(id); // Refresh comments to get actual data
+    } else {
+      console.log("Error:", data.error);
+      setMessage(data.error);
+      // Optionally, remove the optimistic comment on error
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
+      );
+    }
+  } catch (error) {
+    console.log("Error submitting comment:", error.message);
+    setMessage("Error submitting comment: " + error.message);
+    // Optionally, remove the optimistic comment on error
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
+    );
+  }
+};
+
+// Helper function to get the user's profile image
+const getProfileImageSrc2 = () => {
+  if (profile?.photoURL) {
+    return profile?.photoURL;
+  } else if (profile?.image?.data) {
+    const base64String = arrayBufferToBase64(profile.image.data);
+    return `data:image/png;base64,${base64String}`;
+  } else {
+    return "/path/to/placeholder-image.png"; // Fallback to placeholder image
+  }
+};
+
+  
 
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
@@ -136,21 +171,7 @@ const reviewProduct = () => {
     }
   }, [loading, comments, hasScrolledToLatestComment]);
   
-  useEffect(() => {
-    if (id) {
-      getComments(id);
   
-      // ใช้ setTimeout แทน setInterval เพื่อจำกัดการดึงข้อมูลแค่บางครั้ง
-      const fetchCommentsWithDelay = () => {
-        getComments(id);
-        setTimeout(fetchCommentsWithDelay, 500); // ดึงข้อมูลทุก 5 วินาทีแทน
-      };
-  
-      fetchCommentsWithDelay();
-  
-      return () => clearTimeout(fetchCommentsWithDelay); // ลบ timeout เมื่อ component ถูก unmount
-    }
-  }, [id]);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
