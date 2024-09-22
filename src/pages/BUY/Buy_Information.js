@@ -108,7 +108,9 @@ const reviewProduct = () => {
       userImage: getProfileImageSrc(), // Include the profile image
       comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
     };
-
+    
+    // Save profile image to localStorage
+    localStorage.setItem('profileImage', getProfileImageSrc());
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentText(""); // Clear the comment input
 
@@ -155,16 +157,25 @@ const reviewProduct = () => {
   };
 
   // Helper function to get the user's profile image
-  const getProfileImageSrc2 = () => {
+  const getProfileImageSrc = () => {
     if (profile?.photoURL) {
       return profile?.photoURL;
     } else if (profile?.image?.data) {
-      const base64String = arrayBufferToBase64(profile.image.data);
+      const base64String = arrayBufferToBase64(profile?.image?.data);
       return `data:image/png;base64,${base64String}`;
     } else {
-      return "/path/to/placeholder-image.png"; // Fallback to placeholder image
+      return profile?.image ;
     }
   };
+  useEffect(() => {
+    const savedProfileImage = localStorage.getItem('profileImage');
+    if (savedProfileImage) {
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        userImage: savedProfileImage,
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
@@ -277,16 +288,6 @@ const reviewProduct = () => {
     }
   }, [id]);
 
-  const getProfileImageSrc = () => {
-    if (profile?.photoURL) {
-      return profile?.photoURL;
-    } else if (profile?.image?.data) {
-      const base64String = arrayBufferToBase64(profile.image.data);
-      return `data:image/png;base64,${base64String}`;
-    } else {
-      return profile?.image || defaultPhotoURL;
-    }
-  };
 
   return (
     <>
