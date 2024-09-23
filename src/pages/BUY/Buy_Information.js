@@ -30,7 +30,8 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
-  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] = useState(false);
+  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] =
+    useState(false);
   const previousCommentsLengthRef = useRef(0);
 
   const getImage = async (id) => {
@@ -98,7 +99,7 @@ const reviewProduct = () => {
       setMessage("กรุณากรอกข้อความคอมเมนต์");
       return;
     }
-  
+
     // Optimistically update the comment list with the user's profile image
     const newComment = {
       product_id: id, // Using product_id instead of post_id
@@ -107,11 +108,11 @@ const reviewProduct = () => {
       userImage: getProfileImageSrc(), // Include the profile image
       comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
     };
-  
+
     // Add the comment locally for immediate display
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentText(""); // Clear the comment input
-  
+
     try {
       const response = await fetch("http://localhost:8000/comment", {
         method: "POST",
@@ -124,48 +125,38 @@ const reviewProduct = () => {
           user_name: profile.username || profile?.displayName,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         console.log("Comment submitted successfully");
         setMessage("คอมเมนต์ของคุณถูกส่งแล้ว");
-        
+
         // Refresh comments to get actual data from the server
         await getComments(id); // Fetch comments from the server again
       } else {
         console.log("Error:", data.error);
         setMessage(data.error);
-  
+
         // Optionally remove the optimistic comment on error
         setComments((prevComments) =>
-          prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
+          prevComments.filter(
+            (comment) => comment.comment_id !== newComment.comment_id
+          )
         );
       }
     } catch (error) {
       console.log("Error submitting comment:", error.message);
       setMessage("Error submitting comment: " + error.message);
-  
+
       // Optionally remove the optimistic comment on error
       setComments((prevComments) =>
-        prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
+        prevComments.filter(
+          (comment) => comment.comment_id !== newComment.comment_id
+        )
       );
     }
   };
-  
 
-// Helper function to get the user's profile image
-const getProfileImageSrc2 = () => {
-  if (profile?.photoURL) {
-    return profile?.photoURL;
-  } else if (profile?.image?.data) {
-    const base64String = arrayBufferToBase64(profile.image.data);
-    return `data:image/png;base64,${base64String}`;
-  } else {
-    return "/path/to/placeholder-image.png"; // Fallback to placeholder image
-  }
-};
-
-  
 
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
@@ -174,8 +165,7 @@ const getProfileImageSrc2 = () => {
       setHasScrolledToLatestComment(true); // ตั้งค่าให้ไม่เลื่อนอัตโนมัติอีก
     }
   }, [loading, comments, hasScrolledToLatestComment]);
-  
-  
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
@@ -241,7 +231,7 @@ const getProfileImageSrc2 = () => {
     // Update the previous comments length
     previousCommentsLengthRef.current = comments.length;
   }, [comments]);
- 
+
   useEffect(() => {
     if (id) {
       const fetchImageData = async () => {
@@ -281,14 +271,14 @@ const getProfileImageSrc2 = () => {
 
   const getProfileImageSrc = () => {
     if (profile?.photoURL) {
-      return profile?.photoURL;
-    } else if (profile?.image?.data) {
-      const base64String = arrayBufferToBase64(profile.image.data);
-      return `data:image/png;base64,${base64String}`;
+      return profile?.photoURL; // If there's a photoURL, return it directly
     } else {
-      return profile?.image || defaultPhotoURL;
+      // Convert the image data to base64
+      const base64String = arrayBufferToBase64(profile?.image?.data);
+      return `data:image/png;base64,${base64String}`; // Return base64 image
     }
   };
+
   return (
     <>
       {loading ? (
@@ -383,13 +373,11 @@ const getProfileImageSrc2 = () => {
                           className="p-2 rounded mb-2 px-3 flex items-center comment-animation" // เพิ่ม class comment-animation
                         >
                           <img
-                            src={
-                              comment.userImage ||
-                              "/path/to/placeholder-image.png"
-                            }
+                            src={comment.userImage ||  getProfileImageSrc() }
                             alt="User Profile"
-                            className="w-10 h-10 rounded-full"
+                            className="w-10 h-10 rounded-full object-cover"
                           />
+
                           <p className="px-2">
                             <strong>{comment.user_name} : </strong>
                             {comment.comment_text}
