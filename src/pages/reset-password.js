@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { Button } from "flowbite-react";
 import { MdLockReset } from "react-icons/md";
+import Head from "next/head";
 
 export default function ResetPassword() {
   const router = useRouter();

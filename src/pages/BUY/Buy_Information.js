@@ -30,8 +30,7 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
-  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] =
-    useState(false);
+  const [hasScrolledToLatestComment, setHasScrolledToLatestComment] = useState(false);
   const previousCommentsLengthRef = useRef(0);
 
   const getImage = async (id) => {
@@ -96,24 +95,23 @@ const reviewProduct = () => {
       return;
     }
     if (!id || !commentText) {
-      setMessage("");
+      setMessage("กรุณากรอกข้อความคอมเมนต์");
       return;
     }
-
+  
     // Optimistically update the comment list with the user's profile image
     const newComment = {
-      post_id: id,
+      product_id: id, // Using product_id instead of post_id
       comment_text: commentText,
       user_name: profile.username || profile?.displayName,
       userImage: getProfileImageSrc(), // Include the profile image
       comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
     };
-    
-    // Save profile image to localStorage
-    localStorage.setItem('profileImage', getProfileImageSrc());
+  
+    // Add the comment locally for immediate display
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentText(""); // Clear the comment input
-
+  
     try {
       const response = await fetch("http://localhost:8000/comment", {
         method: "POST",
@@ -121,61 +119,53 @@ const reviewProduct = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          post_id: id,
+          product_id: id, // Using product_id instead of post_id
           comment_text: commentText,
           user_name: profile.username || profile?.displayName,
-          userImage: getProfileImageSrc(), // Pass the profile image to the server
         }),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         console.log("Comment submitted successfully");
-        setMessage("Comment added successfully");
-        // Optionally replace the temp comment with the real one by refreshing comments
-        getComments(id); // Refresh comments to get actual data
+        setMessage("คอมเมนต์ของคุณถูกส่งแล้ว");
+        
+        // Refresh comments to get actual data from the server
+        await getComments(id); // Fetch comments from the server again
       } else {
         console.log("Error:", data.error);
         setMessage(data.error);
-        // Optionally, remove the optimistic comment on error
+  
+        // Optionally remove the optimistic comment on error
         setComments((prevComments) =>
-          prevComments.filter(
-            (comment) => comment.comment_id !== newComment.comment_id
-          )
+          prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
         );
       }
     } catch (error) {
       console.log("Error submitting comment:", error.message);
       setMessage("Error submitting comment: " + error.message);
-      // Optionally, remove the optimistic comment on error
+  
+      // Optionally remove the optimistic comment on error
       setComments((prevComments) =>
-        prevComments.filter(
-          (comment) => comment.comment_id !== newComment.comment_id
-        )
+        prevComments.filter((comment) => comment.comment_id !== newComment.comment_id)
       );
     }
   };
+  
 
-  // Helper function to get the user's profile image
-  const getProfileImageSrc = () => {
-    if (profile?.photoURL) {
-      return profile?.photoURL;
-    } else if (profile?.image?.data) {
-      const base64String = arrayBufferToBase64(profile?.image?.data);
-      return `data:image/png;base64,${base64String}`;
-    } else {
-      return profile?.image ;
-    }
-  };
-  useEffect(() => {
-    const savedProfileImage = localStorage.getItem('profileImage');
-    if (savedProfileImage) {
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        userImage: savedProfileImage,
-      }));
-    }
-  }, []);
+// Helper function to get the user's profile image
+const getProfileImageSrc2 = () => {
+  if (profile?.photoURL) {
+    return profile?.photoURL;
+  } else if (profile?.image?.data) {
+    const base64String = arrayBufferToBase64(profile.image.data);
+    return `data:image/png;base64,${base64String}`;
+  } else {
+    return "/path/to/placeholder-image.png"; // Fallback to placeholder image
+  }
+};
+
+  
 
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
@@ -184,7 +174,8 @@ const reviewProduct = () => {
       setHasScrolledToLatestComment(true); // ตั้งค่าให้ไม่เลื่อนอัตโนมัติอีก
     }
   }, [loading, comments, hasScrolledToLatestComment]);
-
+  
+  
   useEffect(() => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
@@ -250,7 +241,7 @@ const reviewProduct = () => {
     // Update the previous comments length
     previousCommentsLengthRef.current = comments.length;
   }, [comments]);
-
+ 
   useEffect(() => {
     if (id) {
       const fetchImageData = async () => {
@@ -288,7 +279,16 @@ const reviewProduct = () => {
     }
   }, [id]);
 
-
+  const getProfileImageSrc = () => {
+    if (profile?.photoURL) {
+      return profile?.photoURL;
+    } else if (profile?.image?.data) {
+      const base64String = arrayBufferToBase64(profile.image.data);
+      return `data:image/png;base64,${base64String}`;
+    } else {
+      return profile?.image || defaultPhotoURL;
+    }
+  };
   return (
     <>
       {loading ? (
