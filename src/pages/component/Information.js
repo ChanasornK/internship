@@ -112,19 +112,20 @@ const Information = () => {
               onChange={(e) => setPrice(e.target.value)}
             />
             <input
-              id="review-input"
-              placeholder="รีวิว"
-              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
-            />
-            <input
               id="link-input"
               placeholder="Link"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
+            <input
+              id="review-input"
+              placeholder="รีวิว"
+              className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+            />
+
             <div className="flex items-center mt-6  ">
               <Dropdownz
                 onSelectItem={handleTypeSelect}

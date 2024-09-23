@@ -21,56 +21,38 @@ const Slide = () => {
   const router = useRouter();
   const [images, setImages] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [openModal, setOpenModal] = useState(true);
+
   useEffect(() => {
     const fetchAllImages = async () => {
       try {
         const response = await getImage();
-        const imageDataArray = response.data.imageData;
+        if (response) {
+          const imageDataArray = response.data.imageData;
 
-        const validImageDataArray = imageDataArray
-          .map((image) => {
-            const base64String = arrayBufferToBase64(image.image.data);
-            return {
-              id: image.id,
-              price: image.price,
-              rating: image.rating,
-              views: image.view,
-              src: `data:image/png;base64,${base64String}`,
-              link: image.link,
-            };
-          })
-          .sort((a, b) => b.views - a.views)
-          .slice(0, 12); // Limit to top 12 images
+          const validImageDataArray = imageDataArray
+            .map((image) => {
+              const base64String = arrayBufferToBase64(image.image.data);
+              return {
+                id: image.id,
+                price: image.price,
+                rating: image.rating,
+                views: image.view,
+                src: `data:image/png;base64,${base64String}`,
+                link: image.link,
+              };
+            })
+            .sort((a, b) => b.views - a.views)
+            .slice(0, 12); // Limit to top 12 images
 
-        const cachedImages = JSON.stringify(validImageDataArray);
-
-        // Update localStorage only if the fetched data is different from the cached data
-        if (localStorage.getItem("cachedImages") !== cachedImages) {
-          localStorage.setItem("cachedImages", cachedImages);
+          setImages(validImageDataArray);
+          setIsLoaded(true); // Mark as loaded after fetching data
         }
-
-        setImages(validImageDataArray);
-        setIsLoaded(true); // Mark as loaded after fetching data
       } catch (error) {
         console.error("Error fetching images:", error);
       }
     };
 
     fetchAllImages();
-
-    const handleRouteChange = (url) => {
-      if (url === "/") {
-        setIsLoaded(false); // Reset loading state
-        fetchAllImages();
-      }
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
   }, [router]);
 
   const getImage = async () => {
@@ -83,6 +65,7 @@ const Slide = () => {
       });
 
       const data = await response.json();
+      console.log(data); // ตรวจสอบการตอบสนองจาก API
 
       if (response.ok) {
         return { data };
@@ -110,6 +93,7 @@ const Slide = () => {
   for (let i = 0; i < Math.min(images.length, 12); i += 3) {
     chunkedImages.push(images.slice(i, i + 3));
   }
+
   const handleImageClick = async (id, link) => {
     try {
       const response = await fetch("http://localhost:8000/increment-view", {
@@ -129,7 +113,6 @@ const Slide = () => {
       console.error("เกิดข้อผิดพลาดในการเพิ่มจำนวนการเข้าชม:", error);
     }
 
-    // ไปที่หน้า ./monitor-test และส่ง id ผ่าน url
     router.push(`/BUY/Buy_Information?id=${id}`);
   };
 
