@@ -7,8 +7,7 @@ import LoadingModal from "../component/loading";
 import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
 import SuccessPopup from "../SuccessPopup";
-import { motion, AnimatePresence } from "framer-motion"; // นำเข้า AnimatePresence
-
+import { GrSend } from "react-icons/gr";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -96,7 +95,7 @@ const reviewProduct = () => {
       return;
     }
     if (!id || !commentText) {
-      setMessage("กรุณากรอกข้อความคอมเมนต์");
+      setMessage("");
       return;
     }
 
@@ -277,7 +276,6 @@ const reviewProduct = () => {
       const base64String = arrayBufferToBase64(profile?.image?.data);
       return `data:image/png;base64,${base64String}`; // Return base64 image
     }
-    
   };
 
   return (
@@ -340,7 +338,7 @@ const reviewProduct = () => {
               {!isChatVisible && (
                 <button
                   onClick={() => setIsChatVisible(true)}
-                  className="fixed bottom-10 right-16 w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center"
+                  className="fixed bottom-10 right-16 w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
                 >
                   💬
                 </button>
@@ -348,18 +346,17 @@ const reviewProduct = () => {
 
               {/* กล่องแชท */}
               <div
-                className={`ml-32 w-[400px] bg-purple-300 flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
+                className={`ml-32 w-[400px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
                   isChatVisible ? "fade-in" : "fade-out"
                 }`}
               >
-                {/* ปุ่มปิดแชท */}
+             
                 <button
-                  className="absolute top-2 right-2 text-white bg-red-500 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-600"
+                  className="absolute top-2 right-2 text-white bg-pink-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-600 transform transition-transform duration-200 hover:scale-125"
                   onClick={() => setIsChatVisible(false)}
                 >
                   &times;
                 </button>
-
                 <div className="relative w-full">
                   <div className="mt-4 max-h-[450px] overflow-y-scroll scrollbar-hide">
                     {Array.isArray(comments) &&
@@ -371,17 +368,19 @@ const reviewProduct = () => {
                               ? latestCommentRef
                               : null
                           } // เพิ่ม ref สำหรับคอมเมนต์ล่าสุด
-                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation" // เพิ่ม class comment-animation
+                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation " // เพิ่ม class comment-animation
                         >
-                          <img
-                            src={comment.userImage || getProfileImageSrc() }
+                          {/* <img
+                            src={comment.userImage || getProfileImageSrc()}
                             alt="User Profile"
                             className="w-10 h-10 rounded-full object-cover"
-                          />
+                          /> */}
 
-                          <p className="px-2">
-                            <strong>{comment.user_name} : </strong>
-                            {comment.comment_text}
+                          <p className="px-2 bg-gray-200 rounded-lg">
+                            <strong className="pl-2">
+                              {comment.user_name}{" "}
+                            </strong>
+                            <p className="pl-2">{comment.comment_text}</p>
                           </p>
                         </div>
                       ))}
@@ -405,7 +404,7 @@ const reviewProduct = () => {
                       className="absolute top-0 right-0 h-12 bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
                       onClick={submitComment}
                     >
-                      Send
+                      <GrSend />
                     </button>
                   </div>
                 </div>

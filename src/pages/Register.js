@@ -28,18 +28,22 @@ const Register = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+  
   const loginAction = async () => {
     await signInWithPopup(auth, googleProvider)
       .then(async function (result) {
         if (!result) return;
+  
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         const user = {
           role: "user", // ตั้งบทบาทเป็น "user"
           email: result.user.email,
           displayName: result.user.displayName,
-          photoURL: result.user.photoURL,
+          photoURL: result.user.photoURL || "", // เพิ่มการตรวจสอบ photoURL
         };
+  
+        console.log("Google login result user:", user); // ตรวจสอบข้อมูล
   
         // บันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
         await registerUser(user);
@@ -67,16 +71,21 @@ const Register = () => {
       });
   };
   
-  // ฟังก์ชันเพื่อบันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
   const registerUser = async (user) => {
     try {
+      console.log("Sending user data to register API:", user); // ตรวจสอบข้อมูลที่จะส่งไปยัง API
+  
       const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: user.email, password: "google-oauth", username: user.displayName }), 
-        // ถ้าไม่มี password ให้ส่งค่า default เช่น "google-oauth"
+        body: JSON.stringify({
+          email: user.email,
+          password: "google-oauth", // ใช้ค่าเริ่มต้นสำหรับ Google OAuth
+          username: user.displayName,
+          image: user.photoURL // ส่ง photoURL ไปด้วย
+        }),
       });
   
       const data = await response.json();
@@ -91,6 +100,7 @@ const Register = () => {
     }
   };
   
+
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword) {
       setError("กรุณากรอก Email, Password ");
