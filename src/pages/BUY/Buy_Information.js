@@ -158,8 +158,6 @@ const reviewProduct = () => {
     }
   };
 
-
-
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
       // เลื่อนไปที่คอมเมนต์ล่าสุดเมื่อหน้าโหลดเสร็จและยังไม่เคยเลื่อนไป
