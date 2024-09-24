@@ -102,7 +102,7 @@ const reviewProduct = () => {
 
     // Optimistically update the comment list with the user's profile image
     const newComment = {
-      product_id: id, // Using product_id instead of post_id
+      product_id: id,
       comment_text: commentText,
       user_name: profile.username || profile?.displayName,
       userImage: getProfileImageSrc(), // Include the profile image
@@ -120,9 +120,10 @@ const reviewProduct = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          product_id: id, // Using product_id instead of post_id
+          product_id: id,
           comment_text: commentText,
           user_name: profile.username || profile?.displayName,
+          userImage: getProfileImageSrc(), // Send the profile image URL or base64 string
         }),
       });
 
@@ -156,6 +157,7 @@ const reviewProduct = () => {
       );
     }
   };
+
 
 
   useEffect(() => {
@@ -277,6 +279,7 @@ const reviewProduct = () => {
       const base64String = arrayBufferToBase64(profile?.image?.data);
       return `data:image/png;base64,${base64String}`; // Return base64 image
     }
+    
   };
 
   return (
@@ -373,7 +376,7 @@ const reviewProduct = () => {
                           className="p-2 rounded mb-2 px-3 flex items-center comment-animation" // เพิ่ม class comment-animation
                         >
                           <img
-                            src={comment.userImage ||  getProfileImageSrc() }
+                            src={comment.userImage || getProfileImageSrc() }
                             alt="User Profile"
                             className="w-10 h-10 rounded-full object-cover"
                           />

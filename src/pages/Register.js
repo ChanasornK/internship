@@ -30,7 +30,7 @@ const Register = () => {
   };
   const loginAction = async () => {
     await signInWithPopup(auth, googleProvider)
-      .then(function (result) {
+      .then(async function (result) {
         if (!result) return;
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
@@ -40,12 +40,16 @@ const Register = () => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
         };
+  
+        // บันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
+        await registerUser(user);
+  
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
         console.log(
-          "Saved auth to localStorage:",
-          JSON.parse(localStorage.getItem("profile"))
+          // "Saved auth to localStorage:",
+          // JSON.parse(localStorage.getItem("profile"))
         );
-
+  
         router.push("./");
       })
       .catch(function (error) {
@@ -62,6 +66,31 @@ const Register = () => {
         }
       });
   };
+  
+  // ฟังก์ชันเพื่อบันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
+  const registerUser = async (user) => {
+    try {
+      const response = await fetch("http://localhost:8000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: user.email, password: "google-oauth", username: user.displayName }), 
+        // ถ้าไม่มี password ให้ส่งค่า default เช่น "google-oauth"
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log("User registered and saved to database successfully:", data);
+      } else {
+        console.error("Failed to register user to database:", data.message);
+      }
+    } catch (error) {
+      console.error("Error registering user to database:", error);
+    }
+  };
+  
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword) {
       setError("กรุณากรอก Email, Password ");
