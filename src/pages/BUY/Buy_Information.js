@@ -313,7 +313,7 @@ const reviewProduct = () => {
           <Menu />
 
           <div className="h-full pt-40 flex justify-center  bg-gradient-to-t from-blue-200 to-pink-200 ">
-            <div className="w-96 h-[500px] ml-48">
+            <div className="w-96 h-[500px] ml-60">
               <img
                 className="object-cover w-auto h-[350px]"
                 src={
@@ -354,9 +354,8 @@ const reviewProduct = () => {
 
             <div>
               {((imageData?.email === storedEmail && role) ||
-                profile?.role === "admin") && (
-                <FixInformation2 dataSource={imageData} />
-              )}
+                profile?.role === "admin") &&
+                !isChatVisible && <FixInformation2 dataSource={imageData} />}
 
               {!isChatVisible && (
                 <button
@@ -368,12 +367,12 @@ const reviewProduct = () => {
               )}
 
               <div
-                className={`ml-32 w-[450px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
+                className={`ml-24 w-[450px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
                   isChatVisible ? "fade-in" : "fade-out"
                 }`}
               >
                 <button
-                  className="absolute top-2 right-10 text-white hover:bg-purple-500 rounded-full flex items-center justify-center  transform transition-transform duration-200 hover:scale-125"
+                  className="absolute top-2 right-4 text-white hover:bg-purple-500 rounded-full flex items-center justify-center  transform transition-transform duration-200 hover:scale-125"
                   onClick={() => setIsChatVisible(false)}
                 >
                   <IoCloseSharp className="text-3xl " />
@@ -392,18 +391,20 @@ const reviewProduct = () => {
                           className="p-2 rounded mb-2 px-3 flex items-center comment-animation " // เพิ่ม class comment-animation
                         >
                           {/* <img
-                            src={comment.userImage || getProfileImageSrc()}
-                            alt="User Profile"
-                            className="w-10 h-10 rounded-full object-cover"
-                          /> */}
+                src={comment.userImage || getProfileImageSrc()}
+                alt="User Profile"
+                className="w-10 h-10 rounded-full object-cover"
+              /> */}
 
                           <p className="px-2 bg-gray-200 rounded-lg">
-                            <strong className="pl-2">
+                            <strong className="pl-1">
                               {comment.user_name}{" "}
                             </strong>
-                            <p className="pl-2">{comment.comment_text}</p>
+                            <p className="pl-1">{comment.comment_text}</p>
                           </p>
-                          <button className="ml-4 h-10 w-10 rounded-full bg-black text-white">......</button>
+                          <button className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200 ">
+                            ......
+                          </button>
                         </div>
                       ))}
                   </div>
@@ -432,6 +433,7 @@ const reviewProduct = () => {
                 </div>
                 {message && <div className="mt-2 text-red-500">{message}</div>}
               </div>
+
               {/* CSS animation */}
               <style jsx>{`
                 .chat-box {
