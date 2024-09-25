@@ -403,6 +403,7 @@ const reviewProduct = () => {
                             </strong>
                             <p className="pl-2">{comment.comment_text}</p>
                           </p>
+                          <button className="ml-4 h-10 w-10 rounded-full bg-black text-white">......</button>
                         </div>
                       ))}
                   </div>
