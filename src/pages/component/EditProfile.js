@@ -9,6 +9,7 @@ const EditProfile = ({ openModal, setOpenModal }) => {
   const [username, setUsername] = useState(""); // Add state for username
   const defaultPhotoURL =
     "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -27,14 +28,14 @@ const EditProfile = ({ openModal, setOpenModal }) => {
 
   const handleSubmit = async () => {
     try {
-      let imageUrl = defaultPhotoURL; // เริ่มต้นด้วยรูป default
+      let imageUrl = profile?.image || defaultPhotoURL; // Use existing image if no new file is uploaded
 
       if (file) {
         const formData = new FormData();
         formData.append("image", file);
         formData.append("id", profile?.id);
 
-        // อัพโหลดรูปภาพหากมีไฟล์ใหม่
+        // Upload the new image if a file is selected
         const uploadImageResponse = await axios.post(
           "http://localhost:8000/uploadImageEditProfile",
           formData,
@@ -45,20 +46,20 @@ const EditProfile = ({ openModal, setOpenModal }) => {
           }
         );
 
-        // แปลงรูปที่อัพโหลดเป็น base64
+        // Convert the new image to base64
         imageUrl = await convertToBase64(file);
       }
 
       const updatedProfile = { ...profile, image: imageUrl };
       setProfile(updatedProfile);
 
-      // อัพเดท username หลังจากอัพเดทรูปภาพเสร็จแล้ว
+      // Update username after the image upload
       const updateUsernameResponse = await axios.put(
         "http://localhost:8000/updateUsername",
         { id: profile?.id, username }
       );
 
-      // อัพเดทข้อมูลใน localStorage ด้วย image และ username ใหม่
+      // Update localStorage with the new image and username
       localStorage.setItem(
         "profile",
         JSON.stringify({
@@ -66,11 +67,12 @@ const EditProfile = ({ openModal, setOpenModal }) => {
         })
       );
 
-      window.location.reload(); // รีโหลดหน้าหลังจากอัพเดทเสร็จ
+      window.location.reload(); // Reload the page after update
     } catch (error) {
       console.error("Error updating profile or username:", error);
     }
   };
+
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -84,9 +86,9 @@ const EditProfile = ({ openModal, setOpenModal }) => {
   useEffect(() => {
     if (openModal) {
       setFile(null);
-      setPreviewImage(null); // Reset the preview image when the modal opens
+      setPreviewImage(profile?.image || null); // Reset to the current profile image when the modal opens
     }
-  }, [openModal]);
+  }, [openModal, profile]);
 
   return (
     <>
@@ -99,7 +101,7 @@ const EditProfile = ({ openModal, setOpenModal }) => {
           <Modal
             show={openModal}
             onClose={() => setOpenModal(false)}
-            className="relative z-50 w-auto max-w-2xl mx-auto mt-28 "
+            className="relative z-50 w-auto max-w-2xl mx-auto mt-28"
           >
             <Modal.Header className="modal-header h-auto w-auto mr-4 mt-4 flex justify-end"></Modal.Header>
 

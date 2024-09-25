@@ -8,6 +8,8 @@ import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
 import SuccessPopup from "../SuccessPopup";
 import { GrSend } from "react-icons/gr";
+import { IoCloseSharp } from "react-icons/io5";
+import FixInformation2 from "../component/FixInformation2";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -29,6 +31,8 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
+  const [role, setRole] = useState(null);
+  const [storedEmail, setStoredEmail] = useState(null);
   const [hasScrolledToLatestComment, setHasScrolledToLatestComment] =
     useState(false);
   const previousCommentsLengthRef = useRef(0);
@@ -45,17 +49,31 @@ const reviewProduct = () => {
 
       const data = await response.json();
       if (response.ok) {
-        return data;
-      } else {
-        console.error("Fetch image failed:", data.message);
-        return null;
+        const base64String = arrayBufferToBase64(data.imageData.image.data);
+        const validImageData = {
+          id: data.imageData.id,
+          src: `data:image/png;base64,${base64String}`,
+          price: data.imageData.price,
+          detail: data.imageData.detail,
+          link: data.imageData.link,
+          type: data.imageData.type,
+          rating: data.imageData.rating,
+          views: data.imageData.view,
+          email: data.imageData.email,
+          review: data.imageData.review,
+        };
+        setImageData(validImageData);
       }
     } catch (error) {
-      console.error("Error during fetch image:", error);
-      return null;
+      console.error("Error fetching image:", error);
     }
   };
 
+  useEffect(() => {
+    if (id) {
+      getImage(id);
+    }
+  }, [id]);
   const getComments = async (id) => {
     try {
       const response = await fetch("http://localhost:8000/getComment", {
@@ -335,6 +353,11 @@ const reviewProduct = () => {
             </div>
 
             <div>
+              {((imageData?.email === storedEmail && role) ||
+                profile?.role === "admin") && (
+                <FixInformation2 dataSource={imageData} />
+              )}
+
               {!isChatVisible && (
                 <button
                   onClick={() => setIsChatVisible(true)}
@@ -344,21 +367,19 @@ const reviewProduct = () => {
                 </button>
               )}
 
-              {/* กล่องแชท */}
               <div
-                className={`ml-32 w-[400px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
+                className={`ml-32 w-[420px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
                   isChatVisible ? "fade-in" : "fade-out"
                 }`}
               >
-             
                 <button
-                  className="absolute top-2 right-2 text-white bg-pink-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-600 transform transition-transform duration-200 hover:scale-125"
+                  className="absolute top-2 right-2 text-white hover:bg-purple-500 rounded-full flex items-center justify-center  transform transition-transform duration-200 hover:scale-125"
                   onClick={() => setIsChatVisible(false)}
                 >
-                  &times;
+                  <IoCloseSharp className="text-3xl " />
                 </button>
                 <div className="relative w-full">
-                  <div className="mt-4 max-h-[450px] overflow-y-scroll scrollbar-hide">
+                  <div className="mt-4 max-h-[455px] overflow-y-scroll scrollbar-hide">
                     {Array.isArray(comments) &&
                       comments.map((comment, index) => (
                         <div
@@ -410,7 +431,6 @@ const reviewProduct = () => {
                 </div>
                 {message && <div className="mt-2 text-red-500">{message}</div>}
               </div>
-
               {/* CSS animation */}
               <style jsx>{`
                 .chat-box {
