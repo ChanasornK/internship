@@ -118,7 +118,7 @@ const FixInformation2 = ({ dataSource }) => {
     <>
       <button
         onClick={() => setFixModal(true)}
-        className="fixed bottom-28 right-16 w-12 h-12 bg-pink-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
+        className="fixed bottom-28 right-5 w-12 h-12 bg-pink-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
         >
           <MdAutoFixHigh className="w-6 h-6" />
       </button>

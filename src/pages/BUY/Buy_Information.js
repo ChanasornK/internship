@@ -361,19 +361,19 @@ const reviewProduct = () => {
               {!isChatVisible && (
                 <button
                   onClick={() => setIsChatVisible(true)}
-                  className="fixed bottom-10 right-16 w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
+                  className="fixed bottom-10 right-5 w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
                 >
                   💬
                 </button>
               )}
 
               <div
-                className={`ml-32 w-[420px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
+                className={`ml-32 w-[450px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
                   isChatVisible ? "fade-in" : "fade-out"
                 }`}
               >
                 <button
-                  className="absolute top-2 right-2 text-white hover:bg-purple-500 rounded-full flex items-center justify-center  transform transition-transform duration-200 hover:scale-125"
+                  className="absolute top-2 right-10 text-white hover:bg-purple-500 rounded-full flex items-center justify-center  transform transition-transform duration-200 hover:scale-125"
                   onClick={() => setIsChatVisible(false)}
                 >
                   <IoCloseSharp className="text-3xl " />
