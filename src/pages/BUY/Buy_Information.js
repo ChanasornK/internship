@@ -365,11 +365,13 @@ const reviewProduct = () => {
                   💬
                 </button>
               )}
-
               <div
-                className={`ml-24 w-[450px] border border-pink-600  bg-gradient-to-t from-blue-400 to-pink-400  flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
+                className={`ml-24 w-[450px] border border-pink-600 bg-cover bg-center flex flex-col justify-end rounded-lg h-[550px] mt-10 relative chat-box ${
                   isChatVisible ? "fade-in" : "fade-out"
                 }`}
+                style={{
+                  backgroundImage: `url('https://images.squarespace-cdn.com/content/v1/5e949a92e17d55230cd1d44f/c936e01c-2f6b-4bc3-b6ce-d029296e18cc/Nebula_resized.png?format=1500w')`,
+                }}
               >
                 <button
                   className="absolute top-2 right-4 text-white hover:bg-purple-500 rounded-full flex items-center justify-center  transform transition-transform duration-200 hover:scale-125"
