@@ -10,6 +10,7 @@ import SuccessPopup from "../SuccessPopup";
 import { GrSend } from "react-icons/gr";
 import { IoCloseSharp } from "react-icons/io5";
 import FixInformation2 from "../component/FixInformation2";
+import EditComment from "../component/editComment";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -36,6 +37,19 @@ const reviewProduct = () => {
   const [hasScrolledToLatestComment, setHasScrolledToLatestComment] =
     useState(false);
   const previousCommentsLengthRef = useRef(0);
+  const [openModal, setOpenModal] = useState(false);
+  const openEditModal = (commentId, commentText) => {
+    console.log("Setting selected comment for editing:", {
+      commentId,
+      commentText,
+    });
+    setSelectedComment({ id: commentId, comment_text: commentText });
+    setOpenModal(true);
+  };
+  const [selectedComment, setSelectedComment] = useState({
+    id: null,
+    comment_text: "",
+  });
 
   const getImage = async (id) => {
     try {
@@ -384,29 +398,34 @@ const reviewProduct = () => {
                     {Array.isArray(comments) &&
                       comments.map((comment, index) => (
                         <div
-                          key={comment.comment_id} // ใช้ comment_id เป็น key
+                          key={comment.id} // Use the comment's id as the key
                           ref={
                             index === comments.length - 1
                               ? latestCommentRef
                               : null
-                          } // เพิ่ม ref สำหรับคอมเมนต์ล่าสุด
-                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation " // เพิ่ม class comment-animation
+                          } // Reference for the latest comment
+                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation"
                         >
-                          {/* <img
-                src={comment.userImage || getProfileImageSrc()}
-                alt="User Profile"
-                className="w-10 h-10 rounded-full object-cover"
-              /> */}
-
                           <p className="px-2 bg-gray-200 rounded-lg">
                             <strong className="pl-1">
                               {comment.user_name}{" "}
                             </strong>
                             <p className="pl-1">{comment.comment_text}</p>
                           </p>
-                          <button className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200 ">
-                            ......
+                          <button
+                            className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
+                            onClick={() =>
+                              openEditModal(comment.id, comment.comment_text)
+                            } // Pass the comment's id to openEditModal
+                          >
+                            ...
                           </button>
+                          <EditComment
+                            openModal={openModal}
+                            setOpenModal={setOpenModal}
+                            commentId={selectedComment.id} // Pass the selected comment's id
+                            initialCommentText={selectedComment.comment_text} // Pass the initial comment text
+                          />
                         </div>
                       ))}
                   </div>
