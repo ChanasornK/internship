@@ -12,14 +12,23 @@ const EditComment = ({
   const [commentText, setCommentText] = useState(initialCommentText);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
-  // Update commentText whenever initialCommentText changes
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   useEffect(() => {
     if (openModal && commentId) {
       setCommentText(initialCommentText);
     }
   }, [openModal, commentId, initialCommentText]);
 
+  useEffect(() => {
+    const storedData = localStorage.getItem("profile");
+    if (storedData) {
+      const profile = JSON.parse(storedData);
+      setEmail(profile?.userData?.email);
+      setRole(profile?.userData?.role || "user");
+    }
+  }, []);
+  console.log(email);
   const handleSave = async () => {
     if (!commentText.trim()) {
       setErrorMessage("Comment text cannot be empty");
@@ -54,13 +63,15 @@ const EditComment = ({
         size="md"
         onClose={() => setOpenModal(false)}
         popup
+        className="fixed inset-0 bg-gray-700 pt-56 z-50"
       >
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
+            <h1>Edit Comment</h1>
             <input
               type="text"
-              className="bg-purple-400 mt-10 p-2 w-full"
+              className="bg-purple-400 mt-10 p-2 w-[90%] rounded-lg"
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               placeholder="Edit Comment"

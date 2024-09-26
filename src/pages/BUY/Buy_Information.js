@@ -32,7 +32,6 @@ const reviewProduct = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(true);
   const latestCommentRef = useRef(null);
-  const [role, setRole] = useState(null);
   const [storedEmail, setStoredEmail] = useState(null);
   const [hasScrolledToLatestComment, setHasScrolledToLatestComment] =
     useState(false);
@@ -375,9 +374,7 @@ const reviewProduct = () => {
             </div>
 
             <div>
-              {((imageData?.email === storedEmail && role) ||
-                profile?.role === "admin") &&
-                !isChatVisible && <FixInformation2 dataSource={imageData} />}
+              {!isChatVisible && <FixInformation2 dataSource={imageData} />}
 
               {!isChatVisible && (
                 <button
