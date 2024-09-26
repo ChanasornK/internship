@@ -44,8 +44,6 @@ const Index = () => {
       setProfile(parsedData);
     }
   }, []);
-
-  // คุณสามารถใช้งาน SuccessPopup ได้ตามเดิม
   const handleHomePage = () => {
     window.location.reload();
   };

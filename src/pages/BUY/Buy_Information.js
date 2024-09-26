@@ -184,7 +184,7 @@ const reviewProduct = () => {
   };
   const handleSaveEdit = async (commentId) => {
     console.log("Saving edit for:", commentId, editText);
-  
+
     try {
       // Make an API call to update the comment in the database
       const response = await fetch("http://localhost:8000/editComment", {
@@ -194,9 +194,9 @@ const reviewProduct = () => {
         },
         body: JSON.stringify({ id: commentId, comment_text: editText }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         // Update the comment in the local state directly
         setComments((prevComments) =>
@@ -206,11 +206,11 @@ const reviewProduct = () => {
               : comment
           )
         );
-  
+
         // Clear the edit mode and input field
         setEditingCommentId(null);
         setEditText("");
-  
+
         console.log("Comment updated successfully:", data.message);
       } else {
         console.error("Failed to update comment:", data.message);
@@ -219,7 +219,7 @@ const reviewProduct = () => {
       console.error("Error updating comment:", error);
     }
   };
-  
+
   const handleCancelEdit = () => {
     setEditingCommentId(null); // Cancel editing
     setEditText(""); // Clear edit input
@@ -446,7 +446,7 @@ const reviewProduct = () => {
                               ? latestCommentRef
                               : null
                           }
-                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation"
+                          className="p-2 rounded mb-2 px-3 flex items-center comment-animation group"
                         >
                           {editingCommentId === comment.id ? (
                             // Editing mode
@@ -478,7 +478,7 @@ const reviewProduct = () => {
                           ) : (
                             // Display mode
                             <div className="flex items-center w-full">
-                              <div className="px-2 bg-gray-200 rounded-lg ">
+                              <div className="px-2 bg-gray-200 rounded-lg">
                                 <p className="pl-1 font-bold">
                                   {comment.user_name}
                                 </p>
@@ -487,7 +487,7 @@ const reviewProduct = () => {
                               {(comment.user_name === profile?.username ||
                                 comment.user_name === profile?.displayName) && (
                                 <button
-                                  className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
+                                  className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                                   onClick={() =>
                                     handleEditClick(
                                       comment.id,
