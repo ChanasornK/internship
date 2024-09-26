@@ -417,14 +417,18 @@ const reviewProduct = () => {
                             </strong>
                             <p className="pl-1">{comment.comment_text}</p>
                           </p>
-                          <button
-                            className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
-                            onClick={() =>
-                              openEditModal(comment.id, comment.comment_text)
-                            }
-                          >
-                            ...
-                          </button>
+                          {(comment.user_name === profile?.username ||
+                            comment.user_name === profile?.displayName) && (
+                            <button
+                              className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
+                              onClick={() =>
+                                openEditModal(comment.id, comment.comment_text)
+                              }
+                            >
+                              ...
+                            </button>
+                          )}
+
                           <EditComment
                             openModal={openModal}
                             setOpenModal={setOpenModal}
