@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
 import axios from "axios";
 
-const EditComment = ({ openModal, setOpenModal, commentId, initialCommentText }) => {
+const EditComment = ({
+  openModal,
+  setOpenModal,
+  commentId,
+  initialCommentText,
+  fetchComments, // Accept fetchComments prop
+}) => {
   const [commentText, setCommentText] = useState(initialCommentText);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -10,7 +16,6 @@ const EditComment = ({ openModal, setOpenModal, commentId, initialCommentText })
   // Update commentText whenever initialCommentText changes
   useEffect(() => {
     if (openModal && commentId) {
-      console.log("Editing comment with ID:", commentId); // Log the comment ID to verify
       setCommentText(initialCommentText);
     }
   }, [openModal, commentId, initialCommentText]);
@@ -21,17 +26,16 @@ const EditComment = ({ openModal, setOpenModal, commentId, initialCommentText })
       return;
     }
 
-    console.log("Sending data to editComment API:", { id: commentId, comment_text: commentText }); // Log data being sent
-
     setIsSaving(true);
     try {
       const response = await axios.post("http://localhost:8000/editComment", {
-        id: commentId, // Use the correct comment ID
+        id: commentId,
         comment_text: commentText,
       });
 
       if (response.status === 200) {
         setOpenModal(false); // Close modal on success
+        await fetchComments(); // Fetch the updated comments list
       } else {
         setErrorMessage(response.data.message || "Failed to update comment");
       }
@@ -45,7 +49,12 @@ const EditComment = ({ openModal, setOpenModal, commentId, initialCommentText })
 
   return (
     <>
-      <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
@@ -56,11 +65,15 @@ const EditComment = ({ openModal, setOpenModal, commentId, initialCommentText })
               onChange={(e) => setCommentText(e.target.value)}
               placeholder="Edit Comment"
             />
-            {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+            {errorMessage && (
+              <p className="text-red-500 mt-2">{errorMessage}</p>
+            )}
 
-            <div className="flex justify-center gap-4 mt-5">
+            <div className="flex justify-center gap-4 mt-5 mb-5">
               <Button
-                className={`bg-red-600 text-white hover:bg-red-700 ${isSaving ? "cursor-not-allowed" : ""}`}
+                className={`bg-red-600 text-white hover:bg-red-700 ${
+                  isSaving ? "cursor-not-allowed" : ""
+                }`}
                 onClick={handleSave}
                 disabled={isSaving}
               >

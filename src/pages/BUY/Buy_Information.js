@@ -309,7 +309,15 @@ const reviewProduct = () => {
       return `data:image/png;base64,${base64String}`; // Return base64 image
     }
   };
-
+  const updateCommentInList = (commentId, newCommentText) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment.id === commentId
+          ? { ...comment, comment_text: newCommentText }
+          : comment
+      )
+    );
+  };
   return (
     <>
       {loading ? (
@@ -398,12 +406,12 @@ const reviewProduct = () => {
                     {Array.isArray(comments) &&
                       comments.map((comment, index) => (
                         <div
-                          key={comment.id} // Use the comment's id as the key
+                          key={comment.id}
                           ref={
                             index === comments.length - 1
                               ? latestCommentRef
                               : null
-                          } // Reference for the latest comment
+                          }
                           className="p-2 rounded mb-2 px-3 flex items-center comment-animation"
                         >
                           <p className="px-2 bg-gray-200 rounded-lg">
@@ -416,15 +424,17 @@ const reviewProduct = () => {
                             className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
                             onClick={() =>
                               openEditModal(comment.id, comment.comment_text)
-                            } // Pass the comment's id to openEditModal
+                            }
                           >
                             ...
                           </button>
                           <EditComment
                             openModal={openModal}
                             setOpenModal={setOpenModal}
-                            commentId={selectedComment.id} // Pass the selected comment's id
-                            initialCommentText={selectedComment.comment_text} // Pass the initial comment text
+                            commentId={selectedComment.id}
+                            initialCommentText={selectedComment.comment_text}
+                            fetchComments={() => getComments(id)}
+                            updateComment={updateCommentInList} // Pass the update function as a prop
                           />
                         </div>
                       ))}
