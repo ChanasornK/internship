@@ -37,6 +37,8 @@ const reviewProduct = () => {
     useState(false);
   const previousCommentsLengthRef = useRef(0);
   const [openModal, setOpenModal] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState(null); // ID of the comment being edited
+  const [editText, setEditText] = useState("");
   const openEditModal = (commentId, commentText) => {
     console.log("Setting selected comment for editing:", {
       commentId,
@@ -121,28 +123,17 @@ const reviewProduct = () => {
   };
 
   const submitComment = async () => {
-    if (!profile) {
-      setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น.");
-      return;
-    }
-    if (!id || !commentText) {
-      setMessage("");
-      return;
-    }
+    if (!commentText) return;
 
-    // Optimistically update the comment list with the user's profile image
     const newComment = {
-      product_id: id,
+      id: `temp-${Date.now()}`, // Temporary ID
+      user_name: profile?.username || profile?.displayName || "User", // Placeholder user
       comment_text: commentText,
-      user_name: profile.username || profile?.displayName,
-      userImage: getProfileImageSrc(), // Include the profile image
-      comment_id: `temp-${Date.now()}`, // Temporary ID for immediate display
     };
 
-    // Add the comment locally for immediate display
+    // Optimistic UI update: Add the new comment to the list immediately
     setComments((prevComments) => [...prevComments, newComment]);
-    setCommentText(""); // Clear the comment input
-
+    setCommentText("");
     try {
       const response = await fetch("http://localhost:8000/comment", {
         method: "POST",
@@ -152,7 +143,7 @@ const reviewProduct = () => {
         body: JSON.stringify({
           product_id: id,
           comment_text: commentText,
-          user_name: profile.username || profile?.displayName,
+          user_name: profile?.username || profile?.displayName,
           userImage: getProfileImageSrc(), // Send the profile image URL or base64 string
         }),
       });
@@ -162,30 +153,69 @@ const reviewProduct = () => {
         console.log("Comment submitted successfully");
         setMessage("คอมเมนต์ของคุณถูกส่งแล้ว");
 
-        // Refresh comments to get actual data from the server
-        await getComments(id); // Fetch comments from the server again
+        // Clear input field
+        setCommentText("");
+
+        // Refresh comments to get the actual data from the server
+        await getComments(id);
       } else {
         console.log("Error:", data.error);
         setMessage(data.error);
 
-        // Optionally remove the optimistic comment on error
+        // Remove the optimistic comment on error
         setComments((prevComments) =>
-          prevComments.filter(
-            (comment) => comment.comment_id !== newComment.comment_id
-          )
+          prevComments.filter((comment) => comment.id !== newComment.id)
         );
       }
     } catch (error) {
       console.log("Error submitting comment:", error.message);
       setMessage("Error submitting comment: " + error.message);
 
-      // Optionally remove the optimistic comment on error
+      // Remove the optimistic comment on error
       setComments((prevComments) =>
-        prevComments.filter(
-          (comment) => comment.comment_id !== newComment.comment_id
-        )
+        prevComments.filter((comment) => comment.id !== newComment.id)
       );
     }
+  };
+
+  const handleEditClick = (commentId, currentText) => {
+    setEditingCommentId(commentId);
+    setEditText(currentText);
+  };
+
+  const handleSaveEdit = async (commentId) => {
+    console.log("Saving edit for:", commentId, editText);
+    try {
+      const response = await fetch("http://localhost:8000/editComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: commentId, comment_text: editText }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.id === commentId
+              ? { ...comment, comment_text: editText }
+              : comment
+          )
+        );
+        setEditingCommentId(null);
+        setEditText("");
+      } else {
+        console.error("Failed to update comment:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCommentId(null); // Cancel editing
+    setEditText(""); // Clear edit input
   };
 
   useEffect(() => {
@@ -411,32 +441,53 @@ const reviewProduct = () => {
                           }
                           className="p-2 rounded mb-2 px-3 flex items-center comment-animation"
                         >
-                          <p className="px-2 bg-gray-200 rounded-lg">
-                            <strong className="pl-1">
-                              {comment.user_name}{" "}
-                            </strong>
-                            <p className="pl-1">{comment.comment_text}</p>
-                          </p>
-                          {(comment.user_name === profile?.username ||
-                            comment.user_name === profile?.displayName) && (
-                            <button
-                              className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
-                              onClick={() =>
-                                openEditModal(comment.id, comment.comment_text)
-                              }
-                            >
-                              ...
-                            </button>
+                          {editingCommentId === comment.id ? (
+                            // Editing mode
+                            <div className="flex items-center w-full">
+                              <input
+                                type="text"
+                                value={editText}
+                                onChange={(e) => setEditText(e.target.value)}
+                                className="w-64 h-8 pl-2 pr-2 bg-gray-200 border-2 border-gray-300 rounded-lg"
+                              />
+                              <button
+                                className="ml-2 bg-blue-500 text-white px-2 rounded hover:bg-blue-600"
+                                onClick={() => handleSaveEdit(comment.id)}
+                              >
+                                Save
+                              </button>
+                              <button
+                                className="ml-2 bg-gray-300 text-black px-2 rounded hover:bg-gray-400"
+                                onClick={handleCancelEdit}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            // Display mode
+                            <div className="flex items-center w-full">
+                              <div className="px-2 bg-gray-200 rounded-lg w-full">
+                                <p className="pl-1 font-bold">
+                                  {comment.user_name}
+                                </p>
+                                <p className="pl-1">{comment.comment_text}</p>
+                              </div>
+                              {(comment.user_name === profile?.username ||
+                                comment.user_name === profile?.displayName) && (
+                                <button
+                                  className="ml-4 h-8 w-8 rounded-full hover:bg-gray-200"
+                                  onClick={() =>
+                                    handleEditClick(
+                                      comment.id,
+                                      comment.comment_text
+                                    )
+                                  }
+                                >
+                                  ...
+                                </button>
+                              )}
+                            </div>
                           )}
-
-                          <EditComment
-                            openModal={openModal}
-                            setOpenModal={setOpenModal}
-                            commentId={selectedComment.id}
-                            initialCommentText={selectedComment.comment_text}
-                            fetchComments={() => getComments(id)}
-                            updateComment={updateCommentInList} // Pass the update function as a prop
-                          />
                         </div>
                       ))}
                   </div>
@@ -451,10 +502,12 @@ const reviewProduct = () => {
                       onChange={(e) => setCommentText(e.target.value)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
+                          e.preventDefault(); // ป้องกันการทำงานเริ่มต้นของ Enter
                           submitComment();
                         }
                       }}
                     />
+
                     <button
                       className="absolute top-0 right-0 h-12 bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
                       onClick={submitComment}
