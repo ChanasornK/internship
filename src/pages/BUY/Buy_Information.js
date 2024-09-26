@@ -10,7 +10,7 @@ import SuccessPopup from "../SuccessPopup";
 import { GrSend } from "react-icons/gr";
 import { IoCloseSharp } from "react-icons/io5";
 import FixInformation2 from "../component/FixInformation2";
-import EditComment from "../component/editComment";
+import { FaPencilAlt } from "react-icons/fa";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -182,10 +182,11 @@ const reviewProduct = () => {
     setEditingCommentId(commentId);
     setEditText(currentText);
   };
-
   const handleSaveEdit = async (commentId) => {
     console.log("Saving edit for:", commentId, editText);
+  
     try {
+      // Make an API call to update the comment in the database
       const response = await fetch("http://localhost:8000/editComment", {
         method: "POST",
         headers: {
@@ -193,9 +194,11 @@ const reviewProduct = () => {
         },
         body: JSON.stringify({ id: commentId, comment_text: editText }),
       });
-
+  
       const data = await response.json();
+  
       if (response.ok) {
+        // Update the comment in the local state directly
         setComments((prevComments) =>
           prevComments.map((comment) =>
             comment.id === commentId
@@ -203,8 +206,12 @@ const reviewProduct = () => {
               : comment
           )
         );
+  
+        // Clear the edit mode and input field
         setEditingCommentId(null);
         setEditText("");
+  
+        console.log("Comment updated successfully:", data.message);
       } else {
         console.error("Failed to update comment:", data.message);
       }
@@ -212,7 +219,7 @@ const reviewProduct = () => {
       console.error("Error updating comment:", error);
     }
   };
-
+  
   const handleCancelEdit = () => {
     setEditingCommentId(null); // Cancel editing
     setEditText(""); // Clear edit input
@@ -448,7 +455,12 @@ const reviewProduct = () => {
                                 type="text"
                                 value={editText}
                                 onChange={(e) => setEditText(e.target.value)}
-                                className="w-64 h-8 pl-2 pr-2 bg-gray-200 border-2 border-gray-300 rounded-lg"
+                                className="w-64 h-8 pl-2 pr-2 bg-pink-200 border-2 border-gray-300 rounded-lg"
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    handleSaveEdit(comment.id);
+                                  }
+                                }}
                               />
                               <button
                                 className="ml-2 bg-blue-500 text-white px-2 rounded hover:bg-blue-600"
@@ -466,7 +478,7 @@ const reviewProduct = () => {
                           ) : (
                             // Display mode
                             <div className="flex items-center w-full">
-                              <div className="px-2 bg-gray-200 rounded-lg w-full">
+                              <div className="px-2 bg-gray-200 rounded-lg ">
                                 <p className="pl-1 font-bold">
                                   {comment.user_name}
                                 </p>
@@ -483,7 +495,7 @@ const reviewProduct = () => {
                                     )
                                   }
                                 >
-                                  ...
+                                  ✏️
                                 </button>
                               )}
                             </div>
@@ -495,7 +507,7 @@ const reviewProduct = () => {
                   {/* Input สำหรับพิมพ์ข้อความ */}
                   <div className="relative w-full">
                     <input
-                      className="w-full h-12 pl-5 pr-20 bg-gray-200 border-2 border-gray-300 rounded-lg focus:outline-none"
+                      className=" w-full h-12 pl-5 pr-20 bg-gray-200 border-2 border-gray-300 rounded-lg focus:outline-none"
                       type="text"
                       placeholder="Comment Text"
                       value={commentText}
