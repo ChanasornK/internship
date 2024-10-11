@@ -28,32 +28,33 @@ const Register = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-  
+
   const loginAction = async () => {
     await signInWithPopup(auth, googleProvider)
       .then(async function (result) {
         if (!result) return;
-  
+
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         const user = {
           role: "user", // ตั้งบทบาทเป็น "user"
           email: result.user.email,
           displayName: result.user.displayName,
-          photoURL: result.user.photoURL || "", // เพิ่มการตรวจสอบ photoURL
+          photoURL: result.user.photoURL || "",
         };
-  
+
         console.log("Google login result user:", user); // ตรวจสอบข้อมูล
-  
+
         // บันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
         await registerUser(user);
-  
+
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
-        console.log(
+        console
+          .log
           // "Saved auth to localStorage:",
           // JSON.parse(localStorage.getItem("profile"))
-        );
-  
+          ();
+
         router.push("./");
       })
       .catch(function (error) {
@@ -70,11 +71,11 @@ const Register = () => {
         }
       });
   };
-  
+
   const registerUser = async (user) => {
     try {
       console.log("Sending user data to register API:", user); // ตรวจสอบข้อมูลที่จะส่งไปยัง API
-  
+
       const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
@@ -84,14 +85,17 @@ const Register = () => {
           email: user.email,
           password: "google-oauth", // ใช้ค่าเริ่มต้นสำหรับ Google OAuth
           username: user.displayName,
-          image: user.photoURL // ส่ง photoURL ไปด้วย
+          image: user.photoURL, // ส่ง photoURL ไปด้วย
         }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
-        console.log("User registered and saved to database successfully:", data);
+        console.log(
+          "User registered and saved to database successfully:",
+          data
+        );
       } else {
         console.error("Failed to register user to database:", data.message);
       }
@@ -99,7 +103,6 @@ const Register = () => {
       console.error("Error registering user to database:", error);
     }
   };
-  
 
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword) {
@@ -243,14 +246,16 @@ const Register = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
+                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm 
+                    rounded-lg hover:border-purple-600 block w-full   focus:border-purple-600 p-2.5 pr-10"
                   />
                 </div>
 
                 <div className="mb-5 relative">
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium 
+                    text-gray-900 dark:text-white"
                   >
                     Password
                   </label>
@@ -260,7 +265,9 @@ const Register = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
+                    className="h-12 bg-gray-50 border border-gray-300 
+                    text-gray-900 text-sm  rounded-lg focus:border-purple-600
+                     hover:border-purple-600 block w-full p-2.5 pr-10"
                   />
                   <div
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer mt-4"
@@ -282,7 +289,9 @@ const Register = () => {
                     id="confirm-password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-600 dark:focus:border-purple-600 pr-10"
+                    className="h-12 bg-gray-50 border border-gray-300 text-gray-900 
+                    text-sm  rounded-lg focus:ring-purple-600 focus:border-purple-600 
+                    hover:border-purple-600  block w-full p-2.5  pr-10"
                   />
                   <div
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer mt-4"
@@ -307,7 +316,7 @@ const Register = () => {
                 onClick={handleSignup}
                 disabled={loading} // Disable button while loading
                 type="button"
-                className=" mt-5 text-white bg-blue-500 hover:bg-blue-600 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55  w-full h-12"
+                className=" mt-5 text-white bg-blue-500 hover:bg-blue-600 text-center focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-base px-5 py-2.5 inline-flex items-center justify-center w-full h-12"
               >
                 {loading ? "Signing up..." : "Sign up"}
                 <RiGhostFill className="ml-2" />
