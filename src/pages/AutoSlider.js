@@ -46,7 +46,7 @@ const AutoSlider = () => {
               }}
             >
               <img
-                src="https://scontent.fbkk29-4.fna.fbcdn.net/v/t1.15752-9/457491743_501321222620989_3333539029455903832_n.webp?_nc_cat=110&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeG2IBv-3CWXHemjUGjNLfSsgfWqLfHa5LyB9aot8drkvGfF61WYUtbuvI_P4ZlXcbOic9AQaPEyUvW91CkZ6BVC&_nc_ohc=OXrZYOn9UAEQ7kNvgF2-aYf&_nc_ht=scontent.fbkk29-4.fna&_nc_gid=Ak_a15_NmyBbOWSLlDYoK0v&oh=03_Q7cD1QEtMBJ4A5eWJ3RhQz1ufW_XJUGm9KQHi_qa35ttJmtD5Q&oe=67060255"
+                src="https://dlcdnwebimgs.asus.com/gain/A6A079BA-9DDF-49FD-8C57-C60671DDC6F7/fwebp"
                 style={{
                   width: "100%",
                   height: "100%",

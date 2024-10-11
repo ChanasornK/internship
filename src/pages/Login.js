@@ -85,29 +85,77 @@ const Login = () => {
 
   const loginAction = async () => {
     await signInWithPopup(auth, googleProvider)
-      .then(function (result) {
+      .then(async function (result) {
         if (!result) return;
+
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
         const user = {
-          role: "user",
+          role: "user", // ตั้งบทบาทเป็น "user"
           email: result.user.email,
           displayName: result.user.displayName,
-          photoURL: result.user.photoURL,
+          photoURL: result.user.photoURL || "",
         };
+
+        console.log("Google login result user:", user); // ตรวจสอบข้อมูล
+
+        // บันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
+        await registerUser(user);
+
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
-        console.log("Login successful");
+        console
+          .log
+          // "Saved auth to localStorage:",
+          // JSON.parse(localStorage.getItem("profile"))
+          ();
 
-        // เก็บสถานะการล็อกอินสำเร็จใน localStorage
-        localStorage.setItem("loginSuccess", "true");
-
-        setShowPopup(true); // Show success popup
-        setTimeout(() => {
-          router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
-          setLoading(false);
-        }, 1000);
+        router.push("./");
       })
       .catch(function (error) {
-        console.error(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = error.credential;
+        if (errorCode === "auth/account-exists-with-different-credential") {
+          alert(
+            "You have already signed up with a different auth provider for that email."
+          );
+        } else {
+          console.log(error);
+        }
       });
+  };
+
+  const registerUser = async (user) => {
+    try {
+      console.log("Sending user data to register API:", user); // ตรวจสอบข้อมูลที่จะส่งไปยัง API
+
+      const response = await fetch("http://localhost:8000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: "google-oauth", // ใช้ค่าเริ่มต้นสำหรับ Google OAuth
+          username: '',
+          image: user.photoURL, // ส่ง photoURL ไปด้วย
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(
+          "User registered and saved to database successfully:",
+          data
+        );
+      } else {
+        console.error("Failed to register user to database:", data.message);
+      }
+    } catch (error) {
+      console.error("Error registering user to database:", error);
+    }
   };
 
   const handleKeyDown = (e) => {

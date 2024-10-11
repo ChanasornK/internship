@@ -84,7 +84,7 @@ const Register = () => {
         body: JSON.stringify({
           email: user.email,
           password: "google-oauth", // ใช้ค่าเริ่มต้นสำหรับ Google OAuth
-          username: user.displayName,
+          username: '',
           image: user.photoURL, // ส่ง photoURL ไปด้วย
         }),
       });

@@ -10,7 +10,6 @@ const ProfileToggle = () => {
   const [openModal, setOpenModal] = useState(false); // State for modal
   const dropdownRef = useRef(null);
   const router = useRouter();
-
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -19,6 +18,7 @@ const ProfileToggle = () => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
       const profile = JSON.parse(storedData);
+      console.log("Profile data:", profile); // ตรวจสอบข้อมูลที่ดึงมา
       setProfile(profile?.userData);
     }
   }, []);
@@ -109,15 +109,19 @@ const ProfileToggle = () => {
           } origin-top`}
         >
           <ul className="font-semibold py-1 text-sm text-gray-700 dark:text-gray-200 overflow-hidden">
-            <li>
-              <button
-                onClick={handleEditProfile}
-                className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
-              >
-                <RiEdit2Fill className="text-lg ml-4" />
-                <span className="text-sm pl-3">Edit Profile</span>
-              </button>
-            </li>
+           
+          {profile?.password !== "google-oauth" && (
+  <li>
+    <button
+      onClick={handleEditProfile}
+      className="w-[100%] px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
+    >
+      <RiEdit2Fill className="text-lg ml-4" />
+      <span className="text-sm pl-3">Edit Profile</span>
+    </button>
+  </li>
+)}
+
             <li>
               <button
                 onClick={() => router.push("../Myreview")}

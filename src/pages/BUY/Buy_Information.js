@@ -190,41 +190,45 @@ const reviewProduct = () => {
   };
   const handleSaveEdit = async (commentId) => {
     console.log("Saving edit for:", commentId, editText);
-
+    
+    const previousComments = [...comments]; // สำรองข้อมูลเดิมไว้เผื่อ revert
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment.id === commentId
+          ? { ...comment, comment_text: editText }
+          : comment
+      )
+    );
+    
+    setEditingCommentId(null);
+    setEditText("");
+    
     try {
-      // Make an API call to update the comment in the database
       const response = await fetch("http://localhost:8000/editComment", {
-        method: "PUT", // Use PUT method for updating
+        method: "PUT", 
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: commentId, comment_text: editText }), // Send id and updated comment text
+        body: JSON.stringify({ id: commentId, comment_text: editText }),
       });
-
+  
       const data = await response.json();
-
-      if (response.ok) {
-        // Update the comment in the local state directly
-        setComments((prevComments) =>
-          prevComments.map((comment) =>
-            comment.id === commentId
-              ? { ...comment, comment_text: editText }
-              : comment
-          )
-        );
-
-        // Clear the edit mode and input field
-        setEditingCommentId(null);
-        setEditText("");
-
-        console.log("Comment updated successfully:", data.message);
-      } else {
+  
+      if (!response.ok) {
         console.error("Failed to update comment:", data.message);
+        setComments(previousComments); // Revert กลับถ้าอัปเดตไม่สำเร็จ
+      } else {
+        console.log("Comment updated successfully:", data.message);
+        // ดึงข้อมูลคอมเมนต์ใหม่หลังอัปเดตสำเร็จ
+        await getComments(id);
       }
     } catch (error) {
       console.error("Error updating comment:", error);
+      setComments(previousComments); // Revert ถ้าเกิดข้อผิดพลาด
     }
   };
+  
+  
 
   const handleCancelEdit = () => {
     setEditingCommentId(null); // Cancel editing
@@ -417,7 +421,7 @@ const reviewProduct = () => {
             </div>
 
             <div>
-              {!isChatVisible && <FixInformation2 dataSource={imageData} />}
+            {profile?.role !== "user" && !isChatVisible && <FixInformation2 dataSource={imageData} />}
 
               {!isChatVisible && (
                 <button
