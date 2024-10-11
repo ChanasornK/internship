@@ -38,6 +38,7 @@ const reviewProduct = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState(null); // ID of the comment being edited
   const [editText, setEditText] = useState("");
+  const [isLoadingEdit, setIsLoadingEdit] = useState(false);
   const openEditModal = (commentId, commentText) => {
     console.log("Setting selected comment for editing:", {
       commentId,
@@ -97,30 +98,38 @@ const reviewProduct = () => {
         },
         body: JSON.stringify({ id: id }),
       });
-
-      const data = await response.json();
-      if (response.ok) {
-        // Process comments data
-        const processedComments = data.imageData.map((comment) => {
-          if (comment.userImage && comment.userImage.data) {
-            const base64String = arrayBufferToBase64(comment.userImage.data);
-            return {
-              ...comment,
-              userImage: `data:image/png;base64,${base64String}`,
-            };
-          }
-          return comment;
-        });
-        setComments(processedComments); // Update state with processed comments
-        return data;
-      } else {
-        console.error("Fetch comments failed:", data.message);
+  
+      if (!response.ok) {
+        throw new Error(`Error fetching comments: ${response.statusText}`);
       }
+  
+      const data = await response.json();
+  
+      if (!Array.isArray(data.imageData)) {
+        throw new Error("Invalid data format: imageData is not an array");
+      }
+  
+      // Process comments data
+      const processedComments = data.imageData.map((comment) => {
+        if (comment.userImage && comment.userImage.data) {
+          const base64String = arrayBufferToBase64(comment.userImage.data);
+          return {
+            ...comment,
+            userImage: `data:image/png;base64,${base64String}`,
+          };
+        }
+        return comment;
+      });
+  
+      // Update state with processed comments
+      setComments(processedComments.length > 0 ? processedComments : []);
+      return data;
+  
     } catch (error) {
-      console.error("Error fetching comments:", error);
+      console.error("Error fetching comments:", error.message);
+      setComments([]); // Set comments to an empty array if there is an error
     }
   };
-
   const submitComment = async () => {
     if (!profile) {
       // If the user is not logged in, show an alert and return
@@ -183,14 +192,9 @@ const reviewProduct = () => {
       );
     }
   };
-
-  const handleEditClick = (commentId, currentText) => {
-    setEditingCommentId(commentId);
-    setEditText(currentText);
-  };
   const handleSaveEdit = async (commentId) => {
     console.log("Saving edit for:", commentId, editText);
-    
+  
     const previousComments = [...comments]; // สำรองข้อมูลเดิมไว้เผื่อ revert
     setComments((prevComments) =>
       prevComments.map((comment) =>
@@ -199,27 +203,27 @@ const reviewProduct = () => {
           : comment
       )
     );
-    
+  
     setEditingCommentId(null);
     setEditText("");
-    
+  
     try {
       const response = await fetch("http://localhost:8000/editComment", {
-        method: "PUT", 
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: commentId, comment_text: editText }),
       });
   
-      const data = await response.json();
-  
       if (!response.ok) {
-        console.error("Failed to update comment:", data.message);
+        const errorData = await response.json();
+        console.error("Failed to update comment:", errorData.message);
         setComments(previousComments); // Revert กลับถ้าอัปเดตไม่สำเร็จ
       } else {
-        console.log("Comment updated successfully:", data.message);
-        // ดึงข้อมูลคอมเมนต์ใหม่หลังอัปเดตสำเร็จ
+        console.log("Comment updated successfully");
+  
+        // ดึงข้อมูลคอมเมนต์ใหม่ทันทีหลังจากอัปเดตสำเร็จ
         await getComments(id);
       }
     } catch (error) {
@@ -228,8 +232,10 @@ const reviewProduct = () => {
     }
   };
   
-  
-
+  const handleEditClick = (commentId, currentText) => {
+    setEditingCommentId(commentId);
+    setEditText(currentText);
+  };
   const handleCancelEdit = () => {
     setEditingCommentId(null); // Cancel editing
     setEditText(""); // Clear edit input
