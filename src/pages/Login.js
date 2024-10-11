@@ -40,7 +40,9 @@ const Login = () => {
           setShowPopup(true); // แสดงป๊อปอัปสำเร็จ
           localStorage.setItem("loginSuccess", "true"); // เก็บสถานะใน localStorage
           setTimeout(() => {
-            router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
+            // router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
+            console.log("/");
+            router.replace("/");
             setLoading(false);
           }, 1000);
         } else {
@@ -54,7 +56,6 @@ const Login = () => {
       }
     }
   };
-  
 
   const VerifyUsers = async (email, password) => {
     try {
@@ -94,10 +95,10 @@ const Login = () => {
         };
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
         console.log("Login successful");
-        
+
         // เก็บสถานะการล็อกอินสำเร็จใน localStorage
         localStorage.setItem("loginSuccess", "true");
-        
+
         setShowPopup(true); // Show success popup
         setTimeout(() => {
           router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
@@ -108,7 +109,6 @@ const Login = () => {
         console.error(error);
       });
   };
-  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

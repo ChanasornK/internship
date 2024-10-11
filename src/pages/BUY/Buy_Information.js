@@ -10,7 +10,6 @@ import SuccessPopup from "../SuccessPopup";
 import { GrSend } from "react-icons/gr";
 import { IoCloseSharp } from "react-icons/io5";
 import FixInformation2 from "../component/FixInformation2";
-import { FaPencilAlt } from "react-icons/fa";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -123,6 +122,12 @@ const reviewProduct = () => {
   };
 
   const submitComment = async () => {
+    if (!profile) {
+      // If the user is not logged in, show an alert and return
+      setMessage("กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น");
+      return;
+    }
+
     if (!commentText) return;
 
     const newComment = {
@@ -134,6 +139,7 @@ const reviewProduct = () => {
     // Optimistic UI update: Add the new comment to the list immediately
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentText("");
+
     try {
       const response = await fetch("http://localhost:8000/comment", {
         method: "POST",
@@ -188,11 +194,11 @@ const reviewProduct = () => {
     try {
       // Make an API call to update the comment in the database
       const response = await fetch("http://localhost:8000/editComment", {
-        method: "POST",
+        method: "PUT", // Use PUT method for updating
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: commentId, comment_text: editText }),
+        body: JSON.stringify({ id: commentId, comment_text: editText }), // Send id and updated comment text
       });
 
       const data = await response.json();
