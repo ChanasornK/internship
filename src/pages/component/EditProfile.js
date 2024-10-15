@@ -6,7 +6,7 @@ const EditProfile = ({ openModal, setOpenModal }) => {
   const [file, setFile] = useState(null);
   const [profile, setProfile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [username, setUsername] = useState(""); // สร้าง state สำหรับ username
+  const [username, setUsername] = useState(""); // Add state for username
   const defaultPhotoURL =
     "https://tse3.mm.bing.net/th?id=OIP.t3ZYddn7rbYeCEhF5h0DiwHaHa&pid=Api&P=0&h=220";
 
@@ -17,44 +17,59 @@ const EditProfile = ({ openModal, setOpenModal }) => {
     setPreviewImage(fileURL);
   };
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleSubmit = async () => {
     try {
-      const formData = new FormData();
-      formData.append("email", profile?.email); // ใช้ email แทน id
-      formData.append("username", username);
+      let imageUrl = profile?.image || defaultPhotoURL; // Use existing image if no new file is uploaded
 
       if (file) {
-        formData.append("image", file); // อัปโหลดภาพใหม่ถ้ามีการเลือกไฟล์
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("id", profile?.id);
+
+        // Upload the new image if a file is selected
+        const uploadImageResponse = await axios.post(
+          "http://localhost:8000/uploadImageEditProfile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        // Convert the new image to base64
+        imageUrl = await convertToBase64(file);
       }
 
-      // อัพเดทภาพและชื่อผู้ใช้
-      const response = await axios.post(
-        "http://localhost:8000/updateProfile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      const updatedProfile = { ...profile, username };
-      if (file) {
-        updatedProfile.image = URL.createObjectURL(file);
-      }
+      const updatedProfile = { ...profile, image: imageUrl };
       setProfile(updatedProfile);
 
-      // อัพเดท localStorage ด้วยข้อมูลใหม่
+      // Update username after the image upload
+      const updateUsernameResponse = await axios.put(
+        "http://localhost:8000/updateUsername",
+        { id: profile?.id, username }
+      );
+
+      // Update localStorage with the new image and username
       localStorage.setItem(
         "profile",
         JSON.stringify({
-          userData: updatedProfile,
+          userData: { ...updatedProfile, username },
         })
       );
 
-      window.location.reload(); // รีโหลดหน้าเว็บหลังจากอัพเดท
+      window.location.reload(); // Reload the page after update
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการอัพเดทโปรไฟล์:", error);
+      console.error("Error updating profile or username:", error);
     }
   };
 
@@ -64,14 +79,14 @@ const EditProfile = ({ openModal, setOpenModal }) => {
       const profile = JSON.parse(storedData);
       setProfile(profile?.userData);
       setPreviewImage(profile?.userData?.image);
-      setUsername(profile?.userData?.username || ""); // เซ็ต username ที่มีอยู่
+      setUsername(profile?.userData?.username || ""); // Set the current username
     }
   }, []);
 
   useEffect(() => {
     if (openModal) {
       setFile(null);
-      setPreviewImage(profile?.image || null); // รีเซ็ตภาพเมื่อ modal เปิด
+      setPreviewImage(profile?.image || null); // Reset to the current profile image when the modal opens
     }
   }, [openModal, profile]);
 
@@ -121,7 +136,7 @@ const EditProfile = ({ openModal, setOpenModal }) => {
                               d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                             />
                           </svg>
-                          เลือกรูปโปรไฟล์ (ขนาดสูงสุด 500 KB)
+                          Choose Photo Profile (MAX.500 KB)
                         </span>
                       </p>
                     </>
@@ -138,9 +153,9 @@ const EditProfile = ({ openModal, setOpenModal }) => {
 
             <input
               type="text"
-              placeholder="ชื่อผู้ใช้"
+              placeholder="Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)} // เปลี่ยนค่า username
+              onChange={(e) => setUsername(e.target.value)} // Bind input to username state
               className="bg-gray-100 flex justify-center w-[90%] mx-auto border-1 rounded-lg mt-4  focus:ring-purple-600 focus:border-purple-600 hover:border-purple-600 dark:focus:ring-purple-600 dark:focus:border-purple-600"
             />
 
@@ -149,13 +164,13 @@ const EditProfile = ({ openModal, setOpenModal }) => {
                 className="w-32 bg-green-400 text-white hover hover:bg-green-500"
                 onClick={handleSubmit}
               >
-                บันทึก
+                Save
               </Button>
               <Button
                 className="w-32 bg-red-500 text-white hover hover:bg-red-700"
                 onClick={() => setOpenModal(false)}
               >
-                ยกเลิก
+                Cancel
               </Button>
             </div>
           </Modal>
