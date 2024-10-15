@@ -225,26 +225,19 @@ const reviewProduct = () => {
       });
   
       const data = await response.json();
-      console.log("Response data:", data); // ตรวจสอบข้อมูลที่ได้จากเซิร์ฟเวอร์
+      console.log("Response data:", data);
   
       if (!response.ok) {
-        console.error("Failed to update comment:", data.message); // ดู error message จากเซิร์ฟเวอร์
+        console.error("Failed to update comment:", data.message);
         setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
       } else {
         console.log("Comment updated successfully");
   
-        // อัปเดตคอมเมนต์ที่ถูกแก้ไขใหม่จากเซิร์ฟเวอร์
-        const updatedComment = data.updatedComment;
-        setComments((prevComments) =>
-          prevComments.map((comment) =>
-            comment.id === updatedComment.id
-              ? { ...comment, comment_text: updatedComment.comment_text }
-              : comment
-          )
-        );
+        // หลังจากอัปเดตสำเร็จ ดึงคอมเมนต์ที่ถูกอัปเดตใหม่จากฐานข้อมูล
+        await getComments(id); // ดึงคอมเมนต์ทั้งหมดใหม่จากฐานข้อมูล
       }
     } catch (error) {
-      console.error("Error updating comment:", error.message); // ตรวจสอบข้อผิดพลาดที่เกิดขึ้น
+      console.error("Error updating comment:", error.message);
       setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
     }
   };

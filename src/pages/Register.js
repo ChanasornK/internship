@@ -19,6 +19,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [slideIn, setSlideIn] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -33,45 +34,32 @@ const Register = () => {
     await signInWithPopup(auth, googleProvider)
       .then(async function (result) {
         if (!result) return;
-
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
         const user = {
-          role: "user", // ตั้งบทบาทเป็น "user"
+          role: "user",
           email: result.user.email,
           displayName: result.user.displayName,
-          photoURL: result.user.photoURL || "",
+          photoURL: result.user.photoURL,
         };
-
-        console.log("Google login result user:", user); // ตรวจสอบข้อมูล
-
-        // บันทึกข้อมูลผู้ใช้ลงในฐานข้อมูลโดยใช้เส้นทาง register
-        await registerUser(user);
-
+  
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
-        console
-          .log
-          // "Saved auth to localStorage:",
-          // JSON.parse(localStorage.getItem("profile"))
-          ();
-
-        router.push("./");
+        console.log("Login successful");
+  
+        // เก็บสถานะการล็อกอินสำเร็จใน localStorage
+        localStorage.setItem("loginSuccess", "true");
+  
+        // บันทึกข้อมูลผู้ใช้ลงฐานข้อมูล
+        await registerUser(user);
+  
+        setShowPopup(true); // Show success popup
+        setTimeout(() => {
+          router.push("./"); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
+          setLoading(false);
+        }, 1000);
       })
       .catch(function (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = error.credential;
-        if (errorCode === "auth/account-exists-with-different-credential") {
-          alert(
-            "You have already signed up with a different auth provider for that email."
-          );
-        } else {
-          console.log(error);
-        }
+        console.error(error);
       });
   };
-
   const registerUser = async (user) => {
     try {
       console.log("Sending user data to register API:", user); // ตรวจสอบข้อมูลที่จะส่งไปยัง API
@@ -134,7 +122,9 @@ const Register = () => {
       setLoading(false); // Set loading state back to false
     }
   };
-
+  const shouldShowPopup = () => {
+    return router.pathname === "/";
+  };
   const register = async (email, password) => {
     try {
       const response = await fetch("http://localhost:8000/register", {
@@ -321,6 +311,13 @@ const Register = () => {
                 {loading ? "Signing up..." : "Sign up"}
                 <RiGhostFill className="ml-2" />
               </button>
+              {showPopup && shouldShowPopup() && (
+                <SuccessPopup
+                  message="Login Successful!"
+                  showPopup={showPopup}
+                  onClose={() => setShowPopup(false)}
+                />
+              )}
             </form>
           </div>
         </div>
