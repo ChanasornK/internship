@@ -196,6 +196,7 @@ const reviewProduct = () => {
     console.log("Saving edit for:", commentId, editText);
   
     const previousComments = [...comments]; // สำรองข้อมูลเดิมเผื่อ revert กลับ
+  
     // อัปเดต UI ทันที (Optimistic Update)
     setComments((prevComments) =>
       prevComments.map((comment) =>
@@ -223,13 +224,14 @@ const reviewProduct = () => {
         }),
       });
   
+      const data = await response.json();
+      console.log("Response data:", data); // ตรวจสอบข้อมูลที่ได้จากเซิร์ฟเวอร์
+  
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Failed to update comment:", errorData.message);
+        console.error("Failed to update comment:", data.message); // ดู error message จากเซิร์ฟเวอร์
         setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
       } else {
-        const data = await response.json();
-        console.log("Comment updated successfully", data);
+        console.log("Comment updated successfully");
   
         // อัปเดตคอมเมนต์ที่ถูกแก้ไขใหม่จากเซิร์ฟเวอร์
         const updatedComment = data.updatedComment;
@@ -242,7 +244,7 @@ const reviewProduct = () => {
         );
       }
     } catch (error) {
-      console.error("Error updating comment:", error);
+      console.error("Error updating comment:", error.message); // ตรวจสอบข้อผิดพลาดที่เกิดขึ้น
       setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
     }
   };
