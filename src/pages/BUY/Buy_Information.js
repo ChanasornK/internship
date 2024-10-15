@@ -195,7 +195,8 @@ const reviewProduct = () => {
   const handleSaveEdit = async (commentId) => {
     console.log("Saving edit for:", commentId, editText);
   
-    const previousComments = [...comments]; // สำรองข้อมูลเดิมไว้เผื่อ revert
+    const previousComments = [...comments]; // สำรองข้อมูลเดิมเผื่อ revert กลับ
+    // อัปเดต UI ทันที (Optimistic Update)
     setComments((prevComments) =>
       prevComments.map((comment) =>
         comment.id === commentId
@@ -204,31 +205,45 @@ const reviewProduct = () => {
       )
     );
   
-    setEditingCommentId(null);
-    setEditText("");
+    setEditingCommentId(null); // ปิดโหมดแก้ไข
+    setEditText(""); // ล้างข้อความแก้ไข
   
     try {
+      // ส่งข้อมูลไปยังเซิร์ฟเวอร์เพื่ออัปเดตคอมเมนต์
       const response = await fetch("http://localhost:8000/editComment", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: commentId, comment_text: editText }),
+        body: JSON.stringify({
+          comment_id: commentId, // ส่ง comment_id
+          product_id: id, // ID ของสินค้า
+          comment_text: editText, // ข้อความคอมเมนต์ที่แก้ไข
+          user_name: profile?.username || profile?.displayName, // ชื่อผู้ใช้
+        }),
       });
   
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Failed to update comment:", errorData.message);
-        setComments(previousComments); // Revert กลับถ้าอัปเดตไม่สำเร็จ
+        setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
       } else {
-        console.log("Comment updated successfully");
+        const data = await response.json();
+        console.log("Comment updated successfully", data);
   
-        // ดึงข้อมูลคอมเมนต์ใหม่ทันทีหลังจากอัปเดตสำเร็จ
-        await getComments(id);
+        // อัปเดตคอมเมนต์ที่ถูกแก้ไขใหม่จากเซิร์ฟเวอร์
+        const updatedComment = data.updatedComment;
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.id === updatedComment.id
+              ? { ...comment, comment_text: updatedComment.comment_text }
+              : comment
+          )
+        );
       }
     } catch (error) {
       console.error("Error updating comment:", error);
-      setComments(previousComments); // Revert ถ้าเกิดข้อผิดพลาด
+      setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
     }
   };
   
