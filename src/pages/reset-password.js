@@ -7,7 +7,7 @@ import Head from "next/head";
 
 export default function ResetPassword() {
   const router = useRouter();
-  const [token, setToken] = useState("");
+  const [email, setEmail] = useState(""); 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,14 +16,21 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (router.isReady) {
-      setToken(router.query.token);
+      const { email } = router.query;
+      if (email) {
+        setEmail(email);
+      }
     }
-  }, [router.isReady, router.query.token]);
+  }, [router.isReady, router.query]);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
-    // ตรวจสอบการยืนยันรหัสผ่านที่นี่ก่อนส่งคำขอ
+    if (!email || !newPassword) {
+      setMessage("Email and new password are required");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       setMessage("Passwords do not match");
       return;
@@ -35,7 +42,7 @@ export default function ResetPassword() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token, newPassword }),
+        body: JSON.stringify({ email, newPassword }),
       });
 
       const data = await res.json();
@@ -43,7 +50,7 @@ export default function ResetPassword() {
       if (res.ok) {
         alert("Password has been reset successfully");
         setTimeout(() => {
-          router.push("/login");
+          router.push("./Login"); // เปลี่ยนไปยังหน้า login
         }, 100); // หน่วงเวลา 100 มิลลิวินาที ก่อนเปลี่ยนหน้า
       } else {
         setMessage(data.message);
@@ -65,11 +72,11 @@ export default function ResetPassword() {
   return (
     <>
       <Head>
-        <title>Forget_Password</title>
+        <title>Reset Password</title>
         <link
           rel="icon"
-          href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHGsvhUqiFI2qfwLotyWmZhEHd1t-B62SgQd3W34HrZKE4xCsI1KQ3Ujgl8xM6tYkfrHIPiZqWI6QkxmepUb6zn&_nc_ohc=QOH9wPGvvU0Q7kNvgG3q1YJ&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=AIjsg8BkR9RPCPVN4o52Vzj&oh=03_Q7cD1QHZnrRI-bLWf-7dxyKZ1kf1jHuINieX_YjZdvCUTAXf3Q&oe=6710882F"
-          className="Kuromi "
+          href="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458802193_443422025395135_5023098190288504627_n.png"
+          className="Kuromi"
         />
       </Head>
       <div className="w-full h-screen bg-gradient-to-t from-blue-200 to-pink-200">
@@ -133,7 +140,7 @@ export default function ResetPassword() {
             </Button>
 
             {message && (
-              <p className="mt-4 text-green-500 font-medium">{message}</p>
+              <p className="mt-4 text-red-500 font-medium">{message}</p>
             )}
           </form>
         </main>
