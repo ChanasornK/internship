@@ -53,7 +53,16 @@ const Index = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("./Login");
   };
-  const imageUrl = { MonitorUrl: "/Item/Monitor.png",NotebookUrl:"/Item/Notebook.png" };
+  const imageUrl = {
+    MonitorUrl: "/Item/Monitor.png",
+    NotebookUrl: "/Item/Notebook.png",
+    Ram: "/Item/Ram1.png",
+    Cpu: "/Item/CPU.png",
+    Gpu: "/Item/GPU.png",
+    Mouse: "/Item/Mouse.png",
+    Keyboard: "/Item/Keyboard.png",
+    Mainboard: "/Item/Mainboard.png",
+  };
 
   return (
     <>
@@ -164,7 +173,10 @@ const Index = () => {
                 onClick={() => handleNavigation("./IT/Ram")}
               >
                 <div className="h-40 w-56">
-                  {/* <img src={} className="w-full h-full object-cover" /> */}
+                  <img
+                    src={imageUrl.Ram}
+                    className="w-full h-full object-cover"
+                  />
                   <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
                     Ram
                   </h1>
@@ -177,7 +189,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t1.15752-9/454013932_8045529075567082_7996735512788385954_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHf-NhX6KAjpZmMhCPame2giOb1XGAXTxmI5vVcYBdPGVOj4A-BqkHMJvQ9kQALhbl6yIQGSe1S93UwAMMJPwkZ&_nc_ohc=QI-49zffPgYQ7kNvgEF_jhZ&_nc_zt=23&_nc_ht=scontent.fbkk14-1.fna&_nc_gid=AEzEhxxj7u5t1o6xmGA8pXw&oh=03_Q7cD1QF-w0phRkgx_OVL55XdsPKbeaNnJJuQEwd_4RnLJsWa1g&oe=672F9D1F"
+                    src={imageUrl.Cpu}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
@@ -196,7 +208,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t1.15752-9/462547265_1781284842410146_4693525298706486066_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEfkMfAtuIcwZrEMN3FSuducFlwXfOrOSdwWXBd86s5J25a5Zq_-p7sIi-B3fr9aPldqzTyBXx2iBb65iuY9rwF&_nc_ohc=vE8k_13AEU8Q7kNvgFeMzbB&_nc_zt=23&_nc_ht=scontent.fbkk14-1.fna&_nc_gid=AEzEhxxj7u5t1o6xmGA8pXw&oh=03_Q7cD1QEehYJzMS-gsfXbvmFj2pysPBwkNKW7SPF-RT8gJGhbPw&oe=672F979F"
+                    src={imageUrl.Gpu}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold  text-lg font-sans text-center text-blue-600">
@@ -211,7 +223,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://resource.logitechg.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/gaming/en/products/pro-x-superlight-2/gallery-1-pro-x-superlight-2-gaming-mouse-black.png?v=1"
+                    src={imageUrl.Mouse}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold  text-lg font-sans text-center text-blue-600">
@@ -226,7 +238,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://resource.logitech.com/content/dam/gaming/en/products/pro-x-keyboard/pro-x-keyboard-gallery-1.png"
+                    src={imageUrl.Keyboard}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold  text-lg font-sans text-center text-blue-600">
@@ -241,7 +253,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.15752-9/456104035_483817987744850_1471080268211175341_n.png?_nc_cat=105&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeE4zUiQpfzQcb91TCa9m-B-eztp9zvv2p97O2n3O-_an9KUE6SHvOe-HovDmzLcJdVUUy_yVpEAYGdAWH_SAZuJ&_nc_ohc=JIYhz8f8VE4Q7kNvgEEY41u&_nc_zt=23&_nc_ht=scontent.fbkk10-1.fna&_nc_gid=AEzEhxxj7u5t1o6xmGA8pXw&oh=03_Q7cD1QHF1PUklPj7H4DNIKG3DuHe7t4sXesUR2JCxu6eMphiXQ&oe=672F9197"
+                    src={imageUrl.Mainboard}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold text-lg font-sans text-center text-blue-600">
