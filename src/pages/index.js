@@ -24,8 +24,6 @@ const Index = () => {
     setTimeout(() => {
       setLoading(false); // ปิด loading เมื่อโหลดข้อมูลเสร็จ
     }, 500);
-
-    // Check if the login was successful by looking at the query parameters
   }, [router.query]);
   useEffect(() => {
     // ตรวจสอบว่า login สำเร็จจาก localStorage หรือไม่
@@ -36,7 +34,6 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    // Check profile.role from localStorage
     const storedData = localStorage.getItem("profile");
     if (storedData) {
       const parsedData = JSON.parse(storedData);
@@ -56,6 +53,8 @@ const Index = () => {
     localStorage.setItem("profile", JSON.stringify(null));
     router.push("./Login");
   };
+  const imageUrl = { MonitorUrl: "/Item/Monitor.png",NotebookUrl:"/Item/Notebook.png" };
+
   return (
     <>
       <Head>
@@ -136,7 +135,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://www.autonetpc.com/wp-content/uploads/2023/07/imageedit_1_9528890449.png"
+                    src={imageUrl.MonitorUrl}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
@@ -151,7 +150,7 @@ const Index = () => {
               >
                 <div className="h-40 w-56">
                   <img
-                    src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.15752-9/461312877_894176302656558_4210724968122023625_n.png?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFbVOOQamWfRXIONeYM8Apv_x5Ph-qFoTr_Hk-H6oWhOp7rQjKUGDtW492FvYwfiCG87bnM6YzZmk52d50BigT1&_nc_ohc=nx9urgiV7nAQ7kNvgEN3Coz&_nc_zt=23&_nc_ht=scontent.fbkk10-1.fna&_nc_gid=AfXS9fV_kx4sE-81AwUcL8W&oh=03_Q7cD1QGF0uh8lIUOMldSmjYPpAnog8-w-08HtP12stqxximGdQ&oe=672FAC27"
+                    src={imageUrl.NotebookUrl}
                     className="w-full h-full object-cover"
                   />
                   <h1 className="font-semibold  text-lg font-sans text-pink-500 text-center ">
@@ -165,10 +164,7 @@ const Index = () => {
                 onClick={() => handleNavigation("./IT/Ram")}
               >
                 <div className="h-40 w-56">
-                  <img
-                    src="https://scontent.fbkk29-6.fna.fbcdn.net/v/t1.15752-9/458775275_1853795235148550_8265704230189766468_n.png?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEIATptC4-2qRbykpzeRO425ozDkelu_MvmjMOR6W78y78SZ9pCnqFOJamgbITGez6tm5Rx7BpRbzYztoK5YnM1&_nc_ohc=oDS7IbsZJ0MQ7kNvgEwDAR5&_nc_ht=scontent.fbkk29-6.fna&_nc_gid=Al5B7BANIrw7moorXV_ETBT&oh=03_Q7cD1QFemRLB21U_AGK5W-ve5WOfSKRJXBuNVwvXBbHVYl6yqA&oe=670A1C5F"
-                    className="w-full h-full object-cover"
-                  />
+                  {/* <img src={} className="w-full h-full object-cover" /> */}
                   <h1 className="font-semibold  text-lg font-sans text-center text-pink-500">
                     Ram
                   </h1>
