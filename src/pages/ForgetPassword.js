@@ -12,6 +12,7 @@ export default function Home() {
   const [otp, setOtp] = useState(new Array(6).fill("")); // เก็บค่า OTP เป็น array
   const [timeRemaining, setTimeRemaining] = useState(0); // สถานะเก็บเวลาที่เหลือ
   const [canResend, setCanResend] = useState(false); // สถานะการส่ง OTP อีกครั้ง
+  const [otpError, setOtpError] = useState(""); // เพิ่ม state สำหรับแจ้งเตือน OTP ผิด
   const inputRefs = useRef([]);
 
   const goLogin = () => {
@@ -85,6 +86,7 @@ export default function Home() {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
+      setOtpError(""); // ล้างข้อความแจ้งเตือนเมื่อมีการเปลี่ยนค่า OTP
 
       // ถ้ามีการกรอก OTP ในช่องนี้ ให้ไปที่ช่องถัดไป
       if (index < 5 && value) {
@@ -109,8 +111,6 @@ export default function Home() {
 
     // เรียกใช้ฟังก์ชันการตรวจสอบ OTP
     await handleOtpVerification(otpString);
-
-    setShowModal(false); // ปิด Modal หลังจากส่ง OTP
   };
 
   const handleOtpVerification = async (otp) => {
@@ -131,12 +131,13 @@ export default function Home() {
           pathname: "./reset-password",
           query: { email }, // ส่ง email ไปยังหน้า reset-password
         });
+        setShowModal(false); // ปิด Modal เมื่อ OTP ถูกต้อง
       } else {
-        setMessage("Invalid OTP, please try again."); // แสดงข้อความถ้า OTP ไม่ถูกต้อง
+        setOtpError("กรุณากรอก OTP ให้ถูกต้อง."); // แสดงข้อความถ้า OTP ไม่ถูกต้อง
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
-      setMessage("An error occurred during OTP verification."); // แสดงข้อความถ้ามีข้อผิดพลาด
+      setOtpError("เกิดข้อผิดพลาดระหว่างการตรวจสอบ OTP."); // แสดงข้อความถ้ามีข้อผิดพลาด
     }
   };
 
@@ -202,11 +203,11 @@ export default function Home() {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => setShowModal(false)} // ปิด Modal เมื่อกดปุ่มนี้
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl"
                 aria-label="Close modal"
               >
-                &times; {/* หรือใช้ไอคอนที่คุณต้องการ */}
+                &times; {/* หรือไอคอนที่คุณต้องการ */}
               </button>
               <h2 className="text-xl font-semibold mb-4">Enter OTP</h2>
               <div className="flex justify-between mb-4">
@@ -223,10 +224,11 @@ export default function Home() {
                   </button>
                 )}
               </div>
-              <form
-                onSubmit={handleOtpSubmit}
-                className="flex flex-col items-center"
-              >
+
+              {/* แสดงข้อความแจ้งเตือน OTP ผิด */}
+              {otpError && <p className="text-red-500 mb-4">{otpError}</p>}
+
+              <form onSubmit={handleOtpSubmit} className="flex flex-col items-center">
                 <div className="flex space-x-2 mb-4">
                   {otp.map((_, index) => (
                     <input
