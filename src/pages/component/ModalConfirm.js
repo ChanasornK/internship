@@ -47,39 +47,37 @@ const ModalConfirm = ({ isOpen, onClose, imageId, dataSource }) => {
       onClose={onClose}
       popup
       backdrop
-      className="relative z-50 w-auto max-w-md mx-auto mt-56 p-auto rounded-md " // เพิ่ม rounded-md ตรงนี้
+      className="relative z-50 w-auto max-w-md mx-auto mt-56 p-auto rounded-md "
     >
-      <Modal.Body className="w-auto rounded-md border-2 border-purple-500  ">
-        <Modal.Header className="bg-pink w-auto rounded-md   bg-gradient-to-t from-pink-200 to-pink-200  " />
-        <div className="text-center rounded-md  bg-gradient-to-t from-blue-200 to-pink-200 ">
-          <TbAlertCircleFilled className="mx-auto mb-4 h-14 w-14  dark:text-gray-200" />
-          <h3 className="mb-5 text-lg font-normal text-black dark:text-gray-400">
-            คุณต้องการที่จะลบข้อมูลนี้
-          </h3>
-          <div className="flex justify-center gap-4 py-5">
-            <Button
-              color=""
-              onClick={deleteImage}
-              className="flex items-center rounded-md bg-green-400"
-            >
-              <div className="flex items-center">
-                <FaCheck className="mr-2 text-sm " />
-                <span className="text-sm">ยืนยัน</span>
-              </div>
-            </Button>
-            <Button
-              color=""
-              onClick={onClose}
-              className="flex items-center rounded-md bg-red-600"
-            >
-              <div className="flex items-center">
-                <ImCross className="mr-2 text-sm " />
-                <span className="text-sm">ยกเลิก</span>
-              </div>
-            </Button>
-          </div>
+      <Modal.Header className="bg-pink w-full rounded-md  bg-gradient-to-t from-pink-200 to-pink-200  " />
+      <div className="text-center rounded-md  bg-gradient-to-t from-blue-200 to-pink-200 ">
+        <TbAlertCircleFilled className="mx-auto mb-4 h-14 w-14  dark:text-gray-200" />
+        <h3 className="mb-5 text-lg font-normal text-black dark:text-gray-400">
+          คุณต้องการที่จะลบข้อมูลนี้
+        </h3>
+        <div className="flex justify-center gap-4 py-5">
+          <Button
+            color=""
+            onClick={deleteImage}
+            className="w-32 bg-green-400 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-green-500 active:bg-green-600 transition-colors duration-200"
+          >
+            <div className="flex items-center">
+              <FaCheck className="mr-2 text-sm " />
+              <span className="text-sm">ยืนยัน</span>
+            </div>
+          </Button>
+          <Button
+            color=""
+            onClick={onClose}
+            className="w-32 bg-red-600 text-white font-medium py-1 text-sm rounded-lg shadow-md hover:bg-red-700 active:bg-red-800 transition-colors duration-200"
+          >
+            <div className="flex items-center">
+              <ImCross className="mr-2 text-sm " />
+              <span className="text-sm">ยกเลิก</span>
+            </div>
+          </Button>
         </div>
-      </Modal.Body>
+      </div>
     </Modal>
   );
 };

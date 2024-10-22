@@ -40,19 +40,18 @@ const Register = () => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
         };
-  
+
         localStorage.setItem("profile", JSON.stringify({ userData: user }));
         console.log("Login successful");
-  
+
         // เก็บสถานะการล็อกอินสำเร็จใน localStorage
         localStorage.setItem("loginSuccess", "true");
-  
         // บันทึกข้อมูลผู้ใช้ลงฐานข้อมูล
         await registerUser(user);
-  
-        setShowPopup(true); // Show success popup
+
+        setShowPopup(true);
         setTimeout(() => {
-          router.push("./"); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
+          router.push("./");
           setLoading(false);
         }, 1000);
       })
@@ -62,9 +61,9 @@ const Register = () => {
   };
   const registerUser = async (user) => {
     try {
-      console.log("Sending user data to register API:", user); // ตรวจสอบข้อมูลที่จะส่งไปยัง API
+      console.log("Sending user data to register API:", user);
 
-      const response = await fetch("http://localhost:8000/register", {
+      const response = await fetch("http://localhost:8000/registerGoogle", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +71,7 @@ const Register = () => {
         body: JSON.stringify({
           email: user.email,
           password: "google-oauth", // ใช้ค่าเริ่มต้นสำหรับ Google OAuth
-          username: '',
+          username: "",
           image: user.photoURL, // ส่ง photoURL ไปด้วย
         }),
       });

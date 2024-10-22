@@ -40,7 +40,6 @@ const Login = () => {
           setShowPopup(true); // แสดงป๊อปอัปสำเร็จ
           localStorage.setItem("loginSuccess", "true"); // เก็บสถานะใน localStorage
           setTimeout(() => {
-            // router.back(); // ใช้ router.back() เพื่อกลับไปหน้าก่อนหน้า
             console.log("/");
             router.replace("/");
             setLoading(false);
@@ -117,7 +116,7 @@ const Login = () => {
     try {
       console.log("Sending user data to register API:", user); // ตรวจสอบข้อมูลที่จะส่งไปยัง API
 
-      const response = await fetch("http://localhost:8000/register", {
+      const response = await fetch("http://localhost:8000/registerGoogle", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
