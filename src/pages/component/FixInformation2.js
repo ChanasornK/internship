@@ -7,10 +7,9 @@ import Upload2 from "./upload2";
 import { IoTrashBin } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
-import ModalConfirm from "./ModalConfirm";
-import { MdOutlineAutoFixHigh } from "react-icons/md";
-
-const FixInformation = ({ dataSource }) => {
+import ModalConfirm from "./ModalConfirm";;
+import { MdAutoFixHigh } from "react-icons/md";
+const FixInformation2 = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState("");
@@ -24,8 +23,6 @@ const FixInformation = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [review, setReview] = useState("");
-  const [loading, setLoading] = useState(false); // สถานะการโหลด
-
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -34,7 +31,7 @@ const FixInformation = ({ dataSource }) => {
       setRole(profile?.userData?.role || "user");
     }
   }, []);
-
+  console.log(email);
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -43,8 +40,9 @@ const FixInformation = ({ dataSource }) => {
       setType(dataSource.type || "");
       setRating(dataSource.rating || 0);
       setImage(dataSource?.src || null);
+      setImage(dataSource?.src || null);
       setImageId(dataSource?.id || null); // Set imageId from dataSource
-      setReview(dataSource?.review || "");
+      setReview(dataSource?.review || '');
     }
   }, [dataSource]);
 
@@ -56,53 +54,20 @@ const FixInformation = ({ dataSource }) => {
     setType(selectedItem);
   };
 
-  const handleRemoveBackground = async (imageFile) => {
-    const formData = new FormData();
-    formData.append("image_file", imageFile);
-    formData.append("size", "auto");
-
-    try {
-      const response = await axios.post(
-        "https://api.remove.bg/v1.0/removebg",
-        formData,
-        {
-          headers: {
-            "X-Api-Key": "75Ps8tChpFRGaKweqexWWDGd",
-            "Content-Type": "multipart/form-data",
-          },
-          responseType: "blob",
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error removing background:", error);
-      return null;
-    }
-  };
-
   const handleConfirm = async () => {
-    setLoading(true); // เริ่มการโหลด
     const formData = new FormData();
-    const removedBgImage = await handleRemoveBackground(image);
-  
-    if (!removedBgImage) {
-      setUploadStatus("Error removing background");
-      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
-      return;
-    }
-  
-    formData.append("image", removedBgImage);
+    console.log("form", formData);
+    if (image) formData.append("image", image);
     formData.append("price", price);
     formData.append("detail", detail);
-    formData.append("type", type);
+    if (type) formData.append("type", type);
     formData.append("rating", rating);
     formData.append("link", link);
+    formData.append("id", dataSource?.id);
     formData.append("email", email);
     formData.append("review", review);
-    formData.append("id", imageId); // ส่ง imageId ไปด้วย
-  
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         "http://localhost:8000/update",
         formData,
         {
@@ -113,15 +78,12 @@ const FixInformation = ({ dataSource }) => {
       );
       setUploadStatus("");
       console.log(response.data);
-      setLoading(false); // หยุดการโหลดหลังการอัปโหลดเสร็จสิ้น
       window.location.reload();
     } catch (error) {
-      setUploadStatus(`Upload failed: ${error.message}`);
+      setUploadStatus(`Upload Failed: ${error.message}`);
       console.error("Error uploading file:", error);
-      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
     }
   };
-  
 
   const handleDeleteClick = () => {
     setIsModalOpen(true);
@@ -156,10 +118,9 @@ const FixInformation = ({ dataSource }) => {
     <>
       <button
         onClick={() => setFixModal(true)}
-        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400 px-2 rounded-lg flex items-center"
-      >
-        <MdOutlineAutoFixHigh className="mr-1" />
-        แก้ไข
+        className="fixed bottom-28 right-5 w-12 h-12 bg-pink-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
+        >
+          <MdAutoFixHigh className="w-6 h-6" />
       </button>
 
       {fixModal && (
@@ -193,7 +154,7 @@ const FixInformation = ({ dataSource }) => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            <input
+             <input
               id="review-input"
               placeholder="รีวิว"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
@@ -254,24 +215,12 @@ const FixInformation = ({ dataSource }) => {
                 />
               </div>
             </div>
-
-            {loading && ( // Spinner จะแสดงเมื่อกำลังโหลด
-              <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
-                <div className="relative">
-                  {/* วงแหวนสีขาว */}
-                  <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
-                  {/* Spinner สีชมพู */}
-                  <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-                </div>
-              </div>
-            )}
-
-            {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
           </Modal>
+          {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
         </>
       )}
     </>
   );
 };
 
-export default FixInformation;
+export default FixInformation2;

@@ -98,17 +98,17 @@ const reviewProduct = () => {
         },
         body: JSON.stringify({ id: id }),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Error fetching comments: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
-  
+
       if (!Array.isArray(data.imageData)) {
         throw new Error("Invalid data format: imageData is not an array");
       }
-  
+
       // Process comments data
       const processedComments = data.imageData.map((comment) => {
         if (comment.userImage && comment.userImage.data) {
@@ -120,11 +120,10 @@ const reviewProduct = () => {
         }
         return comment;
       });
-  
+
       // Update state with processed comments
       setComments(processedComments.length > 0 ? processedComments : []);
       return data;
-  
     } catch (error) {
       console.error("Error fetching comments:", error.message);
       setComments([]); // Set comments to an empty array if there is an error
@@ -194,9 +193,9 @@ const reviewProduct = () => {
   };
   const handleSaveEdit = async (commentId) => {
     console.log("Saving edit for:", commentId, editText);
-  
+
     const previousComments = [...comments]; // สำรองข้อมูลเดิมเผื่อ revert กลับ
-  
+
     // อัปเดต UI ทันที (Optimistic Update)
     setComments((prevComments) =>
       prevComments.map((comment) =>
@@ -205,10 +204,10 @@ const reviewProduct = () => {
           : comment
       )
     );
-  
+
     setEditingCommentId(null); // ปิดโหมดแก้ไข
     setEditText(""); // ล้างข้อความแก้ไข
-  
+
     try {
       // ส่งข้อมูลไปยังเซิร์ฟเวอร์เพื่ออัปเดตคอมเมนต์
       const response = await fetch("http://localhost:8000/editComment", {
@@ -223,16 +222,16 @@ const reviewProduct = () => {
           user_name: profile?.username || profile?.displayName, // ชื่อผู้ใช้
         }),
       });
-  
+
       const data = await response.json();
       console.log("Response data:", data);
-  
+
       if (!response.ok) {
         console.error("Failed to update comment:", data.message);
         setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
       } else {
         console.log("Comment updated successfully");
-  
+
         // หลังจากอัปเดตสำเร็จ ดึงคอมเมนต์ที่ถูกอัปเดตใหม่จากฐานข้อมูล
         await getComments(id); // ดึงคอมเมนต์ทั้งหมดใหม่จากฐานข้อมูล
       }
@@ -241,7 +240,7 @@ const reviewProduct = () => {
       setComments(previousComments); // ถ้าเกิดข้อผิดพลาด จะ revert ข้อมูลกลับ
     }
   };
-  
+
   const handleEditClick = (commentId, currentText) => {
     setEditingCommentId(commentId);
     setEditText(currentText);
@@ -437,7 +436,8 @@ const reviewProduct = () => {
             </div>
 
             <div>
-            {profile?.role !== "user" && !isChatVisible && <FixInformation2 dataSource={imageData} />}
+              {(profile?.role === "admin" ||
+                profile?.email === imageData?.email) && <FixInformation2 />}
 
               {!isChatVisible && (
                 <button
