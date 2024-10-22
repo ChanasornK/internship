@@ -9,6 +9,7 @@ import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
 import ModalConfirm from "./ModalConfirm";
 import { MdOutlineAutoFixHigh } from "react-icons/md";
+
 const FixInformation = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -24,6 +25,7 @@ const FixInformation = ({ dataSource }) => {
   const [email, setEmail] = useState("");
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false); // สถานะการโหลด
+
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -32,7 +34,7 @@ const FixInformation = ({ dataSource }) => {
       setRole(profile?.userData?.role || "user");
     }
   }, []);
-  console.log(email);
+
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -41,9 +43,8 @@ const FixInformation = ({ dataSource }) => {
       setType(dataSource.type || "");
       setRating(dataSource.rating || 0);
       setImage(dataSource?.src || null);
-      setImage(dataSource?.src || null);
       setImageId(dataSource?.id || null); // Set imageId from dataSource
-      setReview(dataSource?.review || '');
+      setReview(dataSource?.review || "");
     }
   }, [dataSource]);
 
@@ -78,17 +79,18 @@ const FixInformation = ({ dataSource }) => {
       return null;
     }
   };
+
   const handleConfirm = async () => {
     setLoading(true); // เริ่มการโหลด
     const formData = new FormData();
     const removedBgImage = await handleRemoveBackground(image);
-
+  
     if (!removedBgImage) {
       setUploadStatus("Error removing background");
       setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
       return;
     }
-
+  
     formData.append("image", removedBgImage);
     formData.append("price", price);
     formData.append("detail", detail);
@@ -97,7 +99,8 @@ const FixInformation = ({ dataSource }) => {
     formData.append("link", link);
     formData.append("email", email);
     formData.append("review", review);
-
+    formData.append("id", imageId); // ส่ง imageId ไปด้วย
+  
     try {
       const response = await axios.put(
         "http://localhost:8000/update",
@@ -190,7 +193,7 @@ const FixInformation = ({ dataSource }) => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-             <input
+            <input
               id="review-input"
               placeholder="รีวิว"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
@@ -251,8 +254,20 @@ const FixInformation = ({ dataSource }) => {
                 />
               </div>
             </div>
+
+            {loading && ( // Spinner จะแสดงเมื่อกำลังโหลด
+              <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
+                <div className="relative">
+                  {/* วงแหวนสีขาว */}
+                  <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
+                  {/* Spinner สีชมพู */}
+                  <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                </div>
+              </div>
+            )}
+
+            {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
           </Modal>
-          {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
         </>
       )}
     </>
