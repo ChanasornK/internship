@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal } from "flowbite-react";
+import { Button, Modal, Spinner } from "flowbite-react";
 import Upload from "./Upload";
 import axios from "axios";
 import RatingStarz from "./RatingStarz";
@@ -17,14 +17,16 @@ const Information = () => {
   const [type, setType] = useState(null);
   const [rating, setRating] = useState(0);
   const [link, setLink] = useState("");
-  const [role, setRole] = useState("guest"); // ตั้งค่าเริ่มต้นเป็น "guest"
+  const [role, setRole] = useState("guest");
   const [email, setEmail] = useState("");
   const storedData = localStorage.getItem("profile");
   const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false); // สถานะการโหลด
+
   useEffect(() => {
     if (storedData) {
       const profile = JSON.parse(storedData);
-      setRole(profile?.userData?.role || "guest"); // ถ้าไม่มี role จะเป็น "guest"
+      setRole(profile?.userData?.role || "guest");
       setEmail(profile?.userData?.email);
     }
   }, []);
@@ -37,9 +39,47 @@ const Information = () => {
     setRating(selectedRating);
   };
 
-  const handleConfirm = async () => {
+  const handleRemoveBackground = async (imageFile) => {
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append("image_file", imageFile);
+    formData.append("size", "auto");
+
+    try {
+      const response = await axios.post(
+        "https://api.remove.bg/v1.0/removebg",
+        formData,
+        {
+          headers: {
+            "X-Api-Key": "oHKxBqxbJGeqGuQU6dftNFsg",
+            "Content-Type": "multipart/form-data",
+          },
+          responseType: "longblob",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("", error);
+      return null;
+    }
+  };
+
+  const handleConfirm = async () => {
+    setLoading(true); // เริ่มการโหลด
+    const formData = new FormData();
+
+    let removedBgImage = image; 
+
+    if (imageHasBackground(image)) {
+      removedBgImage = await handleRemoveBackground(image); 
+    }
+
+    if (!removedBgImage) {
+      setUploadStatus("Error removing background");
+      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
+      return;
+    }
+
+    formData.append("image", removedBgImage);
     formData.append("price", price);
     formData.append("detail", detail);
     formData.append("type", type);
@@ -47,6 +87,7 @@ const Information = () => {
     formData.append("link", link);
     formData.append("email", email);
     formData.append("review", review);
+
     try {
       const response = await axios.post(
         "http://localhost:8000/uploadImage",
@@ -59,11 +100,17 @@ const Information = () => {
       );
       setUploadStatus("");
       console.log(response.data);
+      setLoading(false); // หยุดการโหลดหลังการอัปโหลดเสร็จสิ้น
       window.location.reload();
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
+      setLoading(false); 
     }
+  };
+
+  const imageHasBackground = (image) => {
+    return true; // คืนค่า true ถ้าคุณต้องการลบพื้นหลัง
   };
 
   return (
@@ -161,8 +208,18 @@ const Information = () => {
                 </div>
               </Button>
             </div>
+
+            {loading && ( // Spinner จะแสดงเมื่อกำลังโหลด
+              <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
+                <div className="relative">
+                  <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
+                  <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                </div>
+              </div>
+            )}
+
+            {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
           </Modal>
-          {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
         </>
       )}
     </>

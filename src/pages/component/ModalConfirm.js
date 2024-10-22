@@ -49,8 +49,8 @@ const ModalConfirm = ({ isOpen, onClose, imageId, dataSource }) => {
       backdrop
       className="relative z-50 w-auto max-w-md mx-auto mt-56 p-auto rounded-md "
     >
-      <Modal.Header className="bg-pink w-full rounded-md  bg-gradient-to-t from-pink-200 to-pink-200  " />
-      <div className="text-center rounded-md  bg-gradient-to-t from-blue-200 to-pink-200 ">
+      <Modal.Header className="bg-pink w-full rounded-t-md  bg-gradient-to-t from-pink-200 to-pink-200  " />
+      <div className="text-center rounded-b-md  bg-gradient-to-t from-blue-200 to-pink-200 ">
         <TbAlertCircleFilled className="mx-auto mb-4 h-14 w-14  dark:text-gray-200" />
         <h3 className="mb-5 text-lg font-normal text-black dark:text-gray-400">
           คุณต้องการที่จะลบข้อมูลนี้
