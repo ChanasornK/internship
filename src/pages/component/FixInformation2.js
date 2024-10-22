@@ -7,8 +7,8 @@ import Upload2 from "./upload2";
 import { IoTrashBin } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
-import ModalConfirm from "./ModalConfirm";;
-import { MdAutoFixHigh } from "react-icons/md";
+import ModalConfirm from "./ModalConfirm";
+import { MdOutlineAutoFixHigh } from "react-icons/md";
 const FixInformation2 = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -23,6 +23,7 @@ const FixInformation2 = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false); // สถานะการโหลด
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -53,6 +54,7 @@ const FixInformation2 = ({ dataSource }) => {
   const handleTypeSelect = (selectedItem) => {
     setType(selectedItem);
   };
+
   const handleRemoveBackground = async (imageFile) => {
     const formData = new FormData();
     formData.append("image_file", imageFile);
@@ -77,19 +79,27 @@ const FixInformation2 = ({ dataSource }) => {
     }
   };
   const handleConfirm = async () => {
+    setLoading(true); // เริ่มการโหลด
     const formData = new FormData();
-    console.log("form", formData);
-    if (image) formData.append("image", image);
+    const removedBgImage = await handleRemoveBackground(image);
+
+    if (!removedBgImage) {
+      setUploadStatus("Error removing background");
+      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
+      return;
+    }
+
+    formData.append("image", removedBgImage);
     formData.append("price", price);
     formData.append("detail", detail);
-    if (type) formData.append("type", type);
+    formData.append("type", type);
     formData.append("rating", rating);
     formData.append("link", link);
-    formData.append("id", dataSource?.id);
     formData.append("email", email);
     formData.append("review", review);
+
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         "http://localhost:8000/update",
         formData,
         {
@@ -100,12 +110,15 @@ const FixInformation2 = ({ dataSource }) => {
       );
       setUploadStatus("");
       console.log(response.data);
+      setLoading(false); // หยุดการโหลดหลังการอัปโหลดเสร็จสิ้น
       window.location.reload();
     } catch (error) {
-      setUploadStatus(`Upload Failed: ${error.message}`);
+      setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
+      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
     }
   };
+  
 
   const handleDeleteClick = () => {
     setIsModalOpen(true);
@@ -140,9 +153,10 @@ const FixInformation2 = ({ dataSource }) => {
     <>
       <button
         onClick={() => setFixModal(true)}
-        className="fixed bottom-28 right-5 w-12 h-12 bg-pink-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
-        >
-          <MdAutoFixHigh className="w-6 h-6" />
+        className="text-black hover:bg-gradient-to-b from-purple-600 to-pink-200 bg-purple-400 px-2 rounded-lg flex items-center"
+      >
+        <MdOutlineAutoFixHigh className="mr-1" />
+        แก้ไข
       </button>
 
       {fixModal && (
