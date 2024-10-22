@@ -53,12 +53,12 @@ const Information = () => {
             "X-Api-Key": "oHKxBqxbJGeqGuQU6dftNFsg",
             "Content-Type": "multipart/form-data",
           },
-          responseType: "longblob",
+          responseType: "blob",
         }
       );
       return response.data;
     } catch (error) {
-      console.error("", error);
+      console.error("Error removing background:", error);
       return null;
     }
   };
@@ -66,12 +66,7 @@ const Information = () => {
   const handleConfirm = async () => {
     setLoading(true); // เริ่มการโหลด
     const formData = new FormData();
-
-    let removedBgImage = image; 
-
-    if (imageHasBackground(image)) {
-      removedBgImage = await handleRemoveBackground(image); 
-    }
+    const removedBgImage = await handleRemoveBackground(image);
 
     if (!removedBgImage) {
       setUploadStatus("Error removing background");
@@ -105,12 +100,8 @@ const Information = () => {
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
-      setLoading(false); 
+      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
     }
-  };
-
-  const imageHasBackground = (image) => {
-    return true; // คืนค่า true ถ้าคุณต้องการลบพื้นหลัง
   };
 
   return (
@@ -210,12 +201,14 @@ const Information = () => {
             </div>
 
             {loading && ( // Spinner จะแสดงเมื่อกำลังโหลด
-              <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
-                <div className="relative">
-                  <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
-                  <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-                </div>
-              </div>
+             <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
+             <div className="relative">
+               {/* วงแหวนสีขาว */}
+               <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
+               {/* Spinner สีชมพู */}
+               <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+             </div>
+           </div>
             )}
 
             {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
