@@ -53,7 +53,29 @@ const FixInformation2 = ({ dataSource }) => {
   const handleTypeSelect = (selectedItem) => {
     setType(selectedItem);
   };
+  const handleRemoveBackground = async (imageFile) => {
+    const formData = new FormData();
+    formData.append("image_file", imageFile);
+    formData.append("size", "auto");
 
+    try {
+      const response = await axios.post(
+        "https://api.remove.bg/v1.0/removebg",
+        formData,
+        {
+          headers: {
+            "X-Api-Key": "75Ps8tChpFRGaKweqexWWDGd",
+            "Content-Type": "multipart/form-data",
+          },
+          responseType: "blob",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error removing background:", error);
+      return null;
+    }
+  };
   const handleConfirm = async () => {
     const formData = new FormData();
     console.log("form", formData);

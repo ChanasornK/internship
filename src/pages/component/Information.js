@@ -50,7 +50,7 @@ const Information = () => {
         formData,
         {
           headers: {
-            "X-Api-Key": "oHKxBqxbJGeqGuQU6dftNFsg",
+            "X-Api-Key": "75Ps8tChpFRGaKweqexWWDGd",
             "Content-Type": "multipart/form-data",
           },
           responseType: "blob",

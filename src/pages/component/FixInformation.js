@@ -9,8 +9,6 @@ import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
 import ModalConfirm from "./ModalConfirm";
 import { MdOutlineAutoFixHigh } from "react-icons/md";
-import { Spinner } from "flowbite-react"; // Import Spinner
-
 const FixInformation = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -26,7 +24,6 @@ const FixInformation = ({ dataSource }) => {
   const [email, setEmail] = useState("");
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false); // สถานะการโหลด
-
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -35,7 +32,7 @@ const FixInformation = ({ dataSource }) => {
       setRole(profile?.userData?.role || "user");
     }
   }, []);
-
+  console.log(email);
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -44,8 +41,9 @@ const FixInformation = ({ dataSource }) => {
       setType(dataSource.type || "");
       setRating(dataSource.rating || 0);
       setImage(dataSource?.src || null);
+      setImage(dataSource?.src || null);
       setImageId(dataSource?.id || null); // Set imageId from dataSource
-      setReview(dataSource?.review || "");
+      setReview(dataSource?.review || '');
     }
   }, [dataSource]);
 
@@ -68,7 +66,7 @@ const FixInformation = ({ dataSource }) => {
         formData,
         {
           headers: {
-            "X-Api-Key": "oHKxBqxbJGeqGuQU6dftNFsg",
+            "X-Api-Key": "75Ps8tChpFRGaKweqexWWDGd",
             "Content-Type": "multipart/form-data",
           },
           responseType: "blob",
@@ -80,15 +78,9 @@ const FixInformation = ({ dataSource }) => {
       return null;
     }
   };
-
   const handleConfirm = async () => {
-    if (!image) {
-      setUploadStatus("Please select an image");
-      return;
-    }
-
     setLoading(true); // เริ่มการโหลด
-
+    const formData = new FormData();
     const removedBgImage = await handleRemoveBackground(image);
 
     if (!removedBgImage) {
@@ -97,19 +89,17 @@ const FixInformation = ({ dataSource }) => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("image", removedBgImage); // ใช้ภาพที่ลบ background แล้ว
+    formData.append("image", removedBgImage);
     formData.append("price", price);
     formData.append("detail", detail);
-    if (type) formData.append("type", type);
+    formData.append("type", type);
     formData.append("rating", rating);
     formData.append("link", link);
-    formData.append("id", dataSource?.id);
     formData.append("email", email);
     formData.append("review", review);
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         "http://localhost:8000/update",
         formData,
         {
@@ -119,15 +109,16 @@ const FixInformation = ({ dataSource }) => {
         }
       );
       setUploadStatus("");
-      setLoading(false); // หยุดการโหลด
       console.log(response.data);
-      window.location.reload(); // รีเฟรชหน้าเพื่ออัปเดตข้อมูลใหม่
+      setLoading(false); // หยุดการโหลดหลังการอัปโหลดเสร็จสิ้น
+      window.location.reload();
     } catch (error) {
-      setUploadStatus(`Upload Failed: ${error.message}`);
+      setUploadStatus(`Upload failed: ${error.message}`);
       console.error("Error uploading file:", error);
       setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
     }
   };
+  
 
   const handleDeleteClick = () => {
     setIsModalOpen(true);
@@ -139,16 +130,16 @@ const FixInformation = ({ dataSource }) => {
 
   const deleteImage = async (imageId) => {
     try {
-      console.log("Deleting image with ID:", imageId);
+      console.log("Deleting image with ID:", imageId); // ตรวจสอบค่า imageId
       const response = await axios.delete("http://localhost:8000/deleteImage", {
         data: { id: imageId },
       });
 
-      console.log("Server response:", response);
+      console.log("Server response:", response); // ตรวจสอบการตอบกลับจากเซิร์ฟเวอร์
 
       if (response.status === 200) {
-        setFixModal(false);
-        window.location.reload();
+        setFixModal(false); // ปิด Modal หลังจากลบเสร็จสิ้น
+        window.location.reload(); // รีเฟรชหน้าเพื่อแสดงข้อมูลที่อัปเดต
       } else {
         alert(response.data.message || "Failed to delete image");
       }
@@ -199,7 +190,7 @@ const FixInformation = ({ dataSource }) => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            <input
+             <input
               id="review-input"
               placeholder="รีวิว"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "
@@ -260,15 +251,6 @@ const FixInformation = ({ dataSource }) => {
                 />
               </div>
             </div>
-
-            {loading && (
-              <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
-                <div className="relative">
-                  <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
-                  <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-                </div>
-              </div>
-            )}
           </Modal>
           {uploadStatus && <p className="mt-4 text-center">{uploadStatus}</p>}
         </>
