@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Button } from "flowbite-react";
-import { auth, googleProvider } from "./test";
+import { auth, googleProvider } from "../test";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import { FaSignInAlt } from "react-icons/fa";

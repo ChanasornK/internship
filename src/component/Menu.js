@@ -1,7 +1,7 @@
 import React from "react";
-import Searchform from "../component/Searchform";
+import Searchform from "./Searchform";
 import { useRouter } from "next/router";
-import ProfileToggle from "../component/ProfileToggle";
+import ProfileToggle from "./ProfileToggle";
 import { useState, useEffect } from "react";
 import Product from "./Product";
 import { GrLogin } from "react-icons/gr";

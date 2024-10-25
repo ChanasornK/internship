@@ -1,11 +1,11 @@
 import React from "react";
-import Menu from "./component/Menu";
+import Menu from "../component/Menu";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import LoadingModal from "./component/loading";
-import FixInformation from "./component/FixInformation";
-import Information from "./component/Information";
-import RatingStarz from "./component/RatingStarz";
+import LoadingModal from "../component/loading";
+import FixInformation from "../component/FixInformation";
+import Information from "../component/Information";
+import RatingStarz from "../component/RatingStarz";
 import Head from "next/head";
 import SuccessPopup from "./SuccessPopup";
 
