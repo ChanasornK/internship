@@ -46,8 +46,8 @@ const Logo = () => {
     },
     {
       name: "Asrock",
-      imgUrl:
-        "https://scontent.fbkk29-7.fna.fbcdn.net/v/t1.15752-9/458525523_512465604825616_7641958937197182963_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEA1c59iN4py96ZgVrUF3yVz0IACBJmdDvPQgAIEmZ0Oyn4fyYfA4stfimWK712yX0HEkPWc3WZmITVX9zcdghb&_nc_ohc=u6P0yzzjWjwQ7kNvgGSdDtb&_nc_ht=scontent.fbkk29-7.fna&_nc_gid=AqYZhIuXXaTjLnPX1DWQhHW&oh=03_Q7cD1QFhlutG6Ybwb8HMnwaMr9T1LqSmYTOzAtoSWM0O9d1y1Q&oe=670F73C1",
+      imgUrl:"/Logo/Asrock.png",
+       
     },
     {
       name: "Lenovo",
@@ -71,8 +71,8 @@ const Logo = () => {
     },
     {
       name: "Gigabyte",
-      imgUrl:
-        "https://scontent.fbkk29-1.fna.fbcdn.net/v/t1.15752-9/458487742_1641849849706876_3918649815897531135_n.png?stp=dst-png_s2048x2048&_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHZGNN-hZEUhLtMJCelph0ZetbVpYoXhiR61tWliheGJNWlRX8RnKD1VtwlLnxo66Kun31a_dDcT5wWV-C2evlJ&_nc_ohc=M6k9CaJ6VNgQ7kNvgHsyfCQ&_nc_ht=scontent.fbkk29-1.fna&_nc_gid=As5-okg6gok-fg2mgqjIYoA&oh=03_Q7cD1QHHm906vzS0KS660YsIORlihPErjkYHtcrDd_74KqLyBg&oe=670F6D8F",
+      imgUrl:"/Logo/GG.png"
+        
     },
   ];
 

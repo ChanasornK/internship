@@ -51,7 +51,7 @@ const Login = () => {
         console.error("Error during verification:", error);
         setError("An error occurred during login. Please try again.");
       } finally {
-        setLoading(false); // Ensure loading state is stopped after process
+        setLoading(false); 
       }
     }
   };
