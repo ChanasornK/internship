@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import RatingStarz from "../component/RatingStarz";
-import Information from "../component/Information";
-import FixInformation from "../component/FixInformation";
-import LoadingModal from "../component/loading";
-import Menu from "../component/Menu";
+import RatingStarz from "../../component/RatingStarz";
+import Information from "../../component/Information";
+import FixInformation from "../../component/FixInformation";
+import LoadingModal from "../../component/loading";
+import Menu from "../../component/Menu";
 import Head from "next/head";
 import SuccessPopup from "../SuccessPopup";
 
