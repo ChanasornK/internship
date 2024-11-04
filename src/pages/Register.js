@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Button } from "flowbite-react";
-import { auth, googleProvider } from "./test";
+import { auth, googleProvider } from "../test";
 import { GoEye } from "react-icons/go";
 import { GoEyeClosed } from "react-icons/go";
 import { RiGhostFill } from "react-icons/ri";

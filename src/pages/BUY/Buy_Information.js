@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
-import Menu from "../component/Menu";
-import RatingStarz from "../component/RatingStarz";
+import Menu from "../../component/Menu";
+import RatingStarz from "../../component/RatingStarz";
 import { FaCartShopping } from "react-icons/fa6";
-import LoadingModal from "../component/loading";
+import LoadingModal from "../../component/loading";
 import { BsChatHeart } from "react-icons/bs";
 import Head from "next/head";
 import SuccessPopup from "../SuccessPopup";
 import { GrSend } from "react-icons/gr";
 import { IoCloseSharp } from "react-icons/io5";
-import FixInformation2 from "../component/FixInformation2";
+import FixInformation2 from "../../component/FixInformation2";
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
   const bytes = new Uint8Array(buffer);

@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 
 import { Button } from "flowbite-react";
-import { auth, googleProvider } from "./test";
+import { auth, googleProvider } from "../test";
 const Google_login = () => {
   const [user, setUser] = useState(null);
   const [str, setStr] = useState("Hello");
