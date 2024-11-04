@@ -67,7 +67,7 @@ const FixInformation = ({ dataSource }) => {
         formData,
         {
           headers: {
-            "X-Api-Key": "75Ps8tChpFRGaKweqexWWDGd",
+            "X-Api-Key": "23uH56Rk963CKDY7AsNR41C1",
             "Content-Type": "multipart/form-data",
           },
           responseType: "blob",
