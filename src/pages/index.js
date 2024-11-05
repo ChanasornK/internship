@@ -10,6 +10,7 @@ import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
 import AutoSlider from "./AutoSlider";
 import Head from "next/head";
 import Logo from "./IT/Logo";
+import Menu from "./component/Menu";
 const Index = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -64,7 +65,7 @@ const Index = () => {
     Mainboard: "/Item/Mainboard.png",
     imageProfileWeb: "/Profile.png",
     iconproduct: "/getergory.png",
-    mostview:"/K1.png"
+    mostview: "/K1.png",
   };
 
   return (
@@ -81,49 +82,7 @@ const Index = () => {
         <LoadingModal />
       ) : (
         <div className="w-full h-auto">
-          <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#6A82FB] to-[#FC5C7D] flex z-50 h-36">
-            <div className="w-4/5 ml-24">
-              <div className="flex">
-                <div
-                  className="font-bold font-serif text-3xl cursor-pointer mt-10 h-10 text-white flex items-center group"
-                  onClick={handleHomePage}
-                >
-                  <img
-                    src={imageUrl.imageProfileWeb}
-                    className="mr-4 transition-transform duration-500 group-hover:rotate-180 group-hover:text-black"
-                  />
-                  <span className="hover:text-black">ReviewZone</span>
-                </div>
-
-                <Searchform />
-              </div>
-            </div>
-            <div>
-              {profile ? (
-                <div className="mr-2 mt-2">
-                  <ProfileToggle profile={profile} />
-                </div>
-              ) : (
-                <div className="flex ml-10 mt-8 mx-auto">
-                  <button
-                    onClick={handleGoLogin}
-                    className="bg-gray-200 text-purple-600 h-10 px-4 rounded-lg hover:bg-purple-300 flex items-center border-2 border-purple-600 font-sans"
-                  >
-                    <GrLogin className="mr-2" />
-                    Login
-                  </button>
-                  <button
-                    onClick={handleGoRegister}
-                    className="bg-gray-200 text-pink-600 h-10 px-4 rounded-lg hover:bg-pink-300 flex items-center border-2 border-pink-600 font-sans ml-3 text-nowrap mr-3"
-                  >
-                    <FaUserPlus className="mr-1" />
-                    Sign up
-                  </button>
-                </div>
-              )}
-            </div>
-          </header>
-
+          <Menu />
           <div className="w-full h-[55%] bg-stone-100  ">
             <div className="pt-44 ">
               <AutoSlider />
@@ -267,10 +226,7 @@ const Index = () => {
           <div className="bg-stone-100  w-full h-[500px] overflow-hidden pb-10">
             <div className="flex items-center font-medium text-xl font-sans px-4 py-2 ml-48 mt-4 ">
               <div className="font-medium font-sansew text-xl  h-10 text-black flex items-center ">
-                <img
-                src={imageUrl.mostview}
-                  className=" mr-4"
-                />
+                <img src={imageUrl.mostview} className=" mr-4" />
                 <span className="text-black mt-1 text-nowrap">Most View</span>
               </div>
             </div>
