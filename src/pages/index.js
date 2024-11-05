@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Searchform from "./component/Searchform";
+import Searchform from "../component/Searchform";
 import Slide from "./Slide";
-import ProfileToggle from "./component/ProfileToggle";
+import ProfileToggle from "../component/ProfileToggle";
 import { GrLogin } from "react-icons/gr";
 import { FaUserPlus } from "react-icons/fa6";
-import LoadingModal from "./component/loading";
+import LoadingModal from "../component/loading";
 import SuccessPopup from "./SuccessPopup"; // Import the SuccessPopup component
 import AutoSlider from "./AutoSlider";
 import Head from "next/head";
