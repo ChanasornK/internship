@@ -2,8 +2,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import LoadingModal from "../component/loading";
-import LoadingMostView from "../component/loadingMostView";
+import LoadingModal from "./component/loading";
+import LoadingMostView from "./component/loadingMostView";
 
 const arrowStyles = {
   borderRadius: "50%",
