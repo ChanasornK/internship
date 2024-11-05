@@ -83,7 +83,7 @@ const Logo = () => {
     slidesToShow: 8, // แสดงโลโก้ 8 รูปต่อหน้า
     slidesToScroll: 1, // เลื่อนทีละ 1 รูป
     autoplay: true,
-    autoplaySpeed: 2500, // สไลด์ทุก 2.5 วินาที
+    autoplaySpeed: 2000, // สไลด์ทุก 2.5 วินาที
     draggable: true, // เพิ่มตัวเลือกนี้เพื่อให้ลากด้วยเมาส์ได้
   };
 

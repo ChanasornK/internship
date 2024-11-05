@@ -7,8 +7,9 @@ import Upload2 from "./upload2";
 import { IoTrashBin } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
-import ModalConfirm from "./ModalConfirm";;
-import { MdAutoFixHigh } from "react-icons/md";
+import ModalConfirm from "./ModalConfirm";
+import { MdAutoFixHigh, MdOutlineAutoFixHigh } from "react-icons/md";
+
 const FixInformation2 = ({ dataSource }) => {
   const [fixModal, setFixModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -23,6 +24,8 @@ const FixInformation2 = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false); // สถานะการโหลด
+
   useEffect(() => {
     const storedData = localStorage.getItem("profile");
     if (storedData) {
@@ -31,7 +34,7 @@ const FixInformation2 = ({ dataSource }) => {
       setRole(profile?.userData?.role || "user");
     }
   }, []);
-  console.log(email);
+
   useEffect(() => {
     if (dataSource) {
       setPrice(dataSource.price || "");
@@ -40,9 +43,8 @@ const FixInformation2 = ({ dataSource }) => {
       setType(dataSource.type || "");
       setRating(dataSource.rating || 0);
       setImage(dataSource?.src || null);
-      setImage(dataSource?.src || null);
       setImageId(dataSource?.id || null); // Set imageId from dataSource
-      setReview(dataSource?.review || '');
+      setReview(dataSource?.review || "");
     }
   }, [dataSource]);
 
@@ -54,20 +56,58 @@ const FixInformation2 = ({ dataSource }) => {
     setType(selectedItem);
   };
 
-  const handleConfirm = async () => {
+  const handleRemoveBackground = async (imageFile) => {
     const formData = new FormData();
-    console.log("form", formData);
-    if (image) formData.append("image", image);
-    formData.append("price", price);
-    formData.append("detail", detail);
-    if (type) formData.append("type", type);
-    formData.append("rating", rating);
-    formData.append("link", link);
-    formData.append("id", dataSource?.id);
-    formData.append("email", email);
-    formData.append("review", review);
+    formData.append("image_file", imageFile);
+    formData.append("size", "auto");
+
     try {
       const response = await axios.post(
+        "https://api.remove.bg/v1.0/removebg",
+        formData,
+        {
+          headers: {
+            "X-Api-Key": "23uH56Rk963CKDY7AsNR41C1",
+            "Content-Type": "multipart/form-data",
+          },
+          responseType: "longblob",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error removing background:", error);
+      return null;
+    }
+  };
+
+  const handleConfirm = async () => {
+    setLoading(true); // เริ่มการโหลด
+    const formData = new FormData();
+
+    let removedBgImage = image; // กำหนดรูปภาพเริ่มต้นเป็นรูปภาพเดิม
+
+    if (image && typeof image !== "string") {
+      // ตรวจสอบว่ามีรูปภาพใหม่ที่อัปโหลด
+      removedBgImage = await handleRemoveBackground(image); // ลบพื้นหลังรูปภาพใหม่
+      if (!removedBgImage) {
+        setUploadStatus("เกิดข้อผิดพลาดในการลบพื้นหลัง");
+        setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
+        return;
+      }
+    }
+
+    formData.append("image", removedBgImage); // ใช้รูปภาพที่มี ไม่ว่าจะเป็นรูปเดิมหรือรูปใหม่
+    formData.append("price", price);
+    formData.append("detail", detail);
+    formData.append("type", type);
+    formData.append("rating", rating);
+    formData.append("link", link);
+    formData.append("email", email);
+    formData.append("review", review);
+    formData.append("id", imageId); // ส่ง imageId ไปด้วย
+
+    try {
+      const response = await axios.put(
         "http://localhost:8000/update",
         formData,
         {
@@ -78,10 +118,12 @@ const FixInformation2 = ({ dataSource }) => {
       );
       setUploadStatus("");
       console.log(response.data);
+      setLoading(false); // หยุดการโหลดหลังการอัปโหลดเสร็จสิ้น
       window.location.reload();
     } catch (error) {
-      setUploadStatus(`Upload Failed: ${error.message}`);
-      console.error("Error uploading file:", error);
+      setUploadStatus(`การอัปโหลดล้มเหลว: ${error.message}`);
+      console.error("เกิดข้อผิดพลาดในการอัปโหลดไฟล์:", error);
+      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
     }
   };
 
@@ -119,8 +161,8 @@ const FixInformation2 = ({ dataSource }) => {
       <button
         onClick={() => setFixModal(true)}
         className="fixed bottom-28 right-5 w-12 h-12 bg-pink-500 text-white rounded-full flex items-center justify-center transform transition-transform duration-200 hover:scale-125"
-        >
-          <MdAutoFixHigh className="w-6 h-6" />
+      >
+        <MdAutoFixHigh className="w-6 h-6" />
       </button>
 
       {fixModal && (
@@ -154,7 +196,7 @@ const FixInformation2 = ({ dataSource }) => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-             <input
+            <input
               id="review-input"
               placeholder="รีวิว"
               className="bg-gray-50 text-gray-700 mt-6 ml-10 w-[86%] h-10 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500  "

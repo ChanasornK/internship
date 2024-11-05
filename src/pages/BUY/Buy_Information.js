@@ -192,7 +192,6 @@ const reviewProduct = () => {
     }
   };
 
-
   useEffect(() => {
     if (!loading && comments.length > 0 && !hasScrolledToLatestComment) {
       // เลื่อนไปที่คอมเมนต์ล่าสุดเมื่อหน้าโหลดเสร็จและยังไม่เคยเลื่อนไป
@@ -380,7 +379,9 @@ const reviewProduct = () => {
 
             <div>
               {(profile?.role === "admin" ||
-                profile?.email === imageData?.email) && <FixInformation2 />}
+                profile?.email === imageData?.email) && (
+                <FixInformation2 dataSource={imageData} />
+              )}
 
               {!isChatVisible && (
                 <button
@@ -453,7 +454,6 @@ const reviewProduct = () => {
                                 </p>
                                 <p className="pl-1">{comment.comment_text}</p>
                               </div>
-                            
                             </div>
                           )}
                         </div>

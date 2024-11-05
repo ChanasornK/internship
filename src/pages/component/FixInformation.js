@@ -83,15 +83,19 @@ const FixInformation = ({ dataSource }) => {
   const handleConfirm = async () => {
     setLoading(true); // เริ่มการโหลด
     const formData = new FormData();
-    const removedBgImage = await handleRemoveBackground(image);
   
-    if (!removedBgImage) {
-      setUploadStatus("Error removing background");
-      setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
-      return;
+    let removedBgImage = image; // กำหนดรูปภาพเริ่มต้นเป็นรูปภาพเดิม
+  
+    if (image && typeof image !== "string") { // ตรวจสอบว่ามีรูปภาพใหม่ที่อัปโหลด
+      removedBgImage = await handleRemoveBackground(image); // ลบพื้นหลังรูปภาพใหม่
+      if (!removedBgImage) {
+        setUploadStatus("เกิดข้อผิดพลาดในการลบพื้นหลัง");
+        setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
+        return;
+      }
     }
   
-    formData.append("image", removedBgImage);
+    formData.append("image", removedBgImage); // ใช้รูปภาพที่มี ไม่ว่าจะเป็นรูปเดิมหรือรูปใหม่
     formData.append("price", price);
     formData.append("detail", detail);
     formData.append("type", type);
@@ -116,13 +120,12 @@ const FixInformation = ({ dataSource }) => {
       setLoading(false); // หยุดการโหลดหลังการอัปโหลดเสร็จสิ้น
       window.location.reload();
     } catch (error) {
-      setUploadStatus(`Upload failed: ${error.message}`);
-      console.error("Error uploading file:", error);
+      setUploadStatus(`การอัปโหลดล้มเหลว: ${error.message}`);
+      console.error("เกิดข้อผิดพลาดในการอัปโหลดไฟล์:", error);
       setLoading(false); // หยุดการโหลดเมื่อเกิดข้อผิดพลาด
     }
   };
   
-
   const handleDeleteClick = () => {
     setIsModalOpen(true);
   };
@@ -258,9 +261,7 @@ const FixInformation = ({ dataSource }) => {
             {loading && ( // Spinner จะแสดงเมื่อกำลังโหลด
               <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
                 <div className="relative">
-                  {/* วงแหวนสีขาว */}
                   <div className="w-12 h-12 border-4 border-white border-opacity-75 rounded-full"></div>
-                  {/* Spinner สีชมพู */}
                   <div className="absolute top-0 left-0 w-12 h-12 border-4 border-t-pink-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
                 </div>
               </div>
